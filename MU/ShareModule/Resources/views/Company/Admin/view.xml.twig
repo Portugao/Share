@@ -1,0 +1,9 @@
+{# purpose of this template: companies view xml view #}
+<?xml version="1.0" encoding="{{ pageGetVar('meta.charset') }}" ?>
+<companies>
+{% for company in items %}
+    {{ include('@MUShareModule/Company/include.xml.twig') }}
+{% else %}
+    <noCompany />
+{% endfor %}
+</companies>

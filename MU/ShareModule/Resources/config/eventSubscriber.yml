@@ -1,0 +1,86 @@
+services:
+    # Event subscribers and listeners
+    mu_share_module.entity_lifecycle_listener:
+        class: MU\ShareModule\Listener\EntityLifecycleListener
+        arguments:
+            - "@service_container"
+            - "@event_dispatcher"
+            - "@logger"
+        tags:
+            - { name: doctrine.event_subscriber }
+    
+    mu_share_module.kernel_listener:
+        class: MU\ShareModule\Listener\KernelListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    mu_share_module.installer_listener:
+        class: MU\ShareModule\Listener\InstallerListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    mu_share_module.moduledispatch_listener:
+        class: MU\ShareModule\Listener\ModuleDispatchListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    mu_share_module.mailer_listener:
+        class: MU\ShareModule\Listener\MailerListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    mu_share_module.theme_listener:
+        class: MU\ShareModule\Listener\ThemeListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    mu_share_module.userlogin_listener:
+        class: MU\ShareModule\Listener\UserLoginListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    mu_share_module.userlogout_listener:
+        class: MU\ShareModule\Listener\UserLogoutListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    mu_share_module.user_listener:
+        class: MU\ShareModule\Listener\UserListener
+        arguments:
+            - "@translator.default"
+            - "@mu_share_module.entity_factory"
+            - "@zikula_users_module.current_user"
+            - "@logger"
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    mu_share_module.userregistration_listener:
+        class: MU\ShareModule\Listener\UserRegistrationListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    mu_share_module.users_listener:
+        class: MU\ShareModule\Listener\UsersListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    mu_share_module.group_listener:
+        class: MU\ShareModule\Listener\GroupListener
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    mu_share_module.thirdparty_listener:
+        class: MU\ShareModule\Listener\ThirdPartyListener
+        arguments:
+            - "@filesystem"
+            - "@request_stack"
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    mu_share_module.workflow_events_listener:
+        class: MU\ShareModule\Listener\WorkflowEventsListener
+        arguments:
+            - "@zikula_permissions_module.api.permission"
+        tags:
+            - { name: kernel.event_subscriber }
+    

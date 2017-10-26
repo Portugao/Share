@@ -1,0 +1,22 @@
+{# purpose of this template: locations xml inclusion template #}
+<location id="{{ location.getId() }}" createdon="{{ location.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ location.updatedDate|localizeddate('medium', 'short') }}">
+    <id>{{ location.id }}</id>
+    <title><![CDATA[{{ location.title }}]]></title>
+    <street><![CDATA[{{ location.street }}]]></street>
+    <numberOfStreet><![CDATA[{{ location.numberOfStreet }}]]></numberOfStreet>
+    <zipCode><![CDATA[{{ location.zipCode }}]]></zipCode>
+    <city><![CDATA[{{ location.city }}]]></city>
+    <private>{% if not location.private %}0{% else %}1{% endif %}</private>
+    <forMap>{% if not location.forMap %}0{% else %}1{% endif %}</forMap>
+    <latitude>{{ location.latitude|musharemodule_geoData }}</latitude>
+    <longitude>{{ location.longitude|musharemodule_geoData }}</longitude>
+    <workflowState>{{ location.workflowState|musharemodule_objectState(false)|lower }}</workflowState>
+    <pool>{% if location.pool|default %}{{ location.pool|musharemodule_formattedTitle }}{% endif %}</pool>
+    <offerOfLocation>
+    {% if location.offerOfLocation|default %}
+        {% for relatedItem in location.offerOfLocation %}
+        <offer>{{ relatedItem|musharemodule_formattedTitle }}</offer>
+        {% endfor %}
+    {% endif %}
+    </offerOfLocation>
+</location>

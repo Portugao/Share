@@ -1,0 +1,5 @@
+{# Purpose of this template: Display item information for previewing from other modules #}
+<dl id="pool{{ pool.getKey() }}">
+<dt>{{ pool|musharemodule_formattedTitle|notifyFilters('share.filter_hooks.pools.filter')|safeHtml }}</dt>
+{% if pool.collectionOfPool is not empty %}<dd>{{ pool.collectionOfPool }}</dd>{% endif %}
+</dl>

@@ -1,0 +1,7 @@
+services:
+    # Form field types
+    
+    mu_share_module.form.type.field.geo:
+        class: MU\ShareModule\Form\Type\Field\GeoType
+        tags:
+            - { name: form.type }

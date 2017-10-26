@@ -1,0 +1,9 @@
+{# purpose of this template: offers view xml view #}
+<?xml version="1.0" encoding="{{ pageGetVar('meta.charset') }}" ?>
+<offers>
+{% for offer in items %}
+    {{ include('@MUShareModule/Offer/include.xml.twig') }}
+{% else %}
+    <noOffer />
+{% endfor %}
+</offers>

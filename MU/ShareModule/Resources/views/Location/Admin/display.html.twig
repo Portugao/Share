@@ -1,0 +1,138 @@
+{# purpose of this template: locations admin display view #}
+{% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : 'adminBase' %}
+{% extends 'MUShareModule::' ~ baseTemplate ~ '.html.twig' %}
+{% block pageTitle %}{{ location|musharemodule_formattedTitle|default(__('Location')) }}{% endblock %}
+{% block title %}
+    {% set templateTitle = location|musharemodule_formattedTitle|default(__('Location')) %}
+    {{ templateTitle|notifyFilters('musharemodule.filter_hooks.locations.filter')|safeHtml }}{% if routeArea == 'admin' %} <small>({{ location.workflowState|musharemodule_objectState(false)|lower }})</small>{% endif %}
+    {% set itemActions = knp_menu_get('MUShareModule:ItemActionsMenu:menu', [], {entity: location, area: routeArea, context: 'display'}) %}
+    <div class="dropdown">
+        <a id="itemActions{{ location.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
+        {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:actions.html.twig'}) }}
+    </div>
+{% endblock %}
+{% block admin_page_icon 'eye' %}
+{% block content %}
+    {% set isQuickView = app.request.query.getBoolean('raw', false) %}
+    <div class="musharemodule-location musharemodule-display">
+
+    <div class="row">
+        <div class="col-sm-9">
+    <dl>
+        {% if location.workflowState is not empty and routeArea == 'admin' %}
+            <dt>{{ __('State') }}</dt>
+            <dd>{{ location.workflowState|musharemodule_listEntry('location', 'workflowState') }}</dd>
+        {% endif %}
+        {% if location.title is not empty %}
+            <dt>{{ __('Title') }}</dt>
+            <dd>{{ location.title }}</dd>
+        {% endif %}
+        {% if location.street is not empty %}
+            <dt>{{ __('Street') }}</dt>
+            <dd>{{ location.street }}</dd>
+        {% endif %}
+        {% if location.numberOfStreet is not empty %}
+            <dt>{{ __('Number of street') }}</dt>
+            <dd>{{ location.numberOfStreet }}</dd>
+        {% endif %}
+        {% if location.zipCode is not empty %}
+            <dt>{{ __('Zip code') }}</dt>
+            <dd>{{ location.zipCode }}</dd>
+        {% endif %}
+        {% if location.city is not empty %}
+            <dt>{{ __('City') }}</dt>
+            <dd>{{ location.city }}</dd>
+        {% endif %}
+        {% if location.private is not empty %}
+            <dt>{{ __('Private') }}</dt>
+            <dd>{% if location.private %}
+                <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+            {% else %}
+                <i class="fa fa-times" title="{{ __('No') }}"></i>
+            {% endif %}
+            </dd>
+        {% endif %}
+        {% if location.forMap is not empty %}
+            <dt>{{ __('For map') }}</dt>
+            <dd>{% if location.forMap %}
+                <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+            {% else %}
+                <i class="fa fa-times" title="{{ __('No') }}"></i>
+            {% endif %}
+            </dd>
+        {% endif %}
+        {% if location.latitude is not empty %}
+            <dt>{{ __('Latitude') }}</dt>
+            <dd>{{ location.latitude|musharemodule_geoData }}</dd>
+        {% endif %}
+        {% if location.longitude is not empty %}
+            <dt>{{ __('Longitude') }}</dt>
+            <dd>{{ location.longitude|musharemodule_geoData }}</dd>
+        {% endif %}
+        {% if location.pool|default %}
+            <dt>{{ __('Pool') }}</dt>
+            <dd>
+              {% if not isQuickView %}
+                  <a href="{{ path('musharemodule_pool_' ~ routeArea ~ 'display', {'id': location.pool.getId()}) }}">{% spaceless %}
+                    {{ location.pool|musharemodule_formattedTitle }}
+                  {% endspaceless %}</a>
+                  <a id="poolItem{{ location.pool.getKey() }}Display" href="{{ path('musharemodule_pool_' ~ routeArea ~ 'display', {'id': location.pool.getId(), raw: 1}) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="mushare-inline-window hidden" data-modal-title="{{ location.pool|musharemodule_formattedTitle|e('html_attr') }}"><i class="fa fa-id-card-o"></i></a>
+              {% else %}
+                  {{ location.pool|musharemodule_formattedTitle }}
+              {% endif %}
+            </dd>
+        {% endif %}
+        
+    </dl>
+
+    <h3 class="musharemodule-map">{{ __('Map') }}</h3>
+    <div id="mapContainer" class="musharemodule-mapcontainer">
+    </div>
+    {{ include('@MUShareModule/Helper/includeStandardFieldsDisplay.html.twig', {obj: location}) }}
+
+    {{ block('display_hooks') }}
+        </div>
+        <div class="col-sm-3">
+            {{ block('related_items') }}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block related_items %}
+    {% if routeArea == 'admin' %}
+        <h4>{{ __('Offer of location') }}</h4>
+    {% else %}
+        <h3>{{ __('Offer of location') }}</h3>
+    {% endif %}
+    
+    {% if location.offerOfLocation|default %}
+        {{ include(
+            '@MUShareModule/Offer/Admin/includeDisplayItemListMany.html.twig',
+            {items: location.offerOfLocation}
+        ) }}
+    {% endif %}
+    
+    {% set mayManage = hasPermission('MUShareModule:Offer:', '::', 'ACCESS_EDIT') %}
+    {% if mayManage %}
+        <p class="managelink">
+            {% set createTitle = __('Create offer') %}
+            <a href="{{ path('musharemodule_offer_' ~ routeArea ~ 'edit', {locationOfOffer: location.getKey()}) }}" title="{{ createTitle|e('html_attr') }}"><i class="fa fa-plus"></i> {{ createTitle }}</a>
+        </p>
+    {% endif %}
+{% endblock %}
+{% block display_hooks %}
+    {% set hooks = notifyDisplayHooks(eventName='musharemodule.ui_hooks.locations.display_view', id=location.getKey(), urlObject=currentUrlObject, outputAsArray=true) %}
+    {% if hooks is iterable and hooks|length > 0 %}
+        {% for area, hook in hooks %}
+            <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook }}</div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+{% block footer %}
+    {{ parent() }}
+    {% set pathToLeaflet = zasset('@MUShareModule:css/style.css')|replace({'Resources/public/css/style.css': ''}) ~ 'vendor/drmonty/leaflet/' %}
+    {{ pageAddAsset('stylesheet', pathToLeaflet ~ 'css/leaflet.css') }}
+    {{ pageAddAsset('javascript', pathToLeaflet ~ 'js/leaflet' ~ (app.environment == 'dev' ? '' : '.min') ~ '.js') }}
+    <div id="geographicalInfo" class="hidden" data-context="display" data-latitude="{{ location.latitude|musharemodule_geoData }}" data-longitude="{{ location.longitude|musharemodule_geoData }}" data-zoom-level="{{ getModVar('MUShareModule', 'defaultZoomLevel', 18) }}" data-tile-layer-url="{{ getModVar('MUShareModule', 'tileLayerUrl') }}" data-tile-layer-attribution="{{ getModVar('MUShareModule', 'tileLayerAttribution') }}"></div>
+    
+{% endblock %}

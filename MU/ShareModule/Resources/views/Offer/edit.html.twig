@@ -1,0 +1,122 @@
+{# purpose of this template: build the user form to edit an instance of offer #}
+{% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : 'base' %}
+{% extends 'MUShareModule::' ~ baseTemplate ~ '.html.twig' %}
+
+{% block header %}
+    {{ parent() }}
+    {{ pageAddAsset('javascript', zasset('@MUShareModule:js/MUShareModule.Validation.js'), 98) }}
+    {{ pageAddAsset('javascript', zasset('@MUShareModule:js/MUShareModule.EditFunctions.js'), 99) }}
+{% endblock %}
+{% block title mode == 'create' ? __('Create offer') : __('Edit offer') %}
+{% block content %}
+    <div class="musharemodule-offer musharemodule-edit">
+        {% form_theme form with [
+            '@MUShareModule/Form/bootstrap_3.html.twig',
+            'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
+        ] %}
+        {{ form_start(form, {attr: {id: 'offerEditForm', class: 'mushare-edit-form'}}) }}
+        {{ form_errors(form) }}
+        <fieldset>
+            <legend>{{ __('Content') }}</legend>
+            {{ form_row(form.product) }}
+            {{ form_row(form.description) }}
+            {{ form_row(form.isOpen) }}
+            {{ form_row(form.abo) }}
+            {{ form_row(form.period) }}
+            {{ form_row(form.totalYear) }}
+            {{ form_row(form.splitCosts) }}
+            {{ form_row(form.back) }}
+            {{ form_row(form.atMe) }}
+            {{ form_row(form.zipCode) }}
+            {{ form_row(form.meetingPlace) }}
+            {{ form_row(form.latitude) }}
+            {{ form_row(form.longitude) }}
+        </fieldset>
+        
+        <fieldset class="musharemodule-map">
+            <legend>{{ __('Map') }}</legend>
+            <div id="mapContainer" class="musharemodule-mapcontainer">
+            </div>
+        </fieldset>
+        
+        {{ include(
+            '@MUShareModule/Location/includeSelectOne.html.twig',
+            {group: 'offer', heading: __('Location of offer'), alias: 'locationOfOffer', mandatory: false, idPrefix: 'shareOffer_LocationOfOffer', linkingItem: offer, displayMode: 'choices'}
+        ) }}
+        {% if featureActivationHelper.isEnabled(constant('MU\\ShareModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'offer') %}
+            {{ include('@MUShareModule/Helper/includeCategoriesEdit.html.twig', {obj: offer}) }}
+        {% endif %}
+        {% if mode != 'create' %}
+            {{ include('@MUShareModule/Helper/includeStandardFieldsEdit.html.twig', {obj: offer}) }}
+        {% endif %}
+        
+        {% if formHookTemplates|length > 0 %}
+            <fieldset>
+                {% for hookTemplate in formHookTemplates %}
+                    {{ include(hookTemplate.0, hookTemplate.1, ignore_missing = true) }}
+                {% endfor %}
+            </fieldset>
+        {% endif %}
+        
+        {% if form.moderationSpecificCreator is defined %}
+            <fieldset id="moderationFieldsSection">
+                <legend>{{ __('Moderation') }} <i class="fa fa-expand"></i></legend>
+                <div id="moderationFieldsContent">
+                    {{ form_row(form.moderationSpecificCreator) }}
+                    {{ form_row(form.moderationSpecificCreationDate) }}
+                </div>
+            </fieldset>
+        {% endif %}
+        
+        
+        {# include possible submit actions #}
+        <div class="form-group form-buttons">
+            <div class="col-sm-offset-3 col-sm-9">
+                {% for action in actions %}
+                    {{ form_widget(attribute(form, action.id)) }}
+                    {% if mode == 'create' and action.id == 'submit' %}
+                        {{ form_widget(attribute(form, 'submitrepeat')) }}
+                    {% endif %}
+                {% endfor %}
+                {{ form_widget(form.reset) }}
+                {{ form_widget(form.cancel) }}
+            </div>
+        </div>
+        {{ form_end(form) }}
+        {% set hookId = mode != 'create' ? offer.id : null %}
+        {% set hooks = notifyDisplayHooks(eventName='musharemodule.ui_hooks.offers.form_edit', id=hookId, outputAsArray=true) %}
+        {% if hooks is iterable and hooks|length > 0 %}
+            {% for area, hook in hooks %}
+                <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook }}</div>
+            {% endfor %}
+        {% endif %}
+        
+    </div>
+{% endblock %}
+{% block footer %}
+    {{ parent() }}
+    {% set pathToLeaflet = zasset('@MUShareModule:css/style.css')|replace({'Resources/public/css/style.css': ''}) ~ 'vendor/drmonty/leaflet/' %}
+    {{ pageAddAsset('stylesheet', pathToLeaflet ~ 'css/leaflet.css') }}
+    {{ pageAddAsset('javascript', pathToLeaflet ~ 'js/leaflet' ~ (app.environment == 'dev' ? '' : '.min') ~ '.js') }}
+    <div id="geographicalInfo" class="hidden" data-context="edit" data-latitude="{{ offer.latitude|musharemodule_geoData }}" data-longitude="{{ offer.longitude|musharemodule_geoData }}" data-zoom-level="{{ getModVar('MUShareModule', 'defaultZoomLevel', 18) }}" data-tile-layer-url="{{ getModVar('MUShareModule', 'tileLayerUrl') }}" data-tile-layer-attribution="{{ getModVar('MUShareModule', 'tileLayerAttribution') }}" data-use-geolocation="{% if mode == 'create' and getModVar('MUShareModule', 'enableOfferGeoLocation', false) == true %}true{% else %}false{% endif %}"></div>
+    
+    {% set formInitScript %}
+        <script type="text/javascript">
+        /* <![CDATA[ */
+            var mUShareInlineEditHandlers = [];
+            var mUShareEditHandler = null;
+            
+            ( function($) {
+                $(document).ready(function() {
+                    // initialise auto completion for user fields
+                    {% if form.moderationSpecificCreator is defined %}
+                        initUserLiveSearch('musharemodule_offer_moderationSpecificCreator');
+                    {% endif %}
+                    mUShareInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ offer.id }}{% endif %}');
+                });
+            })(jQuery);
+        /* ]]> */
+        </script>
+    {% endset %}
+    {{ pageAddAsset('footer', formInitScript) }}
+{% endblock %}

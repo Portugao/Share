@@ -1,0 +1,13 @@
+{# Purpose of this template: Display companies within an external context #}
+<dl>
+    {% for company in items %}
+        <dt>{{ company|musharemodule_formattedTitle }}</dt>
+        {% if company.description %}
+            <dd>{{ company.description|striptags|truncate(200, true, '&hellip;') }}</dd>
+        {% endif %}
+        <dd><a href="{{ path('musharemodule_company_display', {'id': company.getId()}) }}" title="{{ __('Read more')|e('html_attr') }}">{{ __('Read more') }}</a>
+        </dd>
+    {% else %}
+        <dt>{{ __('No entries found.') }}</dt>
+    {% endfor %}
+</dl>

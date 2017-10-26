@@ -1,0 +1,10 @@
+{# purpose of this template: offers view csv view #}
+{% spaceless %}"{{ __('Product') }}";"{{ __('Description') }}";"{{ __('Is open') }}";"{{ __('Abo') }}";"{{ __('Period') }}";"{{ __('Total year') }}";"{{ __('Split costs') }}";"{{ __('Back') }}";"{{ __('At me') }}";"{{ __('Zip code') }}";"{{ __('Meeting place') }}";"{{ __('Latitude') }}";"{{ __('Longitude') }}";"{{ __('Workflow state') }}"
+;"{{ __('Location of offer') }}"
+{% endspaceless %}
+{% for offer in items %}
+{% spaceless %}
+    "{{ offer.product }}";"{{ offer.description|safeHtml }}";"{% if not offer.isOpen %}0{% else %}1{% endif %}";"{% if not offer.abo %}0{% else %}1{% endif %}";"{{ offer.period|musharemodule_listEntry('offer', 'period') }}";"{% if not offer.totalYear %}0{% else %}1{% endif %}";"{% if not offer.splitCosts %}0{% else %}1{% endif %}";"{% if not offer.back %}0{% else %}1{% endif %}";"{% if not offer.atMe %}0{% else %}1{% endif %}";"{{ offer.zipCode }}";"{{ offer.meetingPlace }}";"{{ offer.latitude|musharemodule_geoData }}";"{{ offer.longitude|musharemodule_geoData }}";"{{ offer.workflowState|musharemodule_objectState(false)|lower }}"
+    ;"{% if offer.locationOfOffer|default %}{{ offer.locationOfOffer|musharemodule_formattedTitle }}{% endif %}"
+{% endspaceless %}
+{% endfor %}

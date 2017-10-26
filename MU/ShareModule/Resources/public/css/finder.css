@@ -1,0 +1,36 @@
+body {
+    background-color: #ddd;
+    margin: 10px;
+    text-align: left;
+}
+
+#musharemoduleItemContainer {
+    background-color: #eee;
+    height: 300px;
+    overflow: auto;
+    padding: 5px;
+}
+
+#musharemoduleItemContainer ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#musharemoduleItemContainer a {
+    color: #000;
+    margin: 0.1em 0.2em;
+    text-decoration: underline;
+}
+#musharemoduleItemContainer a:hover,
+#musharemoduleItemContainer a:focus,
+#musharemoduleItemContainer a:active {
+    color: #900;
+    text-decoration: none;
+}
+
+.musharemodule-finderform fieldset,
+.musharemodule-finderform fieldset legend {
+    background-color: #fff;
+    border: none;
+}

@@ -1,0 +1,5 @@
+musharemodule:
+    # define routing support for these controllers
+    resource: "@MUShareModule/Controller"
+    # enable support for defining routes by annotations
+    type: annotation

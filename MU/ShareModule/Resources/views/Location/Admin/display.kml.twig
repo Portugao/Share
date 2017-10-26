@@ -1,0 +1,12 @@
+{# purpose of this template: locations display kml view #}
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+<Document>
+    <Placemark>
+        <name>{{ location.getTitle() }}</name>
+        <Point>
+            <coordinates>{{ location.getLongitude() }}, {{ location.getLatitude() }}, 0</coordinates>
+        </Point>
+    </Placemark>
+</Document>
+</kml>

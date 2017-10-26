@@ -1,0 +1,7 @@
+{# purpose of this template: companies view json view #}
+[
+{% for company in items %}
+    {% if not loop.first %},{% endif %}
+    {{ company.toArray()|json_encode() }}
+{% endfor %}
+]

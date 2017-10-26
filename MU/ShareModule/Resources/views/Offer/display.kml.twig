@@ -1,0 +1,13 @@
+{# purpose of this template: offers display kml view #}
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+<Document>
+    <Placemark>
+        <name>{{ offer.getProduct() }}</name>
+        <description><![CDATA[{{ offer.getDescription() }}<br /><a href="{{ url('musharemodule_offer_display', {'id': offer.getId()}) }}">{{ __('Details') }}</a>]]></description>
+        <Point>
+            <coordinates>{{ offer.getLongitude() }}, {{ offer.getLatitude() }}, 0</coordinates>
+        </Point>
+    </Placemark>
+</Document>
+</kml>

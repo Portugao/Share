@@ -1,0 +1,7 @@
+{# purpose of this template: locations view json view #}
+[
+{% for location in items %}
+    {% if not loop.first %},{% endif %}
+    {{ location.toArray()|json_encode() }}
+{% endfor %}
+]

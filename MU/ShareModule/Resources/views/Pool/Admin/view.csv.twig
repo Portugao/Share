@@ -1,0 +1,16 @@
+{# purpose of this template: pools view csv view #}
+{% spaceless %}"{{ __('Collection of pool') }}";"{{ __('Workflow state') }}"
+;"{{ __('Location') }}"
+{% endspaceless %}
+{% for pool in items %}
+{% spaceless %}
+    "{{ pool.collectionOfPool }}";"{{ pool.workflowState|musharemodule_objectState(false)|lower }}"
+    ;"
+    {% if pool.location|default %}
+        {% for relatedItem in pool.location %}
+        {{ relatedItem|musharemodule_formattedTitle }}{% if not loop.last %}, {% endif %}
+        {% endfor %}
+    {% endif %}
+    "
+{% endspaceless %}
+{% endfor %}

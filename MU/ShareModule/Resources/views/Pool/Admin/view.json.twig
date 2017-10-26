@@ -1,0 +1,7 @@
+{# purpose of this template: pools view json view #}
+[
+{% for pool in items %}
+    {% if not loop.first %},{% endif %}
+    {{ pool.toArray()|json_encode() }}
+{% endfor %}
+]

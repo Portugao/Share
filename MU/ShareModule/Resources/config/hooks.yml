@@ -1,0 +1,85 @@
+services:
+    mu_share_module.hook_subscriber.filter_hooks.locations:
+        class: MU\ShareModule\HookSubscriber\LocationFilterHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.musharemodule.filter_hooks.locations' }
+
+    mu_share_module.hook_subscriber.form_aware_hook.locations:
+        class: MU\ShareModule\HookSubscriber\LocationFormAwareHookSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.musharemodule.form_aware_hook.locations' }
+
+    mu_share_module.hook_subscriber.ui_hooks.locations:
+        class: MU\ShareModule\HookSubscriber\LocationUiHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.musharemodule.ui_hooks.locations' }
+
+    mu_share_module.hook_subscriber.filter_hooks.offers:
+        class: MU\ShareModule\HookSubscriber\OfferFilterHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.musharemodule.filter_hooks.offers' }
+
+    mu_share_module.hook_subscriber.form_aware_hook.offers:
+        class: MU\ShareModule\HookSubscriber\OfferFormAwareHookSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.musharemodule.form_aware_hook.offers' }
+
+    mu_share_module.hook_subscriber.ui_hooks.offers:
+        class: MU\ShareModule\HookSubscriber\OfferUiHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.musharemodule.ui_hooks.offers' }
+
+    mu_share_module.hook_subscriber.filter_hooks.pools:
+        class: MU\ShareModule\HookSubscriber\PoolFilterHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.musharemodule.filter_hooks.pools' }
+
+    mu_share_module.hook_subscriber.form_aware_hook.pools:
+        class: MU\ShareModule\HookSubscriber\PoolFormAwareHookSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.musharemodule.form_aware_hook.pools' }
+
+    mu_share_module.hook_subscriber.ui_hooks.pools:
+        class: MU\ShareModule\HookSubscriber\PoolUiHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.musharemodule.ui_hooks.pools' }
+
+    mu_share_module.hook_subscriber.filter_hooks.companies:
+        class: MU\ShareModule\HookSubscriber\CompanyFilterHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.musharemodule.filter_hooks.companies' }
+
+    mu_share_module.hook_subscriber.form_aware_hook.companies:
+        class: MU\ShareModule\HookSubscriber\CompanyFormAwareHookSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.musharemodule.form_aware_hook.companies' }
+
+    mu_share_module.hook_subscriber.ui_hooks.companies:
+        class: MU\ShareModule\HookSubscriber\CompanyUiHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.musharemodule.ui_hooks.companies' }
+

@@ -1,0 +1,86 @@
+{# Purpose of this template: Display a popup selector of offers for scribite integration #}
+{% set useFinder = true %}
+{% extends 'MUShareModule::raw.html.twig' %}
+{% block title __('Search and select offer') %}
+{% block content %}
+    <div class="container">
+        <div class="zikula-bootstrap-tab-container">
+            <ul class="nav nav-tabs">
+            {% set activatedObjectTypes = getModVar('MUShareModule', 'enabledFinderTypes', []) %}
+            {% if 'location' in activatedObjectTypes %}
+                <li{{ objectType == 'location' ? ' class="active"' : '' }}><a href="{{ path('musharemodule_external_finder', {objectType: 'location', editor: editorName}) }}" title="{{ __('Search and select location') }}">{{ __('Locations') }}</a></li>
+            {% endif %}
+            {% if 'offer' in activatedObjectTypes %}
+                <li{{ objectType == 'offer' ? ' class="active"' : '' }}><a href="{{ path('musharemodule_external_finder', {objectType: 'offer', editor: editorName}) }}" title="{{ __('Search and select offer') }}">{{ __('Offers') }}</a></li>
+            {% endif %}
+            {% if 'pool' in activatedObjectTypes %}
+                <li{{ objectType == 'pool' ? ' class="active"' : '' }}><a href="{{ path('musharemodule_external_finder', {objectType: 'pool', editor: editorName}) }}" title="{{ __('Search and select pool') }}">{{ __('Pools') }}</a></li>
+            {% endif %}
+            {% if 'company' in activatedObjectTypes %}
+                <li{{ objectType == 'company' ? ' class="active"' : '' }}><a href="{{ path('musharemodule_external_finder', {objectType: 'company', editor: editorName}) }}" title="{{ __('Search and select company') }}">{{ __('Companies') }}</a></li>
+            {% endif %}
+            </ul>
+        </div>
+        {% form_theme finderForm with [
+            '@MUShareModule/Form/bootstrap_3.html.twig',
+            'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
+        ] %}
+        {{ form_start(finderForm, {attr: {id: 'mUShareModuleSelectorForm'}}) }}
+        {{ form_errors(finderForm) }}
+        <fieldset>
+            <legend>{{ __('Search and select offer') }}</legend>
+            {% if featureActivationHelper.isEnabled(constant('MU\\ShareModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'offer') %}
+                {{ form_row(finderForm.categories) }}
+            {% endif %}
+            {{ form_row(finderForm.pasteAs) }}
+            <br />
+            <div class="form-group">
+                <label class="col-sm-3 control-label">{{ __('Offer') }}:</label>
+                <div class="col-sm-9">
+                    <div id="musharemoduleItemContainer">
+                        <ul>
+                            {% for offer in items %}
+                                <li>
+                                    {% set itemId = offer.getKey() %}
+                                    <a href="#" data-itemid="{{ itemId }}">
+                                        {{ offer|musharemodule_formattedTitle }}
+                                    </a>
+                                    <input type="hidden" id="path{{ itemId }}" value="{{ path('musharemodule_offer_display', {'id': offer.getId()}) }}" />
+                                    <input type="hidden" id="url{{ itemId }}" value="{{ url('musharemodule_offer_display', {'id': offer.getId()}) }}" />
+                                    <input type="hidden" id="title{{ itemId }}" value="{{ offer|musharemodule_formattedTitle|e('html_attr') }}" />
+                                    <input type="hidden" id="desc{{ itemId }}" value="{% set description %}{% if offer.description is not empty %}{{ offer.description }}{% endif %}
+                                    {% endset %}{{ description|striptags|e('html_attr') }}" />
+                                </li>
+                            {% else %}
+                                <li>{{ __('No offers found.') }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            {{ form_row(finderForm.sort) }}
+            {{ form_row(finderForm.sortdir) }}
+            {{ form_row(finderForm.num) }}
+            {{ form_row(finderForm.q) }}
+            <div>
+                {{ pager({display: 'page', rowcount: pager.numitems, limit: pager.itemsperpage, posvar: 'pos', maxpages: 10, route: 'musharemodule_external_finder'}) }}
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                    {{ form_widget(finderForm.update) }}
+                    {{ form_widget(finderForm.cancel) }}
+                </div>
+            </div>
+        </fieldset>
+        {{ form_end(finderForm) }}
+    </div>
+
+    {#
+    <div class="musharemodule-finderform">
+        <fieldset>
+            {{ render(controller('MUShareModule:Offer:edit')) }}
+        </fieldset>
+    </div>
+    #}
+{% endblock %}

@@ -1,0 +1,7 @@
+{# purpose of this template: offers view json view #}
+[
+{% for offer in items %}
+    {% if not loop.first %},{% endif %}
+    {{ offer.toArray()|json_encode() }}
+{% endfor %}
+]

@@ -1,0 +1,204 @@
+application "Share" {
+	vendor "MU"
+	author "Michael Ueberschaer"
+	email "info@homepages-mit-zikula.de"
+	url "https://homepages-mit-zikula.de"
+	version "0.1.0"
+	prefix "share"
+
+	generatorSettings {
+		settingsContainer "Einstellungen"
+		targetCoreVersion ZK15
+	versionAllGeneratedFiles false
+        separateAdminTemplates true
+        generatePoweredByBacklinksIntoFooterTemplates false
+        generateTests false
+    }
+
+			entities {
+				entity "location" leading geographical {
+            nameMultiple "locations"
+					displayPattern "#title#"
+					hasTray true
+            fields {
+						string "title",
+						string "street",
+						string "numberOfStreet",
+						string "zipCode",
+						string "city",
+						boolean "private" {
+							defaultValue ""
+							mandatory false
+						},
+						boolean "forMap" {
+							defaultValue "true"
+							mandatory false
+						}
+					}
+					            actions {
+                mainAction "Index",
+                viewAction "View",
+                displayAction "Display",
+                editAction "Edit",
+                deleteAction "Delete"
+            }
+				},
+				entity "offer" geographical categorisable categorisableMultiSelection {
+            nameMultiple "offers"
+					displayPattern "#product#"
+
+					fields {
+						string "product",
+						text "description" {
+							defaultValue ""
+							mandatory false
+							length 4000
+						},
+						boolean "isOpen" {
+							documentation "Is your offer active?"
+                    defaultValue "true"
+							mandatory false
+						},
+						boolean "abo" {
+							defaultValue ""
+							mandatory false
+						},
+						list "period" {
+						defaultValue "not set"
+							mandatory false
+                    items {
+								listItem "daily" ( "daily" ),
+								listItem "weekly" ("weekly" ),
+								listItem "monthly" ( "monthly" )
+							}
+						},
+						boolean "totalYear" {
+							defaultValue ""
+							mandatory false
+						},
+						boolean "splitCosts" {
+							defaultValue ""
+							mandatory false
+						},
+						boolean "back" {
+							documentation "Do you want back your offer after sharing?"
+                    defaultValue ""
+							mandatory false
+						},
+						boolean "atMe" {
+							documentation "Is the meeting place at you?"
+                    defaultValue ""
+							mandatory false
+						},
+						string "zipCode" {
+                    documentation "Enter the zip code for the meeting place!"
+                    mandatory false
+                },
+                string "meetingPlace" {
+							documentation "Enter the street (and number) for the meeting lce"
+                    defaultValue ""
+							mandatory false
+						}
+					}
+					            actions {
+                mainAction "Index",
+                viewAction "View",
+                displayAction "Display",
+                editAction "Edit",
+                deleteAction "Delete"
+            }
+				},
+				entity "pool" {
+					nameMultiple "pools"
+					displayPattern "#collectionOfPool#"
+					fields {
+						string "collectionOfPool" {
+							defaultValue "collection"
+						}
+					}
+					            actions {
+                mainAction "Index",
+                viewAction "View",
+                displayAction "Display",
+                editAction "Edit",
+                deleteAction "Delete"
+            }
+				},
+				entity "company" {
+					nameMultiple "companies"
+					displayPattern "#name#"
+
+					fields {
+						string "name",
+                text "description" {
+                    mandatory false
+                },
+						email "mail" {
+							defaultValue ""
+							mandatory false
+						},
+						url "website" {
+							defaultValue ""
+							mandatory false
+						},
+						string "phone" {
+							mandatory false
+						},
+						string "mobile" {
+							defaultValue ""
+							mandatory false
+						},
+						boolean "isPublic" {
+							defaultValue "true"
+							mandatory false
+						}
+					}
+					            actions {
+                mainAction "Index",
+                viewAction "View",
+                displayAction "Display",
+                editAction "Edit",
+                deleteAction "Delete"
+            }
+				}
+    }
+    relations {
+				one2many bidirectional {
+					source "location"
+					sourceAlias "locationOfOffer"
+					target "offer"
+					targetAlias "offerOfLocation"
+					cascade NONE
+					orderBy ""
+				},
+				one2many bidirectional {
+					source "pool"
+					sourceAlias "pool"
+					target "location"
+					targetAlias "location"
+				},
+				one2one bidirectional {
+					source "company"
+					sourceAlias "companyOfLocation"
+					target "location"
+					targetAlias "locationOfCompany"
+					cascade REMOVE
+				}
+			}
+			variables {
+				varContainer "General" {
+        sortOrder 1
+					vars {
+						textVar "zicCode",
+						textVar "city",
+						textVar "state",
+						intVar "allowedPictures" {
+							value "5"
+						},
+						intVar "offersPerPage" {
+							value "10"
+						}
+					}
+				}
+			}
+		}

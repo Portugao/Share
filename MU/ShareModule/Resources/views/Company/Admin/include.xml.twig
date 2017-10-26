@@ -1,0 +1,13 @@
+{# purpose of this template: companies xml inclusion template #}
+<company id="{{ company.getId() }}" createdon="{{ company.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ company.updatedDate|localizeddate('medium', 'short') }}">
+    <id>{{ company.id }}</id>
+    <name><![CDATA[{{ company.name }}]]></name>
+    <description><![CDATA[{{ company.description|safeHtml }}]]></description>
+    <mail>{{ company.mail }}</mail>
+    <website>{{ company.website }}</website>
+    <phone><![CDATA[{{ company.phone }}]]></phone>
+    <mobile><![CDATA[{{ company.mobile }}]]></mobile>
+    <isPublic>{% if not company.isPublic %}0{% else %}1{% endif %}</isPublic>
+    <workflowState>{{ company.workflowState|musharemodule_objectState(false)|lower }}</workflowState>
+    <locationOfCompany>{% if company.locationOfCompany|default %}{{ company.locationOfCompany|musharemodule_formattedTitle }}{% endif %}</locationOfCompany>
+</company>

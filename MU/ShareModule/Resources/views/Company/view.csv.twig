@@ -1,0 +1,10 @@
+{# purpose of this template: companies view csv view #}
+{% spaceless %}"{{ __('Name') }}";"{{ __('Description') }}";"{{ __('Mail') }}";"{{ __('Website') }}";"{{ __('Phone') }}";"{{ __('Mobile') }}";"{{ __('Is public') }}";"{{ __('Workflow state') }}"
+;"{{ __('Location of company') }}"
+{% endspaceless %}
+{% for company in items %}
+{% spaceless %}
+    "{{ company.name }}";"{{ company.description|safeHtml }}";"{{ company.mail }}";"{{ company.website }}";"{{ company.phone }}";"{{ company.mobile }}";"{% if not company.isPublic %}0{% else %}1{% endif %}";"{{ company.workflowState|musharemodule_objectState(false)|lower }}"
+    ;"{% if company.locationOfCompany|default %}{{ company.locationOfCompany|musharemodule_formattedTitle }}{% endif %}"
+{% endspaceless %}
+{% endfor %}

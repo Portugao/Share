@@ -1,0 +1,126 @@
+{# purpose of this template: offers view filter form #}
+{% if hasPermission('MUShareModule:Offer:', '::', 'ACCESS_EDIT') %}
+    {% form_theme quickNavForm with [
+        'bootstrap_3_layout.html.twig'
+    ] %}
+    {{ form_start(quickNavForm, {attr: {id: 'mUShareModuleOfferQuickNavForm', class: 'musharemodule-quicknav navbar-form', role: 'navigation'}}) }}
+    {{ form_errors(quickNavForm) }}
+    <a href="#collapseOfferQuickNav" role="button" data-toggle="collapse" class="btn btn-default" aria-expanded="false" aria-controls="collapseOfferQuickNav">
+        <i class="fa fa-filter" aria-hidden="true"></i> {{ __('Filter') }}
+    </a>
+    <div id="collapseOfferQuickNav" class="collapse">
+        <fieldset>
+            <h3>{{ __('Quick navigation') }}</h3>
+            {% set categoriesEnabled = featureActivationHelper.isEnabled(constant('MU\\ShareModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'offer') %}
+            {% if categoriesEnabled %}
+                {% if (categoryFilter is defined and categoryFilter != true) %}
+                    <div class="hidden">
+                {% else %}
+                    <div class="row">
+                        <div class="col-sm-3">
+                {% endif %}
+                    {{ form_row(quickNavForm.categories) }}
+                {% if (categoryFilter is defined and categoryFilter != true) %}
+                    </div>
+                {% else %}
+                        </div>
+                        <div class="col-sm-9">
+                {% endif %}
+            {% endif %}
+            {% if locationFilter is defined and locationFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.locationOfOffer) }}
+            {% if locationFilter is defined and locationFilter != true %}
+                </div>
+            {% endif %}
+            {% if workflowStateFilter is defined and workflowStateFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.workflowState) }}
+            {% if workflowStateFilter is defined and workflowStateFilter != true %}
+                </div>
+            {% endif %}
+            {% if periodFilter is defined and periodFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.period) }}
+            {% if periodFilter is defined and periodFilter != true %}
+                </div>
+            {% endif %}
+            {% if searchFilter is defined and searchFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.q) }}
+            {% if searchFilter is defined and searchFilter != true %}
+                </div>
+            {% endif %}
+            {% if sorting is defined and sorting != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.sort) }}
+                {{ form_row(quickNavForm.sortdir) }}
+            {% if sorting is defined and sorting != true %}
+                </div>
+            {% endif %}
+            {% if pageSizeSelector is defined and pageSizeSelector != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.num) }}
+            {% if pageSizeSelector is defined and pageSizeSelector != true %}
+                </div>
+            {% endif %}
+            {% if isOpenFilter is defined and isOpenFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.isOpen) }}
+            {% if isOpenFilter is defined and isOpenFilter != true %}
+                </div>
+            {% endif %}
+            {% if aboFilter is defined and aboFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.abo) }}
+            {% if aboFilter is defined and aboFilter != true %}
+                </div>
+            {% endif %}
+            {% if totalYearFilter is defined and totalYearFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.totalYear) }}
+            {% if totalYearFilter is defined and totalYearFilter != true %}
+                </div>
+            {% endif %}
+            {% if splitCostsFilter is defined and splitCostsFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.splitCosts) }}
+            {% if splitCostsFilter is defined and splitCostsFilter != true %}
+                </div>
+            {% endif %}
+            {% if backFilter is defined and backFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.back) }}
+            {% if backFilter is defined and backFilter != true %}
+                </div>
+            {% endif %}
+            {% if atMeFilter is defined and atMeFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.atMe) }}
+            {% if atMeFilter is defined and atMeFilter != true %}
+                </div>
+            {% endif %}
+            {{ form_widget(quickNavForm.updateview) }}
+            {% if categoriesEnabled %}
+                {% if categoryFilter is defined and categoryFilter != true %}
+                {% else %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endif %}
+        </fieldset>
+    </div>
+    {{ form_end(quickNavForm) }}
+{% endif %}

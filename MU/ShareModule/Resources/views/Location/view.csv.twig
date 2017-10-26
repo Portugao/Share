@@ -1,0 +1,18 @@
+{# purpose of this template: locations view csv view #}
+{% spaceless %}"{{ __('Title') }}";"{{ __('Street') }}";"{{ __('Number of street') }}";"{{ __('Zip code') }}";"{{ __('City') }}";"{{ __('Private') }}";"{{ __('For map') }}";"{{ __('Latitude') }}";"{{ __('Longitude') }}";"{{ __('Workflow state') }}"
+;"{{ __('Pool') }}"
+;"{{ __('Offer of location') }}"
+{% endspaceless %}
+{% for location in items %}
+{% spaceless %}
+    "{{ location.title }}";"{{ location.street }}";"{{ location.numberOfStreet }}";"{{ location.zipCode }}";"{{ location.city }}";"{% if not location.private %}0{% else %}1{% endif %}";"{% if not location.forMap %}0{% else %}1{% endif %}";"{{ location.latitude|musharemodule_geoData }}";"{{ location.longitude|musharemodule_geoData }}";"{{ location.workflowState|musharemodule_objectState(false)|lower }}"
+    ;"{% if location.pool|default %}{{ location.pool|musharemodule_formattedTitle }}{% endif %}"
+    ;"
+    {% if location.offerOfLocation|default %}
+        {% for relatedItem in location.offerOfLocation %}
+        {{ relatedItem|musharemodule_formattedTitle }}{% if not loop.last %}, {% endif %}
+        {% endfor %}
+    {% endif %}
+    "
+{% endspaceless %}
+{% endfor %}

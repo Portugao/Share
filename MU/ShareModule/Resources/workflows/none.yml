@@ -1,0 +1,37 @@
+workflow:
+    workflows:
+        musharemodule_none:
+            type: state_machine
+            marking_store:
+                type: single_state
+                arguments:
+                    - workflowState
+            supports:
+                - MU\ShareModule\Entity\LocationEntity
+                - MU\ShareModule\Entity\OfferEntity
+                - MU\ShareModule\Entity\PoolEntity
+                - MU\ShareModule\Entity\CompanyEntity
+            places:
+                - initial
+                - approved
+                - suspended
+                - deleted
+            transitions:
+                submit:
+                    from: initial
+                    to: approved
+                unpublish:
+                    from: approved
+                    to: suspended
+                publish:
+                    from: suspended
+                    to: approved
+                updateapproved:
+                    from: approved
+                    to: approved
+                updatesuspended:
+                    from: suspended
+                    to: suspended
+                delete:
+                    from: [approved, suspended]
+                    to: deleted

@@ -1,0 +1,197 @@
+{# purpose of this template: locations user list view #}
+{% extends 'MUShareModule::base.html.twig' %}
+{% block title own ? __('My locations') : __('Locations list') %}
+{% block content %}
+<div class="musharemodule-location musharemodule-view">
+
+    {{ block('page_nav_links') }}
+
+    {{ include('@MUShareModule/Location/viewQuickNav.html.twig') }}{# see template file for available options #}
+
+    {% if routeArea == 'admin' %}
+    <form action="{{ path('musharemodule_location_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="locationsViewForm" class="form-horizontal" role="form">
+        <div>
+    {% endif %}
+        <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover table-condensed">
+            <colgroup>
+                {% if routeArea == 'admin' %}
+                    <col id="cSelect" />
+                {% endif %}
+                <col id="cItemActions" />
+                {% if routeArea == 'admin' %}
+                <col id="cWorkflowState" />
+                {% endif %}
+                <col id="cTitle" />
+                <col id="cStreet" />
+                <col id="cNumberOfStreet" />
+                <col id="cZipCode" />
+                <col id="cCity" />
+                <col id="cPrivate" />
+                <col id="cForMap" />
+                <col id="cPool" />
+            </colgroup>
+            <thead>
+            <tr>
+                {% if routeArea == 'admin' %}
+                    <th id="hSelect" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}text-center z-w02">
+                        <input type="checkbox" class="mushare-mass-toggle" />
+                    </th>
+                {% endif %}
+                <th id="hItemActions" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}z-order-unsorted z-w02">{{ __('Actions') }}</th>
+                {% if routeArea == 'admin' %}
+                <th id="hWorkflowState" scope="col" class="text-left">
+                    <a href="{{ sort.workflowState.url }}" title="{{ __f('Sort by %s', {'%s': 'state'}) }}" class="{{ sort.workflowState.class }}">{{ __('State') }}</a>
+                </th>
+                {% endif %}
+                <th id="hTitle" scope="col" class="text-left">
+                    <a href="{{ sort.title.url }}" title="{{ __f('Sort by %s', {'%s': 'title'}) }}" class="{{ sort.title.class }}">{{ __('Title') }}</a>
+                </th>
+                <th id="hStreet" scope="col" class="text-left">
+                    <a href="{{ sort.street.url }}" title="{{ __f('Sort by %s', {'%s': 'street'}) }}" class="{{ sort.street.class }}">{{ __('Street') }}</a>
+                </th>
+                <th id="hNumberOfStreet" scope="col" class="text-left">
+                    <a href="{{ sort.numberOfStreet.url }}" title="{{ __f('Sort by %s', {'%s': 'number of street'}) }}" class="{{ sort.numberOfStreet.class }}">{{ __('Number of street') }}</a>
+                </th>
+                <th id="hZipCode" scope="col" class="text-left">
+                    <a href="{{ sort.zipCode.url }}" title="{{ __f('Sort by %s', {'%s': 'zip code'}) }}" class="{{ sort.zipCode.class }}">{{ __('Zip code') }}</a>
+                </th>
+                <th id="hCity" scope="col" class="text-left">
+                    <a href="{{ sort.city.url }}" title="{{ __f('Sort by %s', {'%s': 'city'}) }}" class="{{ sort.city.class }}">{{ __('City') }}</a>
+                </th>
+                <th id="hPrivate" scope="col" class="text-center">
+                    <a href="{{ sort.private.url }}" title="{{ __f('Sort by %s', {'%s': 'private'}) }}" class="{{ sort.private.class }}">{{ __('Private') }}</a>
+                </th>
+                <th id="hForMap" scope="col" class="text-center">
+                    <a href="{{ sort.forMap.url }}" title="{{ __f('Sort by %s', {'%s': 'for map'}) }}" class="{{ sort.forMap.class }}">{{ __('For map') }}</a>
+                </th>
+                <th id="hPool" scope="col" class="text-left">
+                    <a href="{{ sort.pool.url }}" title="{{ __f('Sort by %s', {'%s': 'pool'}) }}" class="{{ sort.pool.class }}">{{ __('Pool') }}</a>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+        
+        {% for location in items %}
+            <tr>
+                {% if routeArea == 'admin' %}
+                    <td headers="hSelect" class="fixed-column text-center z-w02">
+                        <input type="checkbox" name="items[]" value="{{ location.getKey() }}" class="mushare-toggle-checkbox" />
+                    </td>
+                {% endif %}
+                <td id="itemActions{{ location.getKey() }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
+                    {% set itemActions = knp_menu_get('MUShareModule:ItemActionsMenu:menu', [], {entity: location, area: routeArea, context: 'view'}) %}
+                    <div class="dropdown">
+                        <a id="itemActions{{ location.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
+                        {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:actions.html.twig'}) }}
+                    </div>
+                </td>
+                {% if routeArea == 'admin' %}<td headers="hWorkflowState" class="text-left nowrap">
+                    {{ location.workflowState|musharemodule_objectState }}
+                </td>
+                {% endif %}<td headers="hTitle" class="text-left">
+                    <a href="{{ path('musharemodule_location_' ~ routeArea ~ 'display', {'id': location.getId()}) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ location.title|notifyFilters('musharemodule.filterhook.locations')|safeHtml }}</a>
+                </td>
+                <td headers="hStreet" class="text-left">
+                    {{ location.street }}
+                </td>
+                <td headers="hNumberOfStreet" class="text-left">
+                    {{ location.numberOfStreet }}
+                </td>
+                <td headers="hZipCode" class="text-left">
+                    {{ location.zipCode }}
+                </td>
+                <td headers="hCity" class="text-left">
+                    {{ location.city }}
+                </td>
+                <td headers="hPrivate" class="text-center">
+                    {% if location.private %}
+                        <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+                    {% else %}
+                        <i class="fa fa-times" title="{{ __('No') }}"></i>
+                    {% endif %}
+                </td>
+                <td headers="hForMap" class="text-center">
+                    {% if location.forMap %}
+                        <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+                    {% else %}
+                        <i class="fa fa-times" title="{{ __('No') }}"></i>
+                    {% endif %}
+                </td>
+                <td headers="hPool" class="text-left">
+                    {% if location.pool|default %}
+                        <a href="{{ path('musharemodule_pool_' ~ routeArea ~ 'display', {'id': location.pool.getId()}) }}">{% spaceless %}
+                          {{ location.pool|musharemodule_formattedTitle }}
+                        {% endspaceless %}</a>
+                        <a id="poolItem{{ location.getKey() }}_rel_{{ location.pool.getKey() }}Display" href="{{ path('musharemodule_pool_' ~ routeArea ~ 'display', {'id': location.pool.getId(), raw: 1}) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="mushare-inline-window hidden" data-modal-title="{{ location.pool|musharemodule_formattedTitle|e('html_attr') }}"><i class="fa fa-id-card-o"></i></a>
+                    {% else %}
+                        {{ __('Not set.') }}
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
+                <td class="text-left" colspan="{% if routeArea == 'admin' %}11{% else %}10{% endif %}">
+            {{ __('No locations found.') }}
+              </td>
+            </tr>
+        {% endfor %}
+        
+            </tbody>
+        </table>
+        </div>
+        
+        {% if all != 1 and pager|default %}
+            {{ pager({rowcount: pager.amountOfItems, limit: pager.itemsPerPage, display: 'page', route: 'musharemodule_location_' ~ routeArea ~ 'view'}) }}
+        {% endif %}
+    {% if routeArea == 'admin' %}
+            <fieldset>
+                <label for="mUShareModuleAction" class="col-sm-3 control-label">{{ __('With selected locations') }}</label>
+                <div class="col-sm-6">
+                    <select id="mUShareModuleAction" name="action" class="form-control input-sm">
+                        <option value="">{{ __('Choose action') }}</option>
+                        <option value="unpublish" title="{{ __('Hide content temporarily.') }}">{{ __('Unpublish') }}</option>
+                        <option value="publish" title="{{ __('Make content available again.') }}">{{ __('Publish') }}</option>
+                        <option value="delete" title="{{ __('Delete content permanently.') }}">{{ __('Delete') }}</option>
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <input type="submit" value="{{ __('Submit') }}" class="btn btn-default btn-sm" />
+                </div>
+            </fieldset>
+        </div>
+    </form>
+    {% endif %}
+
+    {{ block('display_hooks') }}
+</div>
+{% endblock %}
+{% block page_nav_links %}
+    <p>
+        {% if canBeCreated %}
+            {% if hasPermission('MUShareModule:Location:', '::', 'ACCESS_EDIT') %}
+                {% set createTitle = __('Create location') %}
+                <a href="{{ path('musharemodule_location_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}"><i class="fa fa-plus"></i> {{ createTitle }}</a>
+            {% endif %}
+        {% endif %}
+        {% if all == 1 %}
+            {% set linkTitle = __('Back to paginated view') %}
+            <a href="{{ path('musharemodule_location_' ~ routeArea ~ 'view') }}" title="{{ linkTitle|e('html_attr') }}"><i class="fa fa-table"></i> {{ linkTitle }}</a>
+        {% else %}
+            {% set linkTitle = __('Show all entries') %}
+            <a href="{{ path('musharemodule_location_' ~ routeArea ~ 'view', {all: 1}) }}" title="{{ linkTitle|e('html_attr') }}"><i class="fa fa-table"></i> {{ linkTitle }}</a>
+        {% endif %}
+    </p>
+{% endblock %}
+{% block display_hooks %}
+    
+    {# here you can activate calling display hooks for the view page if you need it #}
+    {# % if routeArea != 'admin' %}
+        {% set hooks = notifyDisplayHooks(eventName='musharemodule.ui_hooks.locations.display_view', urlObject=currentUrlObject, outputAsArray=true) %}
+        {% if hooks is iterable and hooks|length > 0 %}
+            {% for area, hook in hooks %}
+                <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endif % #}
+{% endblock %}

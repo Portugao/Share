@@ -1,0 +1,9 @@
+{# purpose of this template: pools view xml view #}
+<?xml version="1.0" encoding="{{ pageGetVar('meta.charset') }}" ?>
+<pools>
+{% for pool in items %}
+    {{ include('@MUShareModule/Pool/include.xml.twig') }}
+{% else %}
+    <noPool />
+{% endfor %}
+</pools>

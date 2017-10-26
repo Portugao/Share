@@ -1,0 +1,13 @@
+{# purpose of this template: pools xml inclusion template #}
+<pool id="{{ pool.getId() }}" createdon="{{ pool.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ pool.updatedDate|localizeddate('medium', 'short') }}">
+    <id>{{ pool.id }}</id>
+    <collectionOfPool><![CDATA[{{ pool.collectionOfPool }}]]></collectionOfPool>
+    <workflowState>{{ pool.workflowState|musharemodule_objectState(false)|lower }}</workflowState>
+    <location>
+    {% if pool.location|default %}
+        {% for relatedItem in pool.location %}
+        <location>{{ relatedItem|musharemodule_formattedTitle }}</location>
+        {% endfor %}
+    {% endif %}
+    </location>
+</pool>

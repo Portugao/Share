@@ -1,0 +1,183 @@
+services:
+    # Form types
+    
+    mu_share_module.form.type.locationquicknav:
+        class: MU\ShareModule\Form\Type\QuickNavigation\LocationQuickNavType
+        arguments:
+            - "@translator.default"
+            - "@request_stack"
+            - "@mu_share_module.entity_display_helper"
+            - "@mu_share_module.listentries_helper"
+            - "@mu_share_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_share_module.form.type.offerquicknav:
+        class: MU\ShareModule\Form\Type\QuickNavigation\OfferQuickNavType
+        arguments:
+            - "@translator.default"
+            - "@request_stack"
+            - "@mu_share_module.entity_display_helper"
+            - "@mu_share_module.listentries_helper"
+            - "@mu_share_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_share_module.form.type.poolquicknav:
+        class: MU\ShareModule\Form\Type\QuickNavigation\PoolQuickNavType
+        arguments:
+            - "@translator.default"
+            - "@mu_share_module.listentries_helper"
+            - "@mu_share_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_share_module.form.type.companyquicknav:
+        class: MU\ShareModule\Form\Type\QuickNavigation\CompanyQuickNavType
+        arguments:
+            - "@translator.default"
+            - "@mu_share_module.listentries_helper"
+            - "@mu_share_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_share_module.form.handler.common:
+        abstract: true
+        arguments:
+            - "@kernel"
+            - "@translator.default"
+            - "@form.factory"
+            - "@request_stack"
+            - "@router"
+            - "@logger"
+            - "@zikula_permissions_module.api.permission"
+            - "@zikula_users_module.current_user"
+            - "@mu_share_module.entity_factory"
+            - "@mu_share_module.controller_helper"
+            - "@mu_share_module.model_helper"
+            - "@mu_share_module.workflow_helper"
+            - "@mu_share_module.hook_helper"
+            - "@mu_share_module.feature_activation_helper"
+        calls:
+            - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
+    
+    
+    mu_share_module.form.handler.location:
+        class: MU\ShareModule\Form\Handler\Location\EditHandler
+        parent: mu_share_module.form.handler.common
+    
+    mu_share_module.form.type.location:
+        class: MU\ShareModule\Form\Type\LocationType
+        arguments:
+            - "@translator.default"
+            - "@mu_share_module.entity_factory"
+            - "@mu_share_module.collection_filter_helper"
+            - "@mu_share_module.entity_display_helper"
+            - "@mu_share_module.listentries_helper"
+            - "@mu_share_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_share_module.form.handler.offer:
+        class: MU\ShareModule\Form\Handler\Offer\EditHandler
+        parent: mu_share_module.form.handler.common
+    
+    mu_share_module.form.type.offer:
+        class: MU\ShareModule\Form\Type\OfferType
+        arguments:
+            - "@translator.default"
+            - "@mu_share_module.entity_factory"
+            - "@mu_share_module.collection_filter_helper"
+            - "@mu_share_module.entity_display_helper"
+            - "@mu_share_module.listentries_helper"
+            - "@mu_share_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_share_module.form.handler.pool:
+        class: MU\ShareModule\Form\Handler\Pool\EditHandler
+        parent: mu_share_module.form.handler.common
+    
+    mu_share_module.form.type.pool:
+        class: MU\ShareModule\Form\Type\PoolType
+        arguments:
+            - "@translator.default"
+            - "@mu_share_module.entity_factory"
+            - "@mu_share_module.collection_filter_helper"
+            - "@mu_share_module.entity_display_helper"
+            - "@mu_share_module.listentries_helper"
+            - "@mu_share_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_share_module.form.handler.company:
+        class: MU\ShareModule\Form\Handler\Company\EditHandler
+        parent: mu_share_module.form.handler.common
+    
+    mu_share_module.form.type.company:
+        class: MU\ShareModule\Form\Type\CompanyType
+        arguments:
+            - "@translator.default"
+            - "@mu_share_module.entity_factory"
+            - "@mu_share_module.collection_filter_helper"
+            - "@mu_share_module.entity_display_helper"
+            - "@mu_share_module.listentries_helper"
+            - "@mu_share_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_share_module.form.type.block.itemlist:
+        class: MU\ShareModule\Block\Form\Type\ItemListBlockType
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: form.type }
+    
+    mu_share_module.form.type.block.item:
+        class: MU\ShareModule\Block\Form\Type\ItemBlockType
+        arguments:
+            - "@translator.default"
+            - "@mu_share_module.entity_factory"
+            - "@mu_share_module.entity_display_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_share_module.form.type.locationfinder:
+        class: MU\ShareModule\Form\Type\Finder\LocationFinderType
+        arguments:
+            - "@translator.default"
+            - "@mu_share_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_share_module.form.type.offerfinder:
+        class: MU\ShareModule\Form\Type\Finder\OfferFinderType
+        arguments:
+            - "@translator.default"
+            - "@mu_share_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_share_module.form.type.poolfinder:
+        class: MU\ShareModule\Form\Type\Finder\PoolFinderType
+        arguments:
+            - "@translator.default"
+            - "@mu_share_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_share_module.form.type.companyfinder:
+        class: MU\ShareModule\Form\Type\Finder\CompanyFinderType
+        arguments:
+            - "@translator.default"
+            - "@mu_share_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_share_module.form.type.config:
+        class: MU\ShareModule\Form\Type\ConfigType
+        arguments:
+            - "@translator.default"
+            - "@=service('zikula_extensions_module.api.variable').getAll('MUShareModule')"
+        tags:
+            - { name: form.type }

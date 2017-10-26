@@ -1,0 +1,144 @@
+{# purpose of this template: offers admin display view #}
+{% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : 'adminBase' %}
+{% extends 'MUShareModule::' ~ baseTemplate ~ '.html.twig' %}
+{% block pageTitle %}{{ offer|musharemodule_formattedTitle|default(__('Offer')) }}{% endblock %}
+{% block title %}
+    {% set templateTitle = offer|musharemodule_formattedTitle|default(__('Offer')) %}
+    {{ templateTitle|notifyFilters('musharemodule.filter_hooks.offers.filter')|safeHtml }}
+    {% set itemActions = knp_menu_get('MUShareModule:ItemActionsMenu:menu', [], {entity: offer, area: routeArea, context: 'display'}) %}
+    <div class="dropdown">
+        <a id="itemActions{{ offer.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
+        {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:actions.html.twig'}) }}
+    </div>
+{% endblock %}
+{% block admin_page_icon 'eye' %}
+{% block content %}
+    {% set isQuickView = app.request.query.getBoolean('raw', false) %}
+    <div class="musharemodule-offer musharemodule-display">
+
+    <dl>
+        {% if offer.product is not empty %}
+            <dt>{{ __('Product') }}</dt>
+            <dd>{{ offer.product }}</dd>
+        {% endif %}
+        {% if offer.description is not empty %}
+            <dt>{{ __('Description') }}</dt>
+            <dd>{{ offer.description|safeHtml }}</dd>
+        {% endif %}
+        {% if offer.isOpen is not empty %}
+            <dt>{{ __('Is open') }}</dt>
+            <dd>{% if offer.isOpen %}
+                <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+            {% else %}
+                <i class="fa fa-times" title="{{ __('No') }}"></i>
+            {% endif %}
+            </dd>
+        {% endif %}
+        {% if offer.abo is not empty %}
+            <dt>{{ __('Abo') }}</dt>
+            <dd>{% if offer.abo %}
+                <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+            {% else %}
+                <i class="fa fa-times" title="{{ __('No') }}"></i>
+            {% endif %}
+            </dd>
+        {% endif %}
+        {% if offer.period is not empty %}
+            <dt>{{ __('Period') }}</dt>
+            <dd>{{ offer.period|musharemodule_listEntry('offer', 'period') }}</dd>
+        {% endif %}
+        {% if offer.totalYear is not empty %}
+            <dt>{{ __('Total year') }}</dt>
+            <dd>{% if offer.totalYear %}
+                <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+            {% else %}
+                <i class="fa fa-times" title="{{ __('No') }}"></i>
+            {% endif %}
+            </dd>
+        {% endif %}
+        {% if offer.splitCosts is not empty %}
+            <dt>{{ __('Split costs') }}</dt>
+            <dd>{% if offer.splitCosts %}
+                <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+            {% else %}
+                <i class="fa fa-times" title="{{ __('No') }}"></i>
+            {% endif %}
+            </dd>
+        {% endif %}
+        {% if offer.back is not empty %}
+            <dt>{{ __('Back') }}</dt>
+            <dd>{% if offer.back %}
+                <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+            {% else %}
+                <i class="fa fa-times" title="{{ __('No') }}"></i>
+            {% endif %}
+            </dd>
+        {% endif %}
+        {% if offer.atMe is not empty %}
+            <dt>{{ __('At me') }}</dt>
+            <dd>{% if offer.atMe %}
+                <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+            {% else %}
+                <i class="fa fa-times" title="{{ __('No') }}"></i>
+            {% endif %}
+            </dd>
+        {% endif %}
+        {% if offer.zipCode is not empty %}
+            <dt>{{ __('Zip code') }}</dt>
+            <dd>{{ offer.zipCode }}</dd>
+        {% endif %}
+        {% if offer.meetingPlace is not empty %}
+            <dt>{{ __('Meeting place') }}</dt>
+            <dd>{{ offer.meetingPlace }}</dd>
+        {% endif %}
+        {% if offer.latitude is not empty %}
+            <dt>{{ __('Latitude') }}</dt>
+            <dd>{{ offer.latitude|musharemodule_geoData }}</dd>
+        {% endif %}
+        {% if offer.longitude is not empty %}
+            <dt>{{ __('Longitude') }}</dt>
+            <dd>{{ offer.longitude|musharemodule_geoData }}</dd>
+        {% endif %}
+        {% if offer.locationOfOffer|default %}
+            <dt>{{ __('Location of offer') }}</dt>
+            <dd>
+              {% if not isQuickView %}
+                  <a href="{{ path('musharemodule_location_' ~ routeArea ~ 'display', {'id': offer.locationOfOffer.getId()}) }}">{% spaceless %}
+                    {{ offer.locationOfOffer|musharemodule_formattedTitle }}
+                  {% endspaceless %}</a>
+                  <a id="locationItem{{ offer.locationOfOffer.getKey() }}Display" href="{{ path('musharemodule_location_' ~ routeArea ~ 'display', {'id': offer.locationOfOffer.getId(), raw: 1}) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="mushare-inline-window hidden" data-modal-title="{{ offer.locationOfOffer|musharemodule_formattedTitle|e('html_attr') }}"><i class="fa fa-id-card-o"></i></a>
+              {% else %}
+                  {{ offer.locationOfOffer|musharemodule_formattedTitle }}
+              {% endif %}
+            </dd>
+        {% endif %}
+        
+    </dl>
+
+    <h3 class="musharemodule-map">{{ __('Map') }}</h3>
+    <div id="mapContainer" class="musharemodule-mapcontainer">
+    </div>
+    {% if featureActivationHelper.isEnabled(constant('MU\\ShareModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'offer') %}
+        {{ include('@MUShareModule/Helper/includeCategoriesDisplay.html.twig', {obj: offer}) }}
+    {% endif %}
+    {{ include('@MUShareModule/Helper/includeStandardFieldsDisplay.html.twig', {obj: offer}) }}
+
+    {{ block('display_hooks') }}
+</div>
+{% endblock %}
+{% block display_hooks %}
+    {% set hooks = notifyDisplayHooks(eventName='musharemodule.ui_hooks.offers.display_view', id=offer.getKey(), urlObject=currentUrlObject, outputAsArray=true) %}
+    {% if hooks is iterable and hooks|length > 0 %}
+        {% for area, hook in hooks %}
+            <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook }}</div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+{% block footer %}
+    {{ parent() }}
+    {% set pathToLeaflet = zasset('@MUShareModule:css/style.css')|replace({'Resources/public/css/style.css': ''}) ~ 'vendor/drmonty/leaflet/' %}
+    {{ pageAddAsset('stylesheet', pathToLeaflet ~ 'css/leaflet.css') }}
+    {{ pageAddAsset('javascript', pathToLeaflet ~ 'js/leaflet' ~ (app.environment == 'dev' ? '' : '.min') ~ '.js') }}
+    <div id="geographicalInfo" class="hidden" data-context="display" data-latitude="{{ offer.latitude|musharemodule_geoData }}" data-longitude="{{ offer.longitude|musharemodule_geoData }}" data-zoom-level="{{ getModVar('MUShareModule', 'defaultZoomLevel', 18) }}" data-tile-layer-url="{{ getModVar('MUShareModule', 'tileLayerUrl') }}" data-tile-layer-attribution="{{ getModVar('MUShareModule', 'tileLayerAttribution') }}"></div>
+    
+{% endblock %}

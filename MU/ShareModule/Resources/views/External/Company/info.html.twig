@@ -1,0 +1,5 @@
+{# Purpose of this template: Display item information for previewing from other modules #}
+<dl id="company{{ company.getKey() }}">
+<dt>{{ company|musharemodule_formattedTitle|notifyFilters('share.filter_hooks.companies.filter')|safeHtml }}</dt>
+{% if company.description is not empty %}<dd>{{ company.description }}</dd>{% endif %}
+</dl>

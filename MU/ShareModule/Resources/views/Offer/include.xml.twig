@@ -1,0 +1,19 @@
+{# purpose of this template: offers xml inclusion template #}
+<offer id="{{ offer.getId() }}" createdon="{{ offer.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ offer.updatedDate|localizeddate('medium', 'short') }}">
+    <id>{{ offer.id }}</id>
+    <product><![CDATA[{{ offer.product }}]]></product>
+    <description><![CDATA[{{ offer.description|safeHtml }}]]></description>
+    <isOpen>{% if not offer.isOpen %}0{% else %}1{% endif %}</isOpen>
+    <abo>{% if not offer.abo %}0{% else %}1{% endif %}</abo>
+    <period>{{ offer.period|musharemodule_listEntry('offer', 'period') }}</period>
+    <totalYear>{% if not offer.totalYear %}0{% else %}1{% endif %}</totalYear>
+    <splitCosts>{% if not offer.splitCosts %}0{% else %}1{% endif %}</splitCosts>
+    <back>{% if not offer.back %}0{% else %}1{% endif %}</back>
+    <atMe>{% if not offer.atMe %}0{% else %}1{% endif %}</atMe>
+    <zipCode><![CDATA[{{ offer.zipCode }}]]></zipCode>
+    <meetingPlace><![CDATA[{{ offer.meetingPlace }}]]></meetingPlace>
+    <latitude>{{ offer.latitude|musharemodule_geoData }}</latitude>
+    <longitude>{{ offer.longitude|musharemodule_geoData }}</longitude>
+    <workflowState>{{ offer.workflowState|musharemodule_objectState(false)|lower }}</workflowState>
+    <locationOfOffer>{% if offer.locationOfOffer|default %}{{ offer.locationOfOffer|musharemodule_formattedTitle }}{% endif %}</locationOfOffer>
+</offer>
