@@ -22,10 +22,10 @@
             <dt>{{ __('State') }}</dt>
             <dd>{{ location.workflowState|musharemodule_listEntry('location', 'workflowState') }}</dd>
         {% endif %}
-        {% if location.title is not empty %}
+        {#% if location.title is not empty %}
             <dt>{{ __('Title') }}</dt>
             <dd>{{ location.title }}</dd>
-        {% endif %}
+        {% endif %#}
         {% if location.street is not empty %}
             <dt>{{ __('Street') }}</dt>
             <dd>{{ location.street }}</dd>

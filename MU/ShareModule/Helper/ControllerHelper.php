@@ -14,10 +14,149 @@ namespace MU\ShareModule\Helper;
 
 use MU\ShareModule\Helper\Base\AbstractControllerHelper;
 
+use Zikula\Component\SortableColumns\SortableColumns;
+use Zikula\Core\RouteUrl;
+
 /**
  * Helper implementation class for controller layer methods.
  */
 class ControllerHelper extends AbstractControllerHelper
 {
-    // feel free to add your own convenience methods here
+    /**
+     * Processes the parameters for a view action.
+     * This includes handling pagination, quick navigation forms and other aspects.
+     *
+     * @param string          $objectType         Name of treated entity type
+     * @param SortableColumns $sortableColumns    Used SortableColumns instance
+     * @param array           $templateParameters Template data
+     * @param boolean         $hasHookSubscriber  Whether hook subscribers are supported or not
+     *
+     * @return array Enriched template parameters used for creating the response
+     */
+    public function processViewActionParameters($objectType, SortableColumns $sortableColumns, array $templateParameters = [], $hasHookSubscriber = false)
+    {
+        $contextArgs = ['controller' => $objectType, 'action' => 'view'];
+        if (!in_array($objectType, $this->getObjectTypes('controllerAction', $contextArgs))) {
+            throw new \Exception($this->__('Error! Invalid object type received.'));
+        }
+    
+        $request = $this->request;
+        $repository = $this->entityFactory->getRepository($objectType);
+    
+        // parameter for used sorting field
+        $sort = $request->query->get('sort', '');
+        if (empty($sort) || !in_array($sort, $repository->getAllowedSortingFields())) {
+            $sort = $repository->getDefaultSortingField();
+            $request->query->set('sort', $sort);
+            // set default sorting in route parameters (e.g. for the pager)
+            $routeParams = $request->attributes->get('_route_params');
+            $routeParams['sort'] = $sort;
+            $request->attributes->set('_route_params', $routeParams);
+        }
+        $sortdir = $request->query->get('sortdir', 'ASC');
+        $templateParameters['sort'] = $sort;
+        $templateParameters['sortdir'] = strtolower($sortdir);
+    
+        $templateParameters['all'] = 'csv' == $request->getRequestFormat() ? 1 : $request->query->getInt('all', 0);
+        $templateParameters['own'] = $request->query->getInt('own', $this->variableApi->get('MUShareModule', 'showOnlyOwnEntries', 0));
+    
+        $resultsPerPage = 0;
+        if ($templateParameters['all'] != 1) {
+            // the number of items displayed on a page for pagination
+            $resultsPerPage = $request->query->getInt('num', 0);
+            if (in_array($resultsPerPage, [0, 10])) {
+                $resultsPerPage = $this->variableApi->get('MUShareModule', $objectType . 'EntriesPerPage', 10);
+            }
+        }
+        $templateParameters['num'] = $resultsPerPage;
+        $templateParameters['tpl'] = $request->query->getAlnum('tpl', '');
+    
+        $templateParameters = $this->addTemplateParameters($objectType, $templateParameters, 'controllerAction', $contextArgs);
+    
+        $quickNavForm = $this->formFactory->create('MU\ShareModule\Form\Type\QuickNavigation\\' . ucfirst($objectType) . 'QuickNavType', $templateParameters);
+        if ($quickNavForm->handleRequest($request) && $quickNavForm->isSubmitted()) {
+            $quickNavData = $quickNavForm->getData();
+            foreach ($quickNavData as $fieldName => $fieldValue) {
+                if ($fieldName == 'routeArea') {
+                    continue;
+                }
+                if (in_array($fieldName, ['all', 'own', 'num'])) {
+                    $templateParameters[$fieldName] = $fieldValue;
+                } elseif ($fieldName == 'sort' && !empty($fieldValue)) {
+                    $sort = $fieldValue;
+                } elseif ($fieldName == 'sortdir' && !empty($fieldValue)) {
+                    $sortdir = $fieldValue;
+                } elseif (false === stripos($fieldName, 'thumbRuntimeOptions')) {
+                    // set filter as query argument, fetched inside repository
+                    $request->query->set($fieldName, $fieldValue);
+                }
+            }
+        }
+        $sortableColumns->setOrderBy($sortableColumns->getColumn($sort), strtoupper($sortdir));
+        $resultsPerPage = $templateParameters['num'];
+    
+        $urlParameters = $templateParameters;
+        foreach ($urlParameters as $parameterName => $parameterValue) {
+            if (false === stripos($parameterName, 'thumbRuntimeOptions')) {
+                continue;
+            }
+            unset($urlParameters[$parameterName]);
+        }
+    
+        $sort = $sortableColumns->getSortColumn()->getName();
+        $sortdir = $sortableColumns->getSortDirection();
+        $sortableColumns->setAdditionalUrlParameters($urlParameters);
+    
+        $where = '';
+        if ($templateParameters['all'] == 1) {
+            // retrieve item list without pagination
+            $entities = $repository->selectWhere($where, $sort . ' ' . $sortdir);
+        } else {
+            // the current offset which is used to calculate the pagination
+            $currentPage = $request->query->getInt('pos', 1);
+    
+            // retrieve item list with pagination
+            list($entities, $objectCount) = $repository->selectWherePaginated($where, $sort . ' ' . $sortdir, $currentPage, $resultsPerPage);
+    
+            $templateParameters['currentPage'] = $currentPage;
+            $templateParameters['pager'] = [
+                'amountOfItems' => $objectCount,
+                'itemsPerPage' => $resultsPerPage
+            ];
+        }
+    
+        $templateParameters['sort'] = $sort;
+        $templateParameters['sortdir'] = $sortdir;
+        $templateParameters['items'] = $entities;
+    
+    
+        if (true === $hasHookSubscriber) {
+            // build RouteUrl instance for display hooks
+            $urlParameters['_locale'] = $request->getLocale();
+            $templateParameters['currentUrlObject'] = new RouteUrl('musharemodule_' . strtolower($objectType) . '_view', $urlParameters);
+        }
+    
+        $templateParameters['sort'] = $sortableColumns->generateSortableColumns();
+        $templateParameters['quickNavForm'] = $quickNavForm->createView();
+        
+        // own code
+        if ($objectType == 'location' && $templateParameters['routeArea'] == '') {
+        	$where = 'tbl.createdBy = 2';
+        	$where .= ' AND ';
+        	$where .= 'tbl.forMap = 1';
+        	
+        	$myLocation = $repository->selectWhere($where);
+        	if (count($myLocation) > 1) {
+        		$this->logger->info(__('Uups. You have more than one private location activated for the map. Please edit your locations so only one is activated for the map view!'));
+        		//LogUtil::registerError(__('Uups. You have more than one private location activated for the map. Please edit your locations so only one is activated for the map view!', $dom));
+        		$redirecturl = ModUtil::url($this->name, 'user', 'view', array('ot' => 'location', 'own' => 1));
+        		return System::redirect($redirecturl);
+        	}
+        	$templateParameters['myLocation'] = $myLocation[0];
+        }
+    
+        $templateParameters['canBeCreated'] = $this->modelHelper->canBeCreated($objectType);
+    
+        return $templateParameters;
+    }
 }

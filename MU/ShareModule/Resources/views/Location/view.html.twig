@@ -12,6 +12,11 @@
     <form action="{{ path('musharemodule_location_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="locationsViewForm" class="form-horizontal" role="form">
         <div>
     {% endif %}
+    
+    <h3 class="musharemodule-map">{{ __('Map') }}</h3>
+    <div id="mapContainer" class="musharemodule-mapcontainer">
+    </div>
+    
         <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover table-condensed">
             <colgroup>
@@ -164,6 +169,14 @@
     {% endif %}
 
     {{ block('display_hooks') }}
+    {% set pathToLeaflet = zasset('@MUShareModule:css/style.css')|replace({'Resources/public/css/style.css': ''}) ~ 'vendor/drmonty/leaflet/' %}
+    {{ pageAddAsset('stylesheet', pathToLeaflet ~ 'css/leaflet.css') }}
+    {{ pageAddAsset('javascript', pathToLeaflet ~ 'js/leaflet' ~ (app.environment == 'dev' ? '' : '.min') ~ '.js') }}
+    <div id="geographicalInfo" class="hidden" data-context="display" data-latitude="{{ myLocation.latitude|musharemodule_geoData }}" data-longitude="{{ myLocation.longitude|musharemodule_geoData }}" data-zoom-level="{{ getModVar('MUShareModule', 'defaultZoomLevel', 18) }}" data-tile-layer-url="{{ getModVar('MUShareModule', 'tileLayerUrl') }}" data-tile-layer-attribution="{{ getModVar('MUShareModule', 'tileLayerAttribution') }}"></div>
+    {% for location in items %}
+    <div class="marker-data hidden" data-context="view" data-latitude="{{ location.latitude|musharemodule_geoData }}" data-longitude="{{ location.longitude|musharemodule_geoData }}" data-zoom-level="{{ getModVar('MUShareModule', 'defaultZoomLevel', 18) }}" data-tile-layer-url="{{ getModVar('MUShareModule', 'tileLayerUrl') }}" data-tile-layer-attribution="{{ getModVar('MUShareModule', 'tileLayerAttribution') }}"></div>    
+    {% endfor %}
+    
 </div>
 {% endblock %}
 {% block page_nav_links %}
@@ -183,6 +196,7 @@
         {% endif %}
     </p>
 {% endblock %}
+
 {% block display_hooks %}
     
     {# here you can activate calling display hooks for the view page if you need it #}
@@ -193,5 +207,5 @@
                 <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook }}</div>
             {% endfor %}
         {% endif %}
-    {% endif % #}
+    {% endif % #}  
 {% endblock %}

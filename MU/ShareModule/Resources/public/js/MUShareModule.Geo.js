@@ -33,6 +33,39 @@ function mUShareInitGeographicalDisplay(parameters, isEditMode)
 }
 
 /**
+ * Initialises geographical view features.
+ */
+function mUShareInitGeographicalView(parameters, isEditMode)
+{
+    var centerLocation;
+
+    centerLocation = new L.LatLng(parameters.latitude, parameters.longitude);
+
+    // create map and center to given coordinates
+    map = L.map('mapContainer').setView(centerLocation, parameters.zoomLevel);
+
+    // add tile layer
+    L.tileLayer(parameters.tileLayerUrl, {
+        attribution: parameters.tileLayerAttribution
+    }).addTo(map);
+    
+    jQuery('.marker-data').each(function (index) {
+        //addMarker(jQuery(this));
+        
+    // add a marker
+    marker = new L.marker([elem.data('latitude'), elem.data('longitude')], {
+        draggable: isEditMode
+    });
+    marker.addTo(map);
+    });
+
+    jQuery('#tabMap').on('shown.bs.tab', function () {
+        // redraw the map after it's tab has been opened
+        map.invalidateSize();
+    });
+}
+
+/**
  * Callback method for geolocation functionality.
  */
 function mUShareNewCoordinatesEventHandler() {
@@ -100,6 +133,7 @@ jQuery(document).ready(function() {
         return;
     }
 
+    //if (infoElem.data('context') == 'display' || infoElem.data('context') == 'edit') {
     parameters = {
         latitude: infoElem.data('latitude'),
         longitude: infoElem.data('longitude'),
@@ -108,11 +142,14 @@ jQuery(document).ready(function() {
         tileLayerAttribution: infoElem.data('tile-layer-attribution'),
         useGeoLocation: false
     };
+    //}
 
     if (infoElem.data('context') == 'display') {
         mUShareInitGeographicalDisplay(parameters, false);
     } else if (infoElem.data('context') == 'edit') {
         parameters.useGeoLocation = infoElem.data('use-geolocation');
         mUShareInitGeographicalEditing(parameters);
+    } else if (infoElem.data('context') == 'view') {
+    	mUShareInitGeographicalView(parameters, false);
     }
 });
