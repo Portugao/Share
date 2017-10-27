@@ -4,6 +4,7 @@ var map;
 var marker;
 var circle;
 var popup;
+var offerdescription;
 
 /**
  * Initialises geographical display features.
@@ -74,7 +75,12 @@ function mUShareInitGeographicalView(parameters, isEditMode)
         draggable: isEditMode
     });
     marker.addTo(map);
-    marker.bindPopup(jQuery(this).attr('data-product') + '');
+    if(jQuery(this).attr('data-description') != '') {
+    	offerdescription = jQuery(this).attr('data-description');
+    } else {
+    	offerdescription = '';
+    }
+    marker.bindPopup(jQuery(this).attr('data-product') + '<br />' + offerdescription);
     
     /*popup = L.popup()
         .setLatLng([jQuery(this).attr('data-latitude') , jQuery(this).attr('data-longitude')])

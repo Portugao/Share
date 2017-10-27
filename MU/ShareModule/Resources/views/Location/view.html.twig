@@ -339,7 +339,7 @@
     <div class="marker-data hidden" data-radius={{ radius }} data-latitude="{{ location.latitude|musharemodule_geoData }}" data-longitude="{{ location.longitude|musharemodule_geoData }}"></div>    
     {% endfor %#}
     {% for offer in offers %}
-    <div class="offer-data hidden" data-product={{ offer.product }} data-forMap={{ offer.atMe}} data-offer-location-latitude={{ offer.locationOfOffer.latitude }} data-offer-location-longitude={{ offer.locationOfOffer.longitude }} data-latitude="{{ offer.latitude|musharemodule_geoData }}" data-longitude="{{ offer.longitude|musharemodule_geoData }}"></div>    
+    <div class="offer-data hidden" data-product={{ offer.product }} data-description={{ offer.description }} data-atMe={{ offer.atMe }} data-offer-location-latitude={{ offer.locationOfOffer.latitude }} data-offer-location-longitude={{ offer.locationOfOffer.longitude }} data-latitude="{{ offer.latitude|musharemodule_geoData }}" data-longitude="{{ offer.longitude|musharemodule_geoData }}"></div>    
     {% endfor %}
     
 </div>
