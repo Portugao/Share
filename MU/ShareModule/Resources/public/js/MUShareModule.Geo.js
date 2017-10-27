@@ -2,6 +2,8 @@
 
 var map;
 var marker;
+var circle;
+var popup;
 
 /**
  * Initialises geographical display features.
@@ -49,14 +51,35 @@ function mUShareInitGeographicalView(parameters, isEditMode)
         attribution: parameters.tileLayerAttribution
     }).addTo(map);
     
-    jQuery('.marker-data').each(function (index) {
-        //addMarker(jQuery(this));
+    /*jQuery('.marker-data').each(function (index) {
         
     // add a marker
     marker = new L.marker([elem.data('latitude'), elem.data('longitude')], {
         draggable: isEditMode
     });
     marker.addTo(map);
+    });*/
+    
+    circle = L.circle([parameters.latitude , parameters.latitude] , {radius:500} , {
+    	color : 'red',
+    	fillColor : '#f03',
+    	fillOpacity : 0.5
+    	}).addTo(map);
+
+    
+    jQuery('.offer-data').each(function (index) {
+        
+    // add a marker
+    marker = new L.marker([jQuery(this).attr('data-latitude'), jQuery(this).attr('data-longitude')], {
+        draggable: isEditMode
+    });
+    marker.addTo(map);
+    marker.bindPopup(jQuery(this).attr('data-product') + '');
+    
+    /*popup = L.popup()
+        .setLatLng([jQuery(this).attr('data-latitude') , jQuery(this).attr('data-longitude')])
+        .setContent("Ich bin ein alleinstehendes Popup !")
+        .openOn(map;*/    
     });
 
     jQuery('#tabMap').on('shown.bs.tab', function () {

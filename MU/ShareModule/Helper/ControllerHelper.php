@@ -16,6 +16,7 @@ use MU\ShareModule\Helper\Base\AbstractControllerHelper;
 
 use Zikula\Component\SortableColumns\SortableColumns;
 use Zikula\Core\RouteUrl;
+use UserUtil;
 
 /**
  * Helper implementation class for controller layer methods.
@@ -107,7 +108,8 @@ class ControllerHelper extends AbstractControllerHelper
         $sortdir = $sortableColumns->getSortDirection();
         $sortableColumns->setAdditionalUrlParameters($urlParameters);
     
-        $where = '';
+        $uid = \UserUtil::getVar('uid');
+        $where = 'tbl.createdBy = ' . $uid;
         if ($templateParameters['all'] == 1) {
             // retrieve item list without pagination
             $entities = $repository->selectWhere($where, $sort . ' ' . $sortdir);
@@ -141,10 +143,11 @@ class ControllerHelper extends AbstractControllerHelper
         
         // own code
         if ($objectType == 'location' && $templateParameters['routeArea'] == '') {
-        	$where = 'tbl.createdBy = 2';
+        	$where = 'tbl.createdBy = ' . $uid;
         	$where .= ' AND ';
         	$where .= 'tbl.forMap = 1';
         	
+        	// we get the location set for the map of the actual user
         	$myLocation = $repository->selectWhere($where);
         	if (count($myLocation) > 1) {
         		$this->logger->info(__('Uups. You have more than one private location activated for the map. Please edit your locations so only one is activated for the map view!'));
@@ -153,6 +156,16 @@ class ControllerHelper extends AbstractControllerHelper
         		return System::redirect($redirecturl);
         	}
         	$templateParameters['myLocation'] = $myLocation[0];
+        	// we get offers for the location of the user within his set radius
+        	// standard radius
+        	$radius = 3000;
+        	
+        	$offerRepository = $this->entityFactory->getRepository('offer');
+        	$where2 = 'tbl.isOpen = 1';
+        	$offers = $offerRepository->selectWhere($where2);
+
+        	$templateParameters['offers'] = $offers;
+        	$templateParameters['radius'] = $radius;
         }
     
         $templateParameters['canBeCreated'] = $this->modelHelper->canBeCreated($objectType);
