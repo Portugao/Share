@@ -18,13 +18,6 @@
             {% if companyFilter is defined and companyFilter != true %}
                 </div>
             {% endif %}
-            {% if poolFilter is defined and poolFilter != true %}
-                <div class="hidden">
-            {% endif %}
-                {{ form_row(quickNavForm.pool) }}
-            {% if poolFilter is defined and poolFilter != true %}
-                </div>
-            {% endif %}
             {% if workflowStateFilter is defined and workflowStateFilter != true %}
                 <div class="hidden">
             {% endif %}

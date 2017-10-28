@@ -132,16 +132,6 @@ abstract class AbstractLocationEntity extends EntityAccess
     protected $companyOfLocation;
     
     /**
-     * Bidirectional - Many location [locations] are linked by one pool [pool] (OWNING SIDE).
-     *
-     * @ORM\ManyToOne(targetEntity="MU\ShareModule\Entity\PoolEntity", inversedBy="location")
-     * @ORM\JoinTable(name="mu_share_pool")
-     * @Assert\Type(type="MU\ShareModule\Entity\PoolEntity")
-     * @var \MU\ShareModule\Entity\PoolEntity $pool
-     */
-    protected $pool;
-    
-    /**
      * Bidirectional - One locationOfOffer [location] has many offerOfLocation [offers] (INVERSE SIDE).
      *
      * @ORM\OneToMany(targetEntity="MU\ShareModule\Entity\OfferEntity", mappedBy="locationOfOffer")
@@ -425,28 +415,6 @@ abstract class AbstractLocationEntity extends EntityAccess
     public function setCompanyOfLocation($companyOfLocation = null)
     {
         $this->companyOfLocation = $companyOfLocation;
-    }
-    
-    /**
-     * Returns the pool.
-     *
-     * @return \MU\ShareModule\Entity\PoolEntity
-     */
-    public function getPool()
-    {
-        return $this->pool;
-    }
-    
-    /**
-     * Sets the pool.
-     *
-     * @param \MU\ShareModule\Entity\PoolEntity $pool
-     *
-     * @return void
-     */
-    public function setPool($pool = null)
-    {
-        $this->pool = $pool;
     }
     
     /**

@@ -227,12 +227,12 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             
             // more actions for adding new related items
             
-            $relatedComponent = 'MUShareModule:Location:';
+            $relatedComponent = 'MUShareModule:Offer:';
             $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
-                $title = $this->__('Create location');
+                $title = $this->__('Create offers');
                 $menu->addChild($title, [
-                    'route' => 'musharemodule_location_' . $routeArea . 'edit',
+                    'route' => 'musharemodule_offer_' . $routeArea . 'edit',
                     'routeParameters' => ['pool' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-plus');
                 $menu[$title]->setLinkAttribute('title', $title);

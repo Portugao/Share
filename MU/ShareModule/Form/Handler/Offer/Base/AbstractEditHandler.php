@@ -83,6 +83,14 @@ abstract class AbstractEditHandler extends EditHandler
                 $relObj->addOfferOfLocation($entity);
             }
         }
+        // editable relation, we store the id and assign it now to show it in UI
+        $this->relationPresets['pool'] = $this->request->get('pool', '');
+        if (!empty($this->relationPresets['pool'])) {
+            $relObj = $this->entityFactory->getRepository('pool')->selectById($this->relationPresets['pool']);
+            if (null !== $relObj) {
+                $relObj->addOffers($entity);
+            }
+        }
     
         // save entity reference for later reuse
         $this->entityRef = $entity;
@@ -143,6 +151,18 @@ abstract class AbstractEditHandler extends EditHandler
         $codes[] = 'userDisplayLocation';
         // admin detail page of related location
         $codes[] = 'adminDisplayLocation';
+        // user list of pools
+        $codes[] = 'userViewPools';
+        // admin list of pools
+        $codes[] = 'adminViewPools';
+        // user list of own pools
+        $codes[] = 'userOwnViewPools';
+        // admin list of own pools
+        $codes[] = 'adminOwnViewPools';
+        // user detail page of related pool
+        $codes[] = 'userDisplayPool';
+        // admin detail page of related pool
+        $codes[] = 'adminDisplayPool';
     
         return $codes;
     }
@@ -335,6 +355,19 @@ abstract class AbstractEditHandler extends EditHandler
             case 'adminDisplayLocation':
                 if (!empty($this->relationPresets['locationOfOffer'])) {
                     return $this->router->generate('musharemodule_location_' . $routeArea . 'display',  ['id' => $this->relationPresets['locationOfOffer']]);
+                }
+    
+                return $this->getDefaultReturnUrl($args);
+            case 'userViewPools':
+            case 'adminViewPools':
+                return $this->router->generate('musharemodule_pool_' . $routeArea . 'view');
+            case 'userOwnViewPools':
+            case 'adminOwnViewPools':
+                return $this->router->generate('musharemodule_pool_' . $routeArea . 'view', ['own' => 1]);
+            case 'userDisplayPool':
+            case 'adminDisplayPool':
+                if (!empty($this->relationPresets['pool'])) {
+                    return $this->router->generate('musharemodule_pool_' . $routeArea . 'display',  ['id' => $this->relationPresets['pool']]);
                 }
     
                 return $this->getDefaultReturnUrl($args);

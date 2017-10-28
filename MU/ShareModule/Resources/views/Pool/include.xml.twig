@@ -3,11 +3,11 @@
     <id>{{ pool.id }}</id>
     <collectionOfPool><![CDATA[{{ pool.collectionOfPool }}]]></collectionOfPool>
     <workflowState>{{ pool.workflowState|musharemodule_objectState(false)|lower }}</workflowState>
-    <location>
-    {% if pool.location|default %}
-        {% for relatedItem in pool.location %}
-        <location>{{ relatedItem|musharemodule_formattedTitle }}</location>
+    <offers>
+    {% if pool.offers|default %}
+        {% for relatedItem in pool.offers %}
+        <offer>{{ relatedItem|musharemodule_formattedTitle }}</offer>
         {% endfor %}
     {% endif %}
-    </location>
+    </offers>
 </pool>

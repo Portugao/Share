@@ -37,23 +37,23 @@
 {% endblock %}
 {% block related_items %}
     {% if routeArea == 'admin' %}
-        <h4>{{ __('Location') }}</h4>
+        <h4>{{ __('Offers') }}</h4>
     {% else %}
-        <h3>{{ __('Location') }}</h3>
+        <h3>{{ __('Offers') }}</h3>
     {% endif %}
     
-    {% if pool.location|default %}
+    {% if pool.offers|default %}
         {{ include(
-            '@MUShareModule/Location/includeDisplayItemListMany.html.twig',
-            {items: pool.location}
+            '@MUShareModule/Offer/includeDisplayItemListMany.html.twig',
+            {items: pool.offers}
         ) }}
     {% endif %}
     
-    {% set mayManage = hasPermission('MUShareModule:Location:', '::', 'ACCESS_EDIT') %}
+    {% set mayManage = hasPermission('MUShareModule:Offer:', '::', 'ACCESS_EDIT') %}
     {% if mayManage %}
         <p class="managelink">
-            {% set createTitle = __('Create location') %}
-            <a href="{{ path('musharemodule_location_' ~ routeArea ~ 'edit', {pool: pool.getKey()}) }}" title="{{ createTitle|e('html_attr') }}"><i class="fa fa-plus"></i> {{ createTitle }}</a>
+            {% set createTitle = __('Create offer') %}
+            <a href="{{ path('musharemodule_offer_' ~ routeArea ~ 'edit', {pool: pool.getKey()}) }}" title="{{ createTitle|e('html_attr') }}"><i class="fa fa-plus"></i> {{ createTitle }}</a>
         </p>
     {% endif %}
 {% endblock %}

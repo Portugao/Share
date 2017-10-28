@@ -111,6 +111,19 @@
               {% endif %}
             </dd>
         {% endif %}
+        {% if offer.pool|default %}
+            <dt>{{ __('Pool') }}</dt>
+            <dd>
+              {% if not isQuickView %}
+                  <a href="{{ path('musharemodule_pool_' ~ routeArea ~ 'display', {'id': offer.pool.getId()}) }}">{% spaceless %}
+                    {{ offer.pool|musharemodule_formattedTitle }}
+                  {% endspaceless %}</a>
+                  <a id="poolItem{{ offer.pool.getKey() }}Display" href="{{ path('musharemodule_pool_' ~ routeArea ~ 'display', {'id': offer.pool.getId(), raw: 1}) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="mushare-inline-window hidden" data-modal-title="{{ offer.pool|musharemodule_formattedTitle|e('html_attr') }}"><i class="fa fa-id-card-o"></i></a>
+              {% else %}
+                  {{ offer.pool|musharemodule_formattedTitle }}
+              {% endif %}
+            </dd>
+        {% endif %}
         
     </dl>
 

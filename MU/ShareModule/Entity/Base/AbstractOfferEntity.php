@@ -73,6 +73,7 @@ abstract class AbstractOfferEntity extends EntityAccess
     protected $product = '';
     
     /**
+     * Enter a description of your offer if it could be helpful!
      * @ORM\Column(type="text", length=4000)
      * @Assert\NotNull()
      * @Assert\Length(min="0", max="4000")
@@ -90,6 +91,7 @@ abstract class AbstractOfferEntity extends EntityAccess
     protected $isOpen = true;
     
     /**
+     * Do you have an abo of your offer?
      * @ORM\Column(type="boolean")
      * @Assert\NotNull()
      * @Assert\Type(type="bool")
@@ -103,7 +105,7 @@ abstract class AbstractOfferEntity extends EntityAccess
      * @ShareAssert\ListEntry(entityName="offer", propertyName="period", multiple=false)
      * @var string $period
      */
-    protected $period = 'not set';
+    protected $period = '';
     
     /**
      * @ORM\Column(type="boolean")
@@ -149,7 +151,7 @@ abstract class AbstractOfferEntity extends EntityAccess
     protected $zipCode = '';
     
     /**
-     * Enter the street (and number) for the meeting lce
+     * Enter the street (and number) for the meeting place!
      * @ORM\Column(length=255)
      * @Assert\NotNull()
      * @Assert\Length(min="0", max="255")
@@ -175,6 +177,16 @@ abstract class AbstractOfferEntity extends EntityAccess
      * @var \MU\ShareModule\Entity\LocationEntity $locationOfOffer
      */
     protected $locationOfOffer;
+    
+    /**
+     * Bidirectional - Many offers [offers] are linked by one pool [pool] (OWNING SIDE).
+     *
+     * @ORM\ManyToOne(targetEntity="MU\ShareModule\Entity\PoolEntity", inversedBy="offers")
+     * @ORM\JoinTable(name="mu_share_pool")
+     * @Assert\Type(type="MU\ShareModule\Entity\PoolEntity")
+     * @var \MU\ShareModule\Entity\PoolEntity $pool
+     */
+    protected $pool;
     
     
     /**
@@ -600,6 +612,28 @@ abstract class AbstractOfferEntity extends EntityAccess
     public function setLocationOfOffer($locationOfOffer = null)
     {
         $this->locationOfOffer = $locationOfOffer;
+    }
+    
+    /**
+     * Returns the pool.
+     *
+     * @return \MU\ShareModule\Entity\PoolEntity
+     */
+    public function getPool()
+    {
+        return $this->pool;
+    }
+    
+    /**
+     * Sets the pool.
+     *
+     * @param \MU\ShareModule\Entity\PoolEntity $pool
+     *
+     * @return void
+     */
+    public function setPool($pool = null)
+    {
+        $this->pool = $pool;
     }
     
     

@@ -32,6 +32,7 @@
                 <col id="cZipCode" />
                 <col id="cMeetingPlace" />
                 <col id="cLocationOfOffer" />
+                <col id="cPool" />
             </colgroup>
             <thead>
             <tr>
@@ -76,6 +77,9 @@
                 </th>
                 <th id="hLocationOfOffer" scope="col" class="text-left">
                     <a href="{{ sort.locationOfOffer.url }}" title="{{ __f('Sort by %s', {'%s': 'location of offer'}) }}" class="{{ sort.locationOfOffer.class }}">{{ __('Location of offer') }}</a>
+                </th>
+                <th id="hPool" scope="col" class="text-left">
+                    <a href="{{ sort.pool.url }}" title="{{ __f('Sort by %s', {'%s': 'pool'}) }}" class="{{ sort.pool.class }}">{{ __('Pool') }}</a>
                 </th>
             </tr>
             </thead>
@@ -162,10 +166,20 @@
                         {{ __('Not set.') }}
                     {% endif %}
                 </td>
+                <td headers="hPool" class="text-left">
+                    {% if offer.pool|default %}
+                        <a href="{{ path('musharemodule_pool_' ~ routeArea ~ 'display', {'id': offer.pool.getId()}) }}">{% spaceless %}
+                          {{ offer.pool|musharemodule_formattedTitle }}
+                        {% endspaceless %}</a>
+                        <a id="poolItem{{ offer.getKey() }}_rel_{{ offer.pool.getKey() }}Display" href="{{ path('musharemodule_pool_' ~ routeArea ~ 'display', {'id': offer.pool.getId(), raw: 1}) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="mushare-inline-window hidden" data-modal-title="{{ offer.pool|musharemodule_formattedTitle|e('html_attr') }}"><i class="fa fa-id-card-o"></i></a>
+                    {% else %}
+                        {{ __('Not set.') }}
+                    {% endif %}
+                </td>
             </tr>
         {% else %}
             <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
-                <td class="text-left" colspan="{% if routeArea == 'admin' %}14{% else %}13{% endif %}">
+                <td class="text-left" colspan="{% if routeArea == 'admin' %}15{% else %}14{% endif %}">
             {{ __('No offers found.') }}
               </td>
             </tr>

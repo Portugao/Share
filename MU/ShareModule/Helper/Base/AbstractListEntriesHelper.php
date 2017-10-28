@@ -295,6 +295,13 @@ abstract class AbstractListEntriesHelper
     {
         $states = [];
         $states[] = [
+            'value'   => 'notset',
+            'text'    => $this->__('Notset'),
+            'title'   => '',
+            'image'   => '',
+            'default' => true
+        ];
+        $states[] = [
             'value'   => 'daily',
             'text'    => $this->__('Daily'),
             'title'   => '',

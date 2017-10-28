@@ -68,13 +68,13 @@ abstract class AbstractPoolEntity extends EntityAccess
     
     
     /**
-     * Bidirectional - One pool [pool] has many location [locations] (INVERSE SIDE).
+     * Bidirectional - One pool [pool] has many offers [offers] (INVERSE SIDE).
      *
-     * @ORM\OneToMany(targetEntity="MU\ShareModule\Entity\LocationEntity", mappedBy="pool")
-     * @ORM\JoinTable(name="mu_share_poollocation")
-     * @var \MU\ShareModule\Entity\LocationEntity[] $location
+     * @ORM\OneToMany(targetEntity="MU\ShareModule\Entity\OfferEntity", mappedBy="pool")
+     * @ORM\JoinTable(name="mu_share_pooloffers")
+     * @var \MU\ShareModule\Entity\OfferEntity[] $offers
      */
-    protected $location = null;
+    protected $offers = null;
     
     
     /**
@@ -86,7 +86,7 @@ abstract class AbstractPoolEntity extends EntityAccess
      */
     public function __construct()
     {
-        $this->location = new ArrayCollection();
+        $this->offers = new ArrayCollection();
     }
     
     /**
@@ -188,56 +188,56 @@ abstract class AbstractPoolEntity extends EntityAccess
     
     
     /**
-     * Returns the location.
+     * Returns the offers.
      *
-     * @return \MU\ShareModule\Entity\LocationEntity[]
+     * @return \MU\ShareModule\Entity\OfferEntity[]
      */
-    public function getLocation()
+    public function getOffers()
     {
-        return $this->location;
+        return $this->offers;
     }
     
     /**
-     * Sets the location.
+     * Sets the offers.
      *
-     * @param \MU\ShareModule\Entity\LocationEntity[] $location
+     * @param \MU\ShareModule\Entity\OfferEntity[] $offers
      *
      * @return void
      */
-    public function setLocation($location)
+    public function setOffers($offers)
     {
-        foreach ($this->location as $locationSingle) {
-            $this->removeLocation($locationSingle);
+        foreach ($this->offers as $offerSingle) {
+            $this->removeOffers($offerSingle);
         }
-        foreach ($location as $locationSingle) {
-            $this->addLocation($locationSingle);
+        foreach ($offers as $offerSingle) {
+            $this->addOffers($offerSingle);
         }
     }
     
     /**
-     * Adds an instance of \MU\ShareModule\Entity\LocationEntity to the list of location.
+     * Adds an instance of \MU\ShareModule\Entity\OfferEntity to the list of offers.
      *
-     * @param \MU\ShareModule\Entity\LocationEntity $location The instance to be added to the collection
+     * @param \MU\ShareModule\Entity\OfferEntity $offer The instance to be added to the collection
      *
      * @return void
      */
-    public function addLocation(\MU\ShareModule\Entity\LocationEntity $location)
+    public function addOffers(\MU\ShareModule\Entity\OfferEntity $offer)
     {
-        $this->location->add($location);
-        $location->setPool($this);
+        $this->offers->add($offer);
+        $offer->setPool($this);
     }
     
     /**
-     * Removes an instance of \MU\ShareModule\Entity\LocationEntity from the list of location.
+     * Removes an instance of \MU\ShareModule\Entity\OfferEntity from the list of offers.
      *
-     * @param \MU\ShareModule\Entity\LocationEntity $location The instance to be removed from the collection
+     * @param \MU\ShareModule\Entity\OfferEntity $offer The instance to be removed from the collection
      *
      * @return void
      */
-    public function removeLocation(\MU\ShareModule\Entity\LocationEntity $location)
+    public function removeOffers(\MU\ShareModule\Entity\OfferEntity $offer)
     {
-        $this->location->removeElement($location);
-        $location->setPool(null);
+        $this->offers->removeElement($offer);
+        $offer->setPool(null);
     }
     
     

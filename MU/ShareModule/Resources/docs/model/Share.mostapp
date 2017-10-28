@@ -13,10 +13,12 @@ application "Share" {
         separateAdminTemplates true
         generatePoweredByBacklinksIntoFooterTemplates false
         generateTests false
+    markFiles "composer.json,\r\nContainer/LinkContainer.php,\r\nForm/Handler/Offer/EditHandler.php,\r\nHelper/ControllerHelper.php,\r\nResources/public/js/MUShareModule.Geo.js,\r\nResources/views/Location/view.html.twig"
     }
 
 			entities {
 				entity "location" leading geographical {
+            documentation "You can create several locations.\r\nCreate locations, if they are possible places, to share stuff."
             nameMultiple "locations"
 					displayPattern "#title#"
 					hasTray true
@@ -50,7 +52,8 @@ application "Share" {
 					fields {
 						string "product",
 						text "description" {
-							defaultValue ""
+							documentation "Enter a description of your offer if it could be helpful!"
+                    defaultValue ""
 							mandatory false
 							length 4000
 						},
@@ -60,18 +63,20 @@ application "Share" {
 							mandatory false
 						},
 						boolean "abo" {
-							defaultValue ""
+							documentation "Do you have an abo of your offer?"
+                    defaultValue ""
 							mandatory false
 						},
 						list "period" {
-						defaultValue "not set"
+						defaultValue ""
 							mandatory false
                     items {
-								listItem "daily" ( "daily" ),
-								listItem "weekly" ("weekly" ),
-								listItem "monthly" ( "monthly" )
-							}
-						},
+                        default listItem "not set",
+								listItem  "daily" ( "daily" ),
+                        listItem  "weekly" ( "weekly" ),
+                        listItem "monthly" ( "monthly" )
+                    }
+                },
 						boolean "totalYear" {
 							defaultValue ""
 							mandatory false
@@ -95,7 +100,7 @@ application "Share" {
                     mandatory false
                 },
                 string "meetingPlace" {
-							documentation "Enter the street (and number) for the meeting lce"
+							documentation "Enter the street (and number) for the meeting place!"
                     defaultValue ""
 							mandatory false
 						}
@@ -171,12 +176,6 @@ application "Share" {
 					cascade NONE
 					orderBy ""
 				},
-				one2many bidirectional {
-					source "pool"
-					sourceAlias "pool"
-					target "location"
-					targetAlias "location"
-				},
 				one2one bidirectional {
 					source "company"
 					sourceAlias "companyOfLocation"
@@ -184,7 +183,14 @@ application "Share" {
 					targetAlias "locationOfCompany"
 					cascade REMOVE
 				}
-			}
+			,
+        one2many bidirectional {
+            source "pool"
+            sourceAlias "pool"
+            target "offer"
+            targetAlias "offers"
+        }
+    }
 			variables {
 				varContainer "General" {
         sortOrder 1
@@ -192,9 +198,6 @@ application "Share" {
 						textVar "zicCode",
 						textVar "city",
 						textVar "state",
-						intVar "allowedPictures" {
-							value "5"
-						},
 						intVar "offersPerPage" {
 							value "10"
 						}

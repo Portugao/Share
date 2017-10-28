@@ -148,6 +148,7 @@ abstract class AbstractOfferController extends AbstractController
             new Column('zipCode'),
             new Column('meetingPlace'),
             new Column('locationOfOffer'),
+            new Column('pool'),
             new Column('latitude'),
             new Column('longitude'),
             new Column('createdBy'),

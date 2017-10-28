@@ -16,4 +16,5 @@
     <longitude>{{ offer.longitude|musharemodule_geoData }}</longitude>
     <workflowState>{{ offer.workflowState|musharemodule_objectState(false)|lower }}</workflowState>
     <locationOfOffer>{% if offer.locationOfOffer|default %}{{ offer.locationOfOffer|musharemodule_formattedTitle }}{% endif %}</locationOfOffer>
+    <pool>{% if offer.pool|default %}{{ offer.pool|musharemodule_formattedTitle }}{% endif %}</pool>
 </offer>

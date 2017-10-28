@@ -22,10 +22,10 @@
             <dt>{{ __('State') }}</dt>
             <dd>{{ location.workflowState|musharemodule_listEntry('location', 'workflowState') }}</dd>
         {% endif %}
-        {#% if location.title is not empty %}
+        {% if location.title is not empty %}
             <dt>{{ __('Title') }}</dt>
             <dd>{{ location.title }}</dd>
-        {% endif %#}
+        {% endif %}
         {% if location.street is not empty %}
             <dt>{{ __('Street') }}</dt>
             <dd>{{ location.street }}</dd>
@@ -67,19 +67,6 @@
         {% if location.longitude is not empty %}
             <dt>{{ __('Longitude') }}</dt>
             <dd>{{ location.longitude|musharemodule_geoData }}</dd>
-        {% endif %}
-        {% if location.pool|default %}
-            <dt>{{ __('Pool') }}</dt>
-            <dd>
-              {% if not isQuickView %}
-                  <a href="{{ path('musharemodule_pool_' ~ routeArea ~ 'display', {'id': location.pool.getId()}) }}">{% spaceless %}
-                    {{ location.pool|musharemodule_formattedTitle }}
-                  {% endspaceless %}</a>
-                  <a id="poolItem{{ location.pool.getKey() }}Display" href="{{ path('musharemodule_pool_' ~ routeArea ~ 'display', {'id': location.pool.getId(), raw: 1}) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="mushare-inline-window hidden" data-modal-title="{{ location.pool|musharemodule_formattedTitle|e('html_attr') }}"><i class="fa fa-id-card-o"></i></a>
-              {% else %}
-                  {{ location.pool|musharemodule_formattedTitle }}
-              {% endif %}
-            </dd>
         {% endif %}
         
     </dl>

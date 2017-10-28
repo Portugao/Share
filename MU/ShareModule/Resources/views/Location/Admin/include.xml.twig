@@ -11,7 +11,6 @@
     <latitude>{{ location.latitude|musharemodule_geoData }}</latitude>
     <longitude>{{ location.longitude|musharemodule_geoData }}</longitude>
     <workflowState>{{ location.workflowState|musharemodule_objectState(false)|lower }}</workflowState>
-    <pool>{% if location.pool|default %}{{ location.pool|musharemodule_formattedTitle }}{% endif %}</pool>
     <offerOfLocation>
     {% if location.offerOfLocation|default %}
         {% for relatedItem in location.offerOfLocation %}

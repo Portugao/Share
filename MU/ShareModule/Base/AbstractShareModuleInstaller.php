@@ -48,7 +48,6 @@ abstract class AbstractShareModuleInstaller extends AbstractExtensionInstaller
         $this->setVar('zicCode', '');
         $this->setVar('city', '');
         $this->setVar('state', '');
-        $this->setVar('allowedPictures', '5');
         $this->setVar('offersPerPage', '10');
         $this->setVar('locationEntriesPerPage', '10');
         $this->setVar('linkOwnLocationsOnAccountPage', true);

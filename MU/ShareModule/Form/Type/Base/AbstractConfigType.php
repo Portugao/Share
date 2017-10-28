@@ -126,16 +126,6 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('Enter the state.')
                 ],
             ])
-            ->add('allowedPictures', IntegerType::class, [
-                'label' => $this->__('Allowed pictures') . ':',
-                'required' => false,
-                'data' => isset($this->moduleVars['allowedPictures']) ? intval($this->moduleVars['allowedPictures']) : intval(5),
-                'empty_data' => intval('5'),
-                'attr' => [
-                    'maxlength' => 255,
-                    'title' => $this->__('Enter the allowed pictures.') . ' ' . $this->__('Only digits are allowed.')
-                ],'scale' => 0
-            ])
             ->add('offersPerPage', IntegerType::class, [
                 'label' => $this->__('Offers per page') . ':',
                 'required' => false,

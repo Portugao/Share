@@ -244,27 +244,6 @@ abstract class AbstractLocationType extends AbstractType
                 'title' => $this->__('Choose the company of location')
             ]
         ]);
-        $queryBuilder = function(EntityRepository $er) {
-            // select without joins
-            return $er->getListQueryBuilder('', '', false);
-        };
-        $entityDisplayHelper = $this->entityDisplayHelper;
-        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
-            return $entityDisplayHelper->getFormattedTitle($entity);
-        };
-        $builder->add('pool', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
-            'class' => 'MUShareModule:PoolEntity',
-            'choice_label' => $choiceLabelClosure,
-            'multiple' => false,
-            'expanded' => false,
-            'query_builder' => $queryBuilder,
-            'placeholder' => $this->__('Please choose an option'),
-            'required' => false,
-            'label' => $this->__('Pool'),
-            'attr' => [
-                'title' => $this->__('Choose the pool')
-            ]
-        ]);
     }
 
     /**

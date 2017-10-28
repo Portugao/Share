@@ -150,7 +150,7 @@ abstract class AbstractWorkflowEventsListener implements EventSubscriberInterfac
             }
             if ($objectType == 'pool') {
                 $isBlocked = false;
-                if (count($entity->getLocation()) > 0) {
+                if (count($entity->getOffers()) > 0) {
                     $isBlocked = true;
                 }
                 $event->setBlocked($isBlocked);

@@ -5,6 +5,9 @@
 {% block content %}
 <div class="musharemodule-location musharemodule-view">
 
+    <p class="alert alert-info">{{ __('You can create several locations.
+    Create locations, if they are possible places, to share stuff.') }}</p>
+
     {{ block('page_nav_links') }}
 
     {{ include('@MUShareModule/Location/Admin/viewQuickNav.html.twig') }}{# see template file for available options #}
@@ -30,7 +33,6 @@
                 <col id="cCity" />
                 <col id="cPrivate" />
                 <col id="cForMap" />
-                <col id="cPool" />
             </colgroup>
             <thead>
             <tr>
@@ -65,9 +67,6 @@
                 </th>
                 <th id="hForMap" scope="col" class="text-center">
                     <a href="{{ sort.forMap.url }}" title="{{ __f('Sort by %s', {'%s': 'for map'}) }}" class="{{ sort.forMap.class }}">{{ __('For map') }}</a>
-                </th>
-                <th id="hPool" scope="col" class="text-left">
-                    <a href="{{ sort.pool.url }}" title="{{ __f('Sort by %s', {'%s': 'pool'}) }}" class="{{ sort.pool.class }}">{{ __('Pool') }}</a>
                 </th>
             </tr>
             </thead>
@@ -119,20 +118,10 @@
                         <i class="fa fa-times" title="{{ __('No') }}"></i>
                     {% endif %}
                 </td>
-                <td headers="hPool" class="text-left">
-                    {% if location.pool|default %}
-                        <a href="{{ path('musharemodule_pool_' ~ routeArea ~ 'display', {'id': location.pool.getId()}) }}">{% spaceless %}
-                          {{ location.pool|musharemodule_formattedTitle }}
-                        {% endspaceless %}</a>
-                        <a id="poolItem{{ location.getKey() }}_rel_{{ location.pool.getKey() }}Display" href="{{ path('musharemodule_pool_' ~ routeArea ~ 'display', {'id': location.pool.getId(), raw: 1}) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="mushare-inline-window hidden" data-modal-title="{{ location.pool|musharemodule_formattedTitle|e('html_attr') }}"><i class="fa fa-id-card-o"></i></a>
-                    {% else %}
-                        {{ __('Not set.') }}
-                    {% endif %}
-                </td>
             </tr>
         {% else %}
             <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
-                <td class="text-left" colspan="{% if routeArea == 'admin' %}11{% else %}10{% endif %}">
+                <td class="text-left" colspan="{% if routeArea == 'admin' %}10{% else %}9{% endif %}">
             {{ __('No locations found.') }}
               </td>
             </tr>

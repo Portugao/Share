@@ -14,14 +14,11 @@ namespace MU\ShareModule\Form\Handler\Location;
 
 use MU\ShareModule\Form\Handler\Location\Base\AbstractEditHandler;
 
-use RuntimeException;
-use ServiceUtil;
-
 /**
  * This handler class handles the page events of editing forms.
  * It aims on the location object type.
  */
 class EditHandler extends AbstractEditHandler
 {
-
+    // feel free to extend the base handler class here
 }

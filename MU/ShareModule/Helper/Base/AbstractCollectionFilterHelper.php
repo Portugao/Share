@@ -168,7 +168,6 @@ abstract class AbstractCollectionFilterHelper
         }
     
         $parameters['companyOfLocation'] = $this->request->query->get('companyOfLocation', 0);
-        $parameters['pool'] = $this->request->query->get('pool', 0);
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
         $parameters['q'] = $this->request->query->get('q', '');
         $parameters['private'] = $this->request->query->get('private', '');
@@ -195,6 +194,7 @@ abstract class AbstractCollectionFilterHelper
         $parameters['catId'] = $this->request->query->get('catId', '');
         $parameters['catIdList'] = $this->categoryHelper->retrieveCategoriesFromRequest('offer', 'GET');
         $parameters['locationOfOffer'] = $this->request->query->get('locationOfOffer', 0);
+        $parameters['pool'] = $this->request->query->get('pool', 0);
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
         $parameters['period'] = $this->request->query->get('period', '');
         $parameters['q'] = $this->request->query->get('q', '');

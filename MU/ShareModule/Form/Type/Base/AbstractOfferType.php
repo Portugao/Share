@@ -140,7 +140,11 @@ abstract class AbstractOfferType extends AbstractType
         
         $builder->add('description', TextareaType::class, [
             'label' => $this->__('Description') . ':',
-            'help' => $this->__f('Note: this value must not exceed %amount% characters.', ['%amount%' => 4000]),
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Enter a description of your offer if it could be helpful!')
+            ],
+            'help' => [$this->__('Enter a description of your offer if it could be helpful!'), $this->__f('Note: this value must not exceed %amount% characters.', ['%amount%' => 4000])],
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 4000,
@@ -166,6 +170,11 @@ abstract class AbstractOfferType extends AbstractType
         
         $builder->add('abo', CheckboxType::class, [
             'label' => $this->__('Abo') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Do you have an abo of your offer?')
+            ],
+            'help' => $this->__('Do you have an abo of your offer?'),
             'attr' => [
                 'class' => '',
                 'title' => $this->__('abo ?')
@@ -182,7 +191,7 @@ abstract class AbstractOfferType extends AbstractType
         }
         $builder->add('period', ChoiceType::class, [
             'label' => $this->__('Period') . ':',
-            'empty_data' => 'not set',
+            'empty_data' => '',
             'attr' => [
                 'class' => '',
                 'title' => $this->__('Choose the period')
@@ -262,9 +271,9 @@ abstract class AbstractOfferType extends AbstractType
             'label' => $this->__('Meeting place') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
-                'title' => $this->__('Enter the street (and number) for the meeting lce')
+                'title' => $this->__('Enter the street (and number) for the meeting place!')
             ],
-            'help' => $this->__('Enter the street (and number) for the meeting lce'),
+            'help' => $this->__('Enter the street (and number) for the meeting place!'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 255,
@@ -343,6 +352,27 @@ abstract class AbstractOfferType extends AbstractType
             'label' => $this->__('Location of offer'),
             'attr' => [
                 'title' => $this->__('Choose the location of offer')
+            ]
+        ]);
+        $queryBuilder = function(EntityRepository $er) {
+            // select without joins
+            return $er->getListQueryBuilder('', '', false);
+        };
+        $entityDisplayHelper = $this->entityDisplayHelper;
+        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
+            return $entityDisplayHelper->getFormattedTitle($entity);
+        };
+        $builder->add('pool', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
+            'class' => 'MUShareModule:PoolEntity',
+            'choice_label' => $choiceLabelClosure,
+            'multiple' => false,
+            'expanded' => false,
+            'query_builder' => $queryBuilder,
+            'placeholder' => $this->__('Please choose an option'),
+            'required' => false,
+            'label' => $this->__('Pool'),
+            'attr' => [
+                'title' => $this->__('Choose the pool')
             ]
         ]);
     }

@@ -653,7 +653,7 @@ abstract class AbstractLocationRepository extends EntityRepository
      */
     protected function addJoinsToSelection()
     {
-        $selection = ', tblCompanyOfLocation, tblPool, tblOfferOfLocation';
+        $selection = ', tblCompanyOfLocation, tblOfferOfLocation';
     
         return $selection;
     }
@@ -668,7 +668,6 @@ abstract class AbstractLocationRepository extends EntityRepository
     protected function addJoinsToFrom(QueryBuilder $qb)
     {
         $qb->leftJoin('tbl.companyOfLocation', 'tblCompanyOfLocation');
-        $qb->leftJoin('tbl.pool', 'tblPool');
         $qb->leftJoin('tbl.offerOfLocation', 'tblOfferOfLocation');
     
         return $qb;

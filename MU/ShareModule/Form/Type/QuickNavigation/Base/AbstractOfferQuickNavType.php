@@ -172,6 +172,20 @@ abstract class AbstractOfferQuickNavType extends AbstractType
                 'class' => 'input-sm'
             ]
         ]);
+        $entityDisplayHelper = $this->entityDisplayHelper;
+        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
+            return $entityDisplayHelper->getFormattedTitle($entity);
+        };
+        $builder->add('pool', EntityType::class, [
+            'class' => 'MUShareModule:PoolEntity',
+            'choice_label' => $choiceLabelClosure,
+            'placeholder' => $this->__('All'),
+            'required' => false,
+            'label' => $this->__('Pool'),
+            'attr' => [
+                'class' => 'input-sm'
+            ]
+        ]);
     
         if ($mainSearchTerm != '') {
             // readd current search argument

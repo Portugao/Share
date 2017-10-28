@@ -144,7 +144,6 @@ abstract class AbstractLocationController extends AbstractController
             new Column('city'),
             new Column('private'),
             new Column('forMap'),
-            new Column('pool'),
             new Column('latitude'),
             new Column('longitude'),
             new Column('createdBy'),
