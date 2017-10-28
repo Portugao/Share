@@ -13,11 +13,154 @@
 namespace MU\ShareModule\Container;
 
 use MU\ShareModule\Container\Base\AbstractLinkContainer;
+use Zikula\Core\LinkContainer\LinkContainerInterface;
+
 
 /**
  * This is the link container service implementation class.
  */
 class LinkContainer extends AbstractLinkContainer
 {
-    // feel free to add own extensions here
+    /**
+     * Returns available header links.
+     *
+     * @param string $type The type to collect links for
+     *
+     * @return array Array of header links
+     */
+    public function getLinks($type = LinkContainerInterface::TYPE_ADMIN)
+    {
+        $contextArgs = ['api' => 'linkContainer', 'action' => 'getLinks'];
+        $allowedObjectTypes = $this->controllerHelper->getObjectTypes('api', $contextArgs);
+
+        $permLevel = LinkContainerInterface::TYPE_ADMIN == $type ? ACCESS_ADMIN : ACCESS_READ;
+
+        // Create an array of links to return
+        $links = [];
+
+        if (LinkContainerInterface::TYPE_ACCOUNT == $type) {
+            if (!$this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_OVERVIEW)) {
+                return $links;
+            }
+
+            if (true === $this->variableApi->get('MUShareModule', 'linkOwnLocationsOnAccountPage', true)) {
+                $objectType = 'location';
+                if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
+                    $links[] = [
+                        'url' => $this->router->generate('musharemodule_' . strtolower($objectType) . '_view', ['own' => 1]),
+                        'text' => $this->__('My locations', 'musharemodule'),
+                        'icon' => 'list-alt'
+                    ];
+                }
+            }
+
+            if (true === $this->variableApi->get('MUShareModule', 'linkOwnOffersOnAccountPage', true)) {
+                $objectType = 'offer';
+                if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
+                    $links[] = [
+                        'url' => $this->router->generate('musharemodule_' . strtolower($objectType) . '_view', ['own' => 1]),
+                        'text' => $this->__('My offers', 'musharemodule'),
+                        'icon' => 'list-alt'
+                    ];
+                }
+            }
+
+            if (true === $this->variableApi->get('MUShareModule', 'linkOwnPoolsOnAccountPage', true)) {
+                $objectType = 'pool';
+                if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
+                    $links[] = [
+                        'url' => $this->router->generate('musharemodule_' . strtolower($objectType) . '_view', ['own' => 1]),
+                        'text' => $this->__('My pools', 'musharemodule'),
+                        'icon' => 'list-alt'
+                    ];
+                }
+            }
+
+            if (true === $this->variableApi->get('MUShareModule', 'linkOwnCompaniesOnAccountPage', true)) {
+                $objectType = 'company';
+                if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
+                    $links[] = [
+                        'url' => $this->router->generate('musharemodule_' . strtolower($objectType) . '_view', ['own' => 1]),
+                        'text' => $this->__('My companies', 'musharemodule'),
+                        'icon' => 'list-alt'
+                    ];
+                }
+            }
+
+            if ($this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {
+                $links[] = [
+                    'url' => $this->router->generate('musharemodule_location_adminindex'),
+                    'text' => $this->__('Share Backend', 'musharemodule'),
+                    'icon' => 'wrench'
+                ];
+            }
+
+
+            return $links;
+        }
+
+        $routeArea = LinkContainerInterface::TYPE_ADMIN == $type ? 'admin' : '';
+        if (LinkContainerInterface::TYPE_ADMIN == $type) {
+            if ($this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_READ)) {
+                $links[] = [
+                    'url' => $this->router->generate('musharemodule_location_index'),
+                    'text' => $this->__('Frontend', 'musharemodule'),
+                    'title' => $this->__('Switch to user area.', 'musharemodule'),
+                    'icon' => 'home'
+                ];
+            }
+        } else {
+            if ($this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {
+                $links[] = [
+                    'url' => $this->router->generate('musharemodule_location_adminindex'),
+                    'text' => $this->__('Backend', 'musharemodule'),
+                    'title' => $this->__('Switch to administration area.', 'musharemodule'),
+                    'icon' => 'wrench'
+                ];
+            }
+        }
+        
+        if (in_array('location', $allowedObjectTypes)
+            && $this->permissionApi->hasPermission($this->getBundleName() . ':Location:', '::', $permLevel)) {
+            $links[] = [
+                'url' => $this->router->generate('musharemodule_location_' . $routeArea . 'view'),
+                'text' => $this->__('Map', 'musharemodule'),
+                'title' => $this->__('Map for sharing and finding paper', 'musharemodule')
+            ];
+        }
+        if (in_array('offer', $allowedObjectTypes)
+            && $this->permissionApi->hasPermission($this->getBundleName() . ':Offer:', '::', $permLevel)) {
+            $links[] = [
+                'url' => $this->router->generate('musharemodule_offer_' . $routeArea . 'view', array('own' => 1)),
+                'text' => $this->__('Your offers', 'musharemodule'),
+                'title' => $this->__('The list of your offers', 'musharemodule')
+            ];
+        }
+        if ($routeArea == 'admin' && in_array('pool', $allowedObjectTypes)
+            && $this->permissionApi->hasPermission($this->getBundleName() . ':Pool:', '::', $permLevel)) {
+            $links[] = [
+                'url' => $this->router->generate('musharemodule_pool_' . $routeArea . 'view'),
+                'text' => $this->__('Pools', 'musharemodule'),
+                'title' => $this->__('Pools list', 'musharemodule')
+            ];
+        }
+        if ($routeArea == 'admin' && in_array('company', $allowedObjectTypes)
+            && $this->permissionApi->hasPermission($this->getBundleName() . ':Company:', '::', $permLevel)) {
+            $links[] = [
+                'url' => $this->router->generate('musharemodule_company_' . $routeArea . 'view'),
+                'text' => $this->__('Companies', 'musharemodule'),
+                'title' => $this->__('Companies list', 'musharemodule')
+            ];
+        }
+        if ($routeArea == 'admin' && $this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {
+            $links[] = [
+                'url' => $this->router->generate('musharemodule_config_config'),
+                'text' => $this->__('Configuration', 'musharemodule'),
+                'title' => $this->__('Manage settings for this application', 'musharemodule'),
+                'icon' => 'wrench'
+            ];
+        }
+
+        return $links;
+    }
 }
