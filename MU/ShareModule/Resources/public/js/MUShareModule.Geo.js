@@ -5,6 +5,8 @@ var marker;
 var circle;
 var popup;
 var offerdescription;
+var latitude = '';
+var longitude = '';
 
 /**
  * Initialises geographical display features.
@@ -52,14 +54,14 @@ function mUShareInitGeographicalView(parameters, isEditMode)
         attribution: parameters.tileLayerAttribution
     }).addTo(map);
     
-    /*jQuery('.marker-data').each(function (index) {
+    jQuery('.marker-data').each(function (index) {
         
     // add a marker
     marker = new L.marker([elem.data('latitude'), elem.data('longitude')], {
         draggable: isEditMode
     });
     marker.addTo(map);
-    });*/
+    });
     
     circle = L.circle([parameters.latitude , parameters.latitude] , {radius:500} , {
     	color : 'red',
@@ -68,7 +70,33 @@ function mUShareInitGeographicalView(parameters, isEditMode)
     	}).addTo(map);
 
     
-    jQuery('.offer-data').each(function (index) {
+    
+    jQuery('.poolLocation-data').each(function (index) {
+        
+    	if(jQuery(this).attr('data-latitude') != latitude && jQuery(this).attr('data-longitude') != longitude) {
+    	
+        // add a marker
+        marker = new L.marker([jQuery(this).attr('data-latitude'), jQuery(this).attr('data-longitude')], {
+            draggable: isEditMode
+        });
+        marker.addTo(map);
+    	}
+        if(jQuery(this).attr('data-description') != '') {
+        	offerdescription = jQuery(this).attr('data-description');
+        } else {
+        	offerdescription = '';
+        }
+        
+        markertext = markertext;
+        
+   
+        });
+    
+        marker.bindPopup(jQuery(this).attr('data-product') + '<br />' + offerdescription);
+    
+    
+    
+    /*jQuery('.offer-data').each(function (index) {
         
     // add a marker
     marker = new L.marker([jQuery(this).attr('data-latitude'), jQuery(this).attr('data-longitude')], {
@@ -86,7 +114,7 @@ function mUShareInitGeographicalView(parameters, isEditMode)
         .setLatLng([jQuery(this).attr('data-latitude') , jQuery(this).attr('data-longitude')])
         .setContent("Ich bin ein alleinstehendes Popup !")
         .openOn(map;*/    
-    });
+    //});
 
     jQuery('#tabMap').on('shown.bs.tab', function () {
         // redraw the map after it's tab has been opened

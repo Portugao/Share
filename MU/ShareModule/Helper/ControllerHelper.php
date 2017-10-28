@@ -16,7 +16,7 @@ use MU\ShareModule\Helper\Base\AbstractControllerHelper;
 
 use Zikula\Component\SortableColumns\SortableColumns;
 use Zikula\Core\RouteUrl;
-use UserUtil;
+use ServiceUtil;
 
 /**
  * Helper implementation class for controller layer methods.
@@ -143,6 +143,8 @@ class ControllerHelper extends AbstractControllerHelper
         
         // own code
         if ($objectType == 'location' && $templateParameters['routeArea'] == '') {
+        	
+        	$offerRespository = $this->entityFactory->getRepository('offer');
         	$where = 'tbl.createdBy = ' . $uid;
         	$where .= ' AND ';
         	$where .= 'tbl.forMap = 1';
@@ -156,20 +158,113 @@ class ControllerHelper extends AbstractControllerHelper
         		return System::redirect($redirecturl);
         	}
         	$templateParameters['myLocation'] = $myLocation[0];
-        	// we get offers for the location of the user within his set radius
-        	// standard radius
-        	$radius = 3000;
         	
-        	$offerRepository = $this->entityFactory->getRepository('offer');
-        	$where2 = 'tbl.isOpen = 1';
-        	$offers = $offerRepository->selectWhere($where2);
+        	// radius is the radius set by the actual user
+        	$radius = 3000;
 
-        	$templateParameters['offers'] = $offers;
+        	// the single offers, that have no other offers entity with
+        	// the same lat and longitude
+        	$where2 = 'tbl.createdBy != ' . $uid;
+        	$where2 .= ' AND ';
+        	$where2 .= 'tbl.isOpen = 1';
+        	$where2 .= ' AND ';
+        	$where2 .= 'tbl.pool is NULL'; 
+        	/*$where2 .= ' AND ';
+        	$where2 .= 'tbl.city = ' . $myLocation[0]['city'];*/
+
+        	// we get all single locations
+        	$singleOffers = $repository->selectWhere($where2);
+
+        	if ($singleOffers) {
+        	// we check the distance for each found location
+        	foreach ($singleOffers as $singleOffer) {
+        		$distance = acos(sin(deg2rad($singleOffer['latitude']))*sin(deg2rad($myLocation[0]['latitude']))+cos(deg2rad($singleOffer['latitude']))*cos(deg2rad($myLocation[0]['latitude']))*cos(deg2rad($singleOffer['longitude']) - deg2rad($myLocation[0]['longitude'])))*6375;
+
+        		if ($distance <= $radius/1000) {
+            		$relevantSingleOffers[] = $singleOffer;
+        		}
+        	}
+        	$templateParameters[singleOffers] = $relevantSingleOffers; 
+        	}
+        	
+        	// we get Offers in pools
+        	$where3 = 'tbl.createdBy != ' . $uid;
+        	$where3 .= ' AND ';
+        	$where3 .= 'tbl.isOpen = 1';
+        	$where3 .= ' AND ';
+        	$where3 .= 'tbl.pool is not NULL';
+        	
+        	// we get all pool locations
+        	$poolOffers = $repository->selectWhere($where3);
+
+        	if ($poolOffers) {
+        		// we check the distance for each found Offer
+        		foreach ($poolOffers as $poolOffer) {
+        			$distance = acos(sin(deg2rad($poolOffer['latitude']))*sin(deg2rad($myLocation[0]['latitude']))+cos(deg2rad($poolOffer['latitude']))*cos(deg2rad($myLocation[0]['latitude']))*cos(deg2rad($poolOffer['longitude']) - deg2rad($myLocation[0]['longitude'])))*6375;
+        	
+        			if ($distance <= $radius/1000) {
+                    	$relevantPoolOffers[] = $poolOffer;
+        			}
+        		}
+        		$pools = array();
+        		foreach ($relevantPoolOffers as $relevantPoolOffer) {
+        			if (!in_array($relevantPoolOffer['pool'], $pools)) {
+        				$pools[] = $relevantPoolOffer['pool'];
+        			}     			
+        		}
+
+        	}
+        	
+        	// we work with pools   	
+        	$templateParameters['pools'] = $pools;
+        	
+        	/*$offerRepository = $this->entityFactory->getRepository('offer');
+        	$where4 = 'tbl.isOpen = 1';
+        	$offers = $offerRepository->selectWhere($where4);
+
+        	$templateParameters['offers'] = $offers;*/
         	$templateParameters['radius'] = $radius;
         }
     
         $templateParameters['canBeCreated'] = $this->modelHelper->canBeCreated($objectType);
     
         return $templateParameters;
+    }
+    
+    /**
+     * Processes the parameters for a display action.
+     *
+     * @param string  $objectType         Name of treated entity type
+     * @param array   $templateParameters Template data
+     * @param boolean $hasHookSubscriber  Whether hook subscribers are supported or not
+     *
+     * @return array Enriched template parameters used for creating the response
+     */
+    public function processDisplayActionParameters($objectType, array $templateParameters = [], $hasHookSubscriber = false)
+    {
+    	$contextArgs = ['controller' => $objectType, 'action' => 'display'];
+    	if (!in_array($objectType, $this->getObjectTypes('controllerAction', $contextArgs))) {
+    		throw new \Exception($this->__('Error! Invalid object type received.'));
+    	}
+    
+    	if (true === $hasHookSubscriber) {
+    		// build RouteUrl instance for display hooks
+    		$entity = $templateParameters[$objectType];
+    		$urlParameters = $entity->createUrlArgs();
+    		$urlParameters['_locale'] = $this->request->getLocale();
+    		$templateParameters['currentUrlObject'] = new RouteUrl('musharemodule_' . strtolower($objectType) . '_display', $urlParameters);
+    	}
+    	
+    	if ($objectType == 'location' && $templateParameters['routeArea'] != 'admin') {
+    		$uid = $this->currentUserApi->get('uid');
+    		if ($entity['createdBy'] != $uid) {
+    			$url = new RouteUrl('musharemodule_location_view');
+    			$serviceContainer = \ServiceUtil::getService();
+    			$serviceContainer->get('mu'); //TODO
+    			
+    		}
+    	}
+    
+    	return $this->addTemplateParameters($objectType, $templateParameters, 'controllerAction', $contextArgs);
     }
 }

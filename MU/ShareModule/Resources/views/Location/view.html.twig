@@ -1,6 +1,6 @@
 {# purpose of this template: locations user list view #}
 {% extends 'MUShareModule::base.html.twig' %}
-{% block title own ? __('My locations') : __('Locations list') %}
+{% block title own ? __('My locations') : __('Share paper') %}
 {% block content %}
 <div class="musharemodule-location musharemodule-view">
 
@@ -14,8 +14,7 @@
     {% endif %}
     
     <h3 class="musharemodule-map">{{ __('Map of your location set for the map and offers') }}</h3>
-    <div id="mapContainer" class="musharemodule-mapcontainer">
-    </div>
+    <div id="mapContainer" class="musharemodule-mapcontainer"></div>
     
         <div class="table-responsive">
         <h3>{{ __('Offers in the radius you set for your locations') }}</h3>
@@ -86,7 +85,7 @@
             </thead>
             <tbody>
         
-        {% for offer in offers %}
+        {# % for offer in offers %}
             <tr>
                 {% if routeArea == 'admin' %}
                     <td headers="hSelect" class="fixed-column text-center z-w02">
@@ -157,7 +156,7 @@
                 <td headers="hMeetingPlace" class="text-left">
                     {{ offer.meetingPlace }}
                 </td>
-                {#<td headers="hLocationOfOffer" class="text-left">
+                {<td headers="hLocationOfOffer" class="text-left">
                     {% if offer.locationOfOffer|default %}
                         <a href="{{ path('musharemodule_location_' ~ routeArea ~ 'display', {'id': offer.locationOfOffer.getId()}) }}">{% spaceless %}
                           {{ offer.locationOfOffer|musharemodule_formattedTitle }}
@@ -166,7 +165,7 @@
                     {% else %}
                         {{ __('Not set.') }}
                     {% endif %}
-                </td>#}
+                </td>}
             </tr>
         {% else %}
             <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
@@ -174,7 +173,7 @@
             {{ __('No offers found.') }}
               </td>
             </tr>
-        {% endfor %}
+        {% endfor %} #}
         
             </tbody>
         </table>
@@ -334,13 +333,28 @@
     {% set pathToLeaflet = zasset('@MUShareModule:css/style.css')|replace({'Resources/public/css/style.css': ''}) ~ 'vendor/drmonty/leaflet/' %}
     {{ pageAddAsset('stylesheet', pathToLeaflet ~ 'css/leaflet.css') }}
     {{ pageAddAsset('javascript', pathToLeaflet ~ 'js/leaflet' ~ (app.environment == 'dev' ? '' : '.min') ~ '.js') }}
-    <div id="geographicalInfo" class="hidden" data-context="view" data-latitude="{{ myLocation.latitude|musharemodule_geoData }}" data-longitude="{{ myLocation.longitude|musharemodule_geoData }}" data-zoom-level="{{ getModVar('MUShareModule', 'defaultZoomLevel', 18) }}" data-tile-layer-url="{{ getModVar('MUShareModule', 'tileLayerUrl') }}" data-tile-layer-attribution="{{ getModVar('MUShareModule', 'tileLayerAttribution') }}"></div>
-    {#% for location in items %}
-    <div class="marker-data hidden" data-radius={{ radius }} data-latitude="{{ location.latitude|musharemodule_geoData }}" data-longitude="{{ location.longitude|musharemodule_geoData }}"></div>    
-    {% endfor %#}
-    {% for offer in offers %}
-    <div class="offer-data hidden" data-product={{ offer.product }} data-description={{ offer.description }} data-atMe={{ offer.atMe }} data-offer-location-latitude={{ offer.locationOfOffer.latitude }} data-offer-location-longitude={{ offer.locationOfOffer.longitude }} data-latitude="{{ offer.latitude|musharemodule_geoData }}" data-longitude="{{ offer.longitude|musharemodule_geoData }}"></div>    
+    <div id="geographicalInfo" class="hidden" data-radius={{ radius }} data-context="view" data-latitude="{{ myLocation.latitude|musharemodule_geoData }}" data-longitude="{{ myLocation.longitude|musharemodule_geoData }}" data-zoom-level="{{ getModVar('MUShareModule', 'defaultZoomLevel', 18) }}" data-tile-layer-url="{{ getModVar('MUShareModule', 'tileLayerUrl') }}" data-tile-layer-attribution="{{ getModVar('MUShareModule', 'tileLayerAttribution') }}"></div>
+    {% if singlelocations is defined %}
+    {% for location in singleLocations %}
+    <div class="marker-data hidden" data-latitude="{{ location.latitude|musharemodule_geoData }}" data-longitude="{{ location.longitude|musharemodule_geoData }}"></div>    
     {% endfor %}
+    {% endif %}
+    {% if pools is defined %}
+    {% for pool in pools %}
+        {% if pool.offer is defined %}
+            {% for poolOffer in pool.offer %}
+            {% if loop.first %}
+                {% set poolLatitude = poolLocation.latitude %}
+                {% set poolLongitude = poolLocation.longitude %}
+            {% endif %}
+                <div class="poolOffer-data hidden" data-description="{{ poolLocation.description }}" data-latitude="{{ poolLocation.latitude|musharemodule_geoData }}" data-longitude="{{ poolLocation.longitude|musharemodule_geoData }}"></div>
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+    {% endif %}
+    {#% for offer in offers %}
+    <div class="offer-data hidden" data-product="{{ offer.product }}" data-description="{{ offer.description }}" data-atMe={{ offer.atMe }} data-offer-location-latitude={{ offer.locationOfOffer.latitude }} data-offer-location-longitude={{ offer.locationOfOffer.longitude }} data-latitude="{{ offer.latitude|musharemodule_geoData }}" data-longitude="{{ offer.longitude|musharemodule_geoData }}"></div>    
+    {% endfor %#}
     
 </div>
 {% endblock %}

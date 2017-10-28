@@ -20,5 +20,105 @@ use MU\ShareModule\Form\Handler\Offer\Base\AbstractEditHandler;
  */
 class EditHandler extends AbstractEditHandler
 {
-    // feel free to extend the base handler class here
+    /**
+     * This method executes a certain workflow action.
+     *
+     * @param array $args Arguments from handleCommand method
+     *
+     * @return bool Whether everything worked well or not
+     *
+     * @throws RuntimeException Thrown if concurrent editing is recognised or another error occurs
+     */
+    public function applyAction(array $args = [])
+    {
+        // get treated entity reference from persisted member var
+        $entity = $this->entityRef;
+        
+        // we get actual user id
+        $uid = $this->currentUserApi->get('uid');
+        
+        // we look for location with the same latitude and longitude
+        $offerRespository = $this->entityFactory->getRepository('offer');
+        
+        $where = 'tbl.latitude = ' . $entity['latitude'];
+        $where .= ' AND ';
+        $where .= 'tbl.longitude = ' . $entity['longitude'];
+        $where .= ' AND ';
+        $where .= 'tbl.createdBy != ' . $uid;
+        
+        $offer = $offerRespository->selectWhere($where);
+        // if a same location is there, we redirect
+        if (count($location) >= 1) {
+        	$this->getErrorUrl;
+        	return new RedirectResponse($this->getErrorUrl(), 302);
+        }
+    
+        $action = $args['commandName'];
+    
+        $success = false;
+        $flashBag = $this->request->getSession()->getFlashBag();
+        try {
+            // execute the workflow action
+            $success = $this->workflowHelper->executeAction($entity, $action);
+        } catch (\Exception $exception) {
+            $flashBag->add('error', $this->__f('Sorry, but an error occured during the %action% action. Please apply the changes again!', ['%action%' => $action]) . ' ' . $exception->getMessage());
+            $logArgs = ['app' => 'MUShareModule', 'user' => $this->currentUserApi->get('uname'), 'entity' => 'location', 'id' => $entity->getKey(), 'errorMessage' => $exception->getMessage()];
+            $this->logger->error('{app}: User {user} tried to edit the {entity} with id {id}, but failed. Error details: {errorMessage}.', $logArgs);
+        }
+    
+        $this->addDefaultMessage($args, $success);
+    
+        if ($success && $this->templateParameters['mode'] == 'create') {
+            // store new identifier
+            $this->idValue = $entity->getKey();
+        }
+        if ($success) {
+        	$poolRespository = $this->entityFactory->getRepository('pool');      	
+            // we get serviceManager
+            $serviceManager = \ServiceUtil::getManager();
+            // we get entityManager
+            $entityManager = $serviceManager->getService('doctrine.entitymanager');
+        	$where2 = 'tbl.latitude = ' . $entity['latitude'];
+        	$where2 .= ' AND ';
+        	$where2 .= 'tbl.longitude = ' . $entity['longitude'];
+        	/*$where .= ' AND ';
+        	$where .= 'tbl.createdBy != ' . $uid;*/
+        	
+        	$sameOffers = $offerRespository->selectWhere($where2);
+        	if (count($sameOffers) > 0) {
+        		//$pool = $this->entityFactory->createPool();
+        		if (count($sameOffers) > 1) {
+        			$existingPool = $sameOffers[0]['pool'];
+        			$entity->setPool($existingPool);
+        			$entityManager->flush();
+        			
+        		} else {
+        			$pool = $this->entityFactory->createPool();
+        			$pool->setCollectionOfPool(date('d.F.Y - G:s'));
+        			$pool->setWorkflowState('approved');
+        			$entityManager->flush();
+        			$entityManager->persist($pool);
+        			foreach ($sameOffers as $sameOffer) {
+        				$thisOffer = $locationRespository->find($sameOffer['id']);
+        				$thisOffer->setPool($pool);
+        				$entityManager->flush();
+        			}
+        		}
+        	}
+        }
+    
+        return $success;
+    }
+    
+    /**
+     * Get error url to redirect to.
+     *
+     *
+     * @return string The redirect url
+     */
+    protected function getErrorUrl()
+    {   
+        // redirect to the list of locations
+         $url = $this->router->generate('musharemodule_location_view');
+    }
 }
