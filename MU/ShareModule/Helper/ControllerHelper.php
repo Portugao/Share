@@ -108,7 +108,7 @@ class ControllerHelper extends AbstractControllerHelper
         $sortdir = $sortableColumns->getSortDirection();
         $sortableColumns->setAdditionalUrlParameters($urlParameters);
     
-        $uid = \UserUtil::getVar('uid');
+        $uid = $this->currentUserApi->get('uid');
         $where = 'tbl.createdBy = ' . $uid;
         if ($templateParameters['all'] == 1) {
             // retrieve item list without pagination
@@ -144,7 +144,7 @@ class ControllerHelper extends AbstractControllerHelper
         // own code
         if ($objectType == 'location' && $templateParameters['routeArea'] == '') {
         	
-        	$offerRespository = $this->entityFactory->getRepository('offer');
+        	$offerRepository = $this->entityFactory->getRepository('offer');
         	$where = 'tbl.createdBy = ' . $uid;
         	$where .= ' AND ';
         	$where .= 'tbl.forMap = 1';
@@ -157,10 +157,21 @@ class ControllerHelper extends AbstractControllerHelper
         		$redirecturl = ModUtil::url($this->name, 'user', 'view', array('ot' => 'location', 'own' => 1));
         		return System::redirect($redirecturl);
         	}
-        	$templateParameters['myLocation'] = $myLocation[0];
+        	if (!isset($myLocation)) {
+        		$this->logger->info(__('Uups. You have more than one private location activated for the map. Please edit your locations so only one is activated for the map view!'));
+        		//LogUtil::registerError(__('Uups. You have more than one private location activated for the map. Please edit your locations so only one is activated for the map view!', $dom));
+        		$redirecturl = ModUtil::url($this->name, 'user', 'view', array('ot' => 'location', 'own' => 1));
+        		return System::redirect($redirecturl);
+        	}
+        	if ($myLocation) {
+        	    $templateParameters['myLocation'] = $myLocation[0];
+        	} else {
+        		$templateParameters['defaultLatitude'] = $this->variableApi->get('MUShareModule', 'defaultLatitude');
+        		$templateParameters['defaultLongitude'] = $this->variableApi->get('MUShareModule', 'defaultLongitude');
+        	}
         	
-        	// radius is the radius set by the actual user
-        	$radius = 3000;
+        	// radius is the radius set by the actual user, standard setting
+        	$radius = 1000;
 
         	// the single offers, that have no other offers entity with
         	// the same lat and longitude
@@ -172,8 +183,8 @@ class ControllerHelper extends AbstractControllerHelper
         	/*$where2 .= ' AND ';
         	$where2 .= 'tbl.city = ' . $myLocation[0]['city'];*/
 
-        	// we get all single locations
-        	$singleOffers = $repository->selectWhere($where2);
+        	// we get all single offers
+        	$singleOffers = $offerRepository->selectWhere($where2);
 
         	if ($singleOffers) {
         	// we check the distance for each found location
@@ -184,7 +195,8 @@ class ControllerHelper extends AbstractControllerHelper
             		$relevantSingleOffers[] = $singleOffer;
         		}
         	}
-        	$templateParameters[singleOffers] = $relevantSingleOffers; 
+        	if ($relevantSingleOffers)
+        	$templateParameters['singleOffers'] = $relevantSingleOffers; 
         	}
         	
         	// we get Offers in pools
@@ -194,8 +206,8 @@ class ControllerHelper extends AbstractControllerHelper
         	$where3 .= ' AND ';
         	$where3 .= 'tbl.pool is not NULL';
         	
-        	// we get all pool locations
-        	$poolOffers = $repository->selectWhere($where3);
+        	// we get all pool offers
+        	$poolOffers = $offerRepository->selectWhere($where3);
 
         	if ($poolOffers) {
         		// we check the distance for each found Offer
@@ -215,8 +227,10 @@ class ControllerHelper extends AbstractControllerHelper
 
         	}
         	
-        	// we work with pools   	
-        	$templateParameters['pools'] = $pools;
+        	// we work with pools 
+        	if (isset($pools)) {
+        	    $templateParameters['pools'] = $pools;
+        	}
         	
         	/*$offerRepository = $this->entityFactory->getRepository('offer');
         	$where4 = 'tbl.isOpen = 1';
