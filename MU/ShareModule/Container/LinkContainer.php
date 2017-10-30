@@ -119,21 +119,36 @@ class LinkContainer extends AbstractLinkContainer
                 ];
             }
         }
-        
+        if ($routeArea != 'admin') {
+        	$locationText = $this->__('Map', 'musharemodule');
+        	$locationTitle = $this->__('Map for sharing and finding paper', 'musharemodule');
+        } else {
+        	$locationText = $this->__('Locations', 'musharemodule');
+        	$locationTitle = $this->__('List of locations', 'musharemodule');
+        }        
         if (in_array('location', $allowedObjectTypes)
             && $this->permissionApi->hasPermission($this->getBundleName() . ':Location:', '::', $permLevel)) {
             $links[] = [
                 'url' => $this->router->generate('musharemodule_location_' . $routeArea . 'view'),
-                'text' => $this->__('Map', 'musharemodule'),
-                'title' => $this->__('Map for sharing and finding paper', 'musharemodule')
+                'text' => $locationText,
+                'title' => $locationTitle
             ];
+        }
+        if ($routeArea != 'admin') {
+        	$offerText = $this->__('Your offers', 'musharemodule');
+        	$offerTitle = $this->__('The list of your offers', 'musharemodule');
+        	$offerUrl = $this->router->generate('musharemodule_offer_' . $routeArea . 'view', array('own' => 1));
+        } else {
+        	$offerText = $this->__('Offers', 'musharemodule');
+        	$offerTitle = $this->__('List of offers', 'musharemodule');
+        	$offerUrl = $this->router->generate('musharemodule_offer_' . $routeArea . 'view');
         }
         if (in_array('offer', $allowedObjectTypes)
             && $this->permissionApi->hasPermission($this->getBundleName() . ':Offer:', '::', $permLevel)) {
             $links[] = [
-                'url' => $this->router->generate('musharemodule_offer_' . $routeArea . 'view', array('own' => 1)),
-                'text' => $this->__('Your offers', 'musharemodule'),
-                'title' => $this->__('The list of your offers', 'musharemodule')
+                'url' => $offerUrl,
+                'text' => $offerText,
+                'title' => $offerTitle
             ];
         }
         if ($routeArea == 'admin' && in_array('pool', $allowedObjectTypes)
