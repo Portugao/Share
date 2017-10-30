@@ -14,10 +14,14 @@
     {% endif %}
     
     <h3 class="musharemodule-map">{{ __('Map of your location set for the map and offers') }}</h3>
-    <div id="mapContainer" class="musharemodule-mapcontainer"></div>
+    {% if myLocation is defined %}
     
+    {% else %}
+        <div class="alert alert-info">{{ __('You get a default view, because you have not yet created your first location. Use the link Create Location for that.') }}</div>
+    {% endif %}
+    <div id="mapContainer" class="musharemodule-mapcontainer"></div>
         <div class="table-responsive">
-        <h3>{{ __('Offers in the radius you set for your locations') }}</h3>
+        <h3>{{ __('Offers in the radius you set for your location') }}</h3>
         <table class="table table-striped table-bordered table-hover table-condensed">
             <colgroup>
                 {% if routeArea == 'admin' %}
@@ -333,10 +337,24 @@
     {% set pathToLeaflet = zasset('@MUShareModule:css/style.css')|replace({'Resources/public/css/style.css': ''}) ~ 'vendor/drmonty/leaflet/' %}
     {{ pageAddAsset('stylesheet', pathToLeaflet ~ 'css/leaflet.css') }}
     {{ pageAddAsset('javascript', pathToLeaflet ~ 'js/leaflet' ~ (app.environment == 'dev' ? '' : '.min') ~ '.js') }}
-    <div id="geographicalInfo" class="hidden" data-radius={{ radius }} data-context="view" data-latitude="{{ myLocation.latitude|musharemodule_geoData }}" data-longitude="{{ myLocation.longitude|musharemodule_geoData }}" data-zoom-level="{{ getModVar('MUShareModule', 'defaultZoomLevel', 18) }}" data-tile-layer-url="{{ getModVar('MUShareModule', 'tileLayerUrl') }}" data-tile-layer-attribution="{{ getModVar('MUShareModule', 'tileLayerAttribution') }}"></div>
-    {% if singlelocations is defined %}
-    {% for location in singleLocations %}
-    <div class="marker-data hidden" data-latitude="{{ location.latitude|musharemodule_geoData }}" data-longitude="{{ location.longitude|musharemodule_geoData }}"></div>    
+    {% if myLocation is defined %}
+        {% set latitude = myLocation.latitude|musharemodule_geoData %}
+        {% set longitude = myLocation.longitude|musharemodule_geoData %}
+        {% set zoomLevel = getModVar('MUShareModule', 'defaultZoomLevel', 18) %}
+ {% else %}
+        {% set latitude = defaultLatitude %}
+        {% set longitude = defaultLongitude %}
+        {% set zoomLevel = 6 %}
+    {% endif %}
+    <div id="geographicalInfo" class="hidden" data-radius={{ radius }} data-context="view" data-latitude="{{ latitude|musharemodule_geoData }}" data-longitude="{{ longitude|musharemodule_geoData }}" data-zoom-level="{{ zoomLevel }}" data-tile-layer-url="{{ getModVar('MUShareModule', 'tileLayerUrl') }}" data-tile-layer-attribution="{{ getModVar('MUShareModule', 'tileLayerAttribution') }}"></div>
+    {% if singleOffers is defined %}
+    {% for offer in singleOffers %}
+    {% if offer.description != '' %}
+        {% set offerDescription = offer.description %}
+    {% else %}
+        {% set offerDescription = __('No description') %}
+    {% endif %}
+    <div class="marker-data hidden" data-product="{{ offer.product }}" data-description="{{ offerDescription }}" data-latitude="{{ offer.latitude|musharemodule_geoData }}" data-longitude="{{ offer.longitude|musharemodule_geoData }}"></div>    
     {% endfor %}
     {% endif %}
     {% if pools is defined %}
