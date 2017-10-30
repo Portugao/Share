@@ -54,20 +54,28 @@ function mUShareInitGeographicalView(parameters, isEditMode)
         attribution: parameters.tileLayerAttribution
     }).addTo(map);
     
+    circle = L.circle([parameters.latitude , parameters.longitude] , {radius:parameters.radius} , {
+    	color : '#eeeeee',
+    	fillColor : '#ff0033',
+    	fillOpacity : 0.5
+    	}).addTo(map);    
+    
     jQuery('.marker-data').each(function (index) {
         
     // add a marker
-    marker = new L.marker([elem.data('latitude'), elem.data('longitude')], {
+    marker = new L.marker([jQuery(this).attr('data-latitude'), jQuery(this).attr('data-longitude')], {
         draggable: isEditMode
     });
     marker.addTo(map);
+    /*if(jQuery(this).attr('data-description') != '') {
+    	offerdescription = jQuery(this).attr('data-description');
+    } else {
+    	offerdescription = '';
+    }*/
+    marker.bindPopup('<h4>' + jQuery(this).attr('data-product') + '</h4>' + jQuery(this).attr('data-description'));
     });
     
-    circle = L.circle([parameters.latitude , parameters.latitude] , {radius:500} , {
-    	color : 'red',
-    	fillColor : '#f03',
-    	fillOpacity : 0.5
-    	}).addTo(map);
+
 
     
     
@@ -92,7 +100,7 @@ function mUShareInitGeographicalView(parameters, isEditMode)
    
         });
     
-        marker.bindPopup(jQuery(this).attr('data-product') + '<br />' + offerdescription);
+        //marker.bindPopup(jQuery(this).attr('data-product') + '<br />' + offerdescription);
     
     
     
@@ -195,6 +203,7 @@ jQuery(document).ready(function() {
         latitude: infoElem.data('latitude'),
         longitude: infoElem.data('longitude'),
         zoomLevel: infoElem.data('zoom-level'),
+        radius: infoElem.data('radius'),
         tileLayerUrl: infoElem.data('tile-layer-url'),
         tileLayerAttribution: infoElem.data('tile-layer-attribution'),
         useGeoLocation: false
