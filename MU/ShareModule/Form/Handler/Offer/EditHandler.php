@@ -48,7 +48,7 @@ class EditHandler extends AbstractEditHandler
         
         $offer = $offerRespository->selectWhere($where);
         // if a same location is there, we redirect
-        if (count($location) >= 1) {
+        if (count($offer) >= 1) {
         	$this->getErrorUrl;
         	return new RedirectResponse($this->getErrorUrl(), 302);
         }
@@ -99,7 +99,7 @@ class EditHandler extends AbstractEditHandler
         			$entityManager->flush();
         			$entityManager->persist($pool);
         			foreach ($sameOffers as $sameOffer) {
-        				$thisOffer = $locationRespository->find($sameOffer['id']);
+        				$thisOffer = $offerRespository->find($sameOffer['id']);
         				$thisOffer->setPool($pool);
         				$entityManager->flush();
         			}
