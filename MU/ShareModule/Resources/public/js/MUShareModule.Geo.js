@@ -7,6 +7,8 @@ var popup;
 var offerdescription;
 var latitude = '';
 var longitude = '';
+var counter;
+var markertext;
 
 /**
  * Initialises geographical display features.
@@ -67,67 +69,37 @@ function mUShareInitGeographicalView(parameters, isEditMode)
         draggable: isEditMode
     });
     marker.addTo(map);
-    /*if(jQuery(this).attr('data-description') != '') {
-    	offerdescription = jQuery(this).attr('data-description');
-    } else {
-    	offerdescription = '';
-    }*/
+
     marker.bindPopup('<h4>' + jQuery(this).attr('data-product') + '</h4>' + jQuery(this).attr('data-description'));
-    });
-    
-
-
-    
-    
-    jQuery('.poolLocation-data').each(function (index) {
+    });   
+  
+    counter = 0;
+    markertext = '';
+    jQuery('.pooloffer-data').each(function (index) {
         
-    	if(jQuery(this).attr('data-latitude') != latitude && jQuery(this).attr('data-longitude') != longitude) {
-    	
-        // add a marker
-        marker = new L.marker([jQuery(this).attr('data-latitude'), jQuery(this).attr('data-longitude')], {
-            draggable: isEditMode
-        });
-        marker.addTo(map);
-    	}
-        if(jQuery(this).attr('data-description') != '') {
-        	offerdescription = jQuery(this).attr('data-description');
-        } else {
-        	offerdescription = '';
-        }
-        
-        markertext = markertext;
-        
-   
-        });
-    
-        //marker.bindPopup(jQuery(this).attr('data-product') + '<br />' + offerdescription);
-    
-    
-    
-    /*jQuery('.offer-data').each(function (index) {
-        
+    if(counter == 0) {
     // add a marker
     marker = new L.marker([jQuery(this).attr('data-latitude'), jQuery(this).attr('data-longitude')], {
         draggable: isEditMode
     });
     marker.addTo(map);
+    counter = counter + 1;
+    }
+    
     if(jQuery(this).attr('data-description') != '') {
     	offerdescription = jQuery(this).attr('data-description');
     } else {
-    	offerdescription = '';
+    	offerdescription = 'No description';
     }
-    marker.bindPopup(jQuery(this).attr('data-product') + '<br />' + offerdescription);
-    
-    /*popup = L.popup()
-        .setLatLng([jQuery(this).attr('data-latitude') , jQuery(this).attr('data-longitude')])
-        .setContent("Ich bin ein alleinstehendes Popup !")
-        .openOn(map;*/    
-    //});
+    markertext = markertext + '<h4>' + jQuery(this).attr('data-product') + '</h4>' + offerdescription;
+    marker.bindPopup(markertext);
+    });
 
-    jQuery('#tabMap').on('shown.bs.tab', function () {
+    jQuery('#tabMap').on('shown.bs.tab', function() {
         // redraw the map after it's tab has been opened
         map.invalidateSize();
     });
+
 }
 
 /**
