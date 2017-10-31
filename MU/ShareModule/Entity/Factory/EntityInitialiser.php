@@ -13,11 +13,80 @@
 namespace MU\ShareModule\Entity\Factory;
 
 use MU\ShareModule\Entity\Factory\Base\AbstractEntityInitialiser;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
+use MU\ShareModule\Entity\LocationEntity;
+use MU\ShareModule\Entity\OfferEntity;
+use MU\ShareModule\Entity\PoolEntity;
+use MU\ShareModule\Entity\CompanyEntity;
+use MU\ShareModule\Helper\ListEntriesHelper;
+use ServiceUtil;
 
 /**
  * Entity initialiser class used to dynamically apply default values to newly created entities.
  */
 class EntityInitialiser extends AbstractEntityInitialiser
 {
-    // feel free to customise the initialiser
+    /**
+     * @var Request
+     */
+    protected $request;
+    
+    /**
+     * @var EntityFactory
+     */
+    protected $entityFactory;
+	
+	/**
+	 * EntityInitialiser constructor.
+	 *
+	 * @param ListEntriesHelper $listEntriesHelper Helper service for managing list entries
+	 * @param float $defaultLatitude Default latitude for geographical entities
+	 * @param float $defaultLongitude Default longitude for geographical entities
+	 * @param RequestStack        $requestStack    RequestStack service instance
+	 */
+	public function __construct(ListEntriesHelper $listEntriesHelper, $defaultLatitude, $defaultLongitude, RequestStack $requestStack)
+	{
+		$this->listEntriesHelper = $listEntriesHelper;
+		$this->defaultLatitude = $defaultLatitude;
+		$this->defaultLongitude = $defaultLongitude;
+		$this->request = $requestStack->getCurrentRequest();
+	}
+	
+    /**
+     * Initialises a given offer instance.
+     *
+     * @param OfferEntity $entity The newly created entity instance
+     *
+     * @return OfferEntity The updated entity instance
+     */
+    public function initOffer(OfferEntity $entity)
+    {
+        $listEntries = $this->listEntriesHelper->getEntries('offer', 'period');
+        $items = [];
+        foreach ($listEntries as $listEntry) {
+            if (true === $listEntry['default']) {
+                $items[] = $listEntry['value'];
+            }
+        }
+        $entity->setPeriod(implode('###', $items));
+        
+        $serviceManager = \ServiceUtil::getManager();
+        $factory = $serviceManager->get('mu_share_module.entity_factory');
+        
+        $request = $this->request;
+        $locationId = $request->query->getDigits('locationofoffer');
+        $repository = $factory->getRepository('location');
+        $offerLocation = $repository->find($locationId);
+        if ($offerLocation) {
+        	$entity->setLatitude($offerLocation['latitude']);
+        	$entity->setLongitude($offerLocation['longitude']);        	
+        } else {
+        	$entity->setLatitude($this->defaultLatitude);
+        	$entity->setLongitude($this->defaultLongitude);
+        }
+
+        return $entity;
+    }
+    
 }
