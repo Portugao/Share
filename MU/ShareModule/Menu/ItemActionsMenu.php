@@ -74,7 +74,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
                 ])->setAttribute('icon', 'fa fa-eye');
                 $menu[$this->__('Details')]->setLinkAttribute('title', str_replace('"', '', $entityDisplayHelper->getFormattedTitle($entity)));
             }
-            if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
+            if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT) && $currentUserId == $entity->getCreatedBy()->getUid()) {
                 $menu->addChild($this->__('Edit'), [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
@@ -86,7 +86,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new location'));
             }
-            if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
+            if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE) && $currentUserId == $entity->getCreatedBy()->getUid()) {
                 $menu->addChild($this->__('Delete'), [
                     'route' => $routePrefix . $routeArea . 'delete',
                     'routeParameters' => $entity->createUrlArgs()
@@ -135,7 +135,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
                 ])->setAttribute('icon', 'fa fa-eye');
                 $menu[$this->__('Details')]->setLinkAttribute('title', str_replace('"', '', $entityDisplayHelper->getFormattedTitle($entity)));
             }
-            if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
+            if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT) && $currentUserId == $entity->getCreatedBy()->getUid()) {
                 $menu->addChild($this->__('Edit'), [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
@@ -147,7 +147,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new offer'));
             }
-            if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
+            if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE) && $currentUserId == $entity->getCreatedBy()->getUid()) {
                 $menu->addChild($this->__('Delete'), [
                     'route' => $routePrefix . $routeArea . 'delete',
                     'routeParameters' => $entity->createUrlArgs()
