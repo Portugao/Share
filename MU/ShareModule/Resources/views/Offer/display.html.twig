@@ -16,10 +16,10 @@
     <div class="musharemodule-offer musharemodule-display">
 
     <dl>
-        {% if offer.product is not empty %}
+        {#% if offer.product is not empty %}
             <dt>{{ __('Product') }}</dt>
             <dd>{{ offer.product }}</dd>
-        {% endif %}
+        {% endif %#}
         {% if offer.description is not empty %}
             <dt>{{ __('Description') }}</dt>
             <dd>{{ offer.description|safeHtml }}</dd>
@@ -90,7 +90,7 @@
             <dt>{{ __('Meeting place') }}</dt>
             <dd>{{ offer.meetingPlace }}</dd>
         {% endif %}
-        {% if offer.latitude is not empty %}
+        {#% if offer.latitude is not empty %}
             <dt>{{ __('Latitude') }}</dt>
             <dd>{{ offer.latitude|musharemodule_geoData }}</dd>
         {% endif %}
@@ -123,7 +123,7 @@
                   {{ offer.pool|musharemodule_formattedTitle }}
               {% endif %}
             </dd>
-        {% endif %}
+        {% endif %#}
         
     </dl>
 

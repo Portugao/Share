@@ -20,8 +20,8 @@
                 {% endif %}
                 <col id="cItemActions" />
                 <col id="cProduct" />
-                <col id="cDescription" />
-                <col id="cIsOpen" />
+                {#<col id="cDescription" />
+                <col id="cIsOpen" />#}
                 <col id="cAbo" />
                 <col id="cPeriod" />
                 <col id="cTotalYear" />
@@ -31,7 +31,7 @@
                 <col id="cZipCode" />
                 <col id="cMeetingPlace" />
                 <col id="cLocationOfOffer" />
-                <col id="cPool" />
+                {#<col id="cPool" />#}
             </colgroup>
             <thead>
             <tr>
@@ -44,12 +44,12 @@
                 <th id="hProduct" scope="col" class="text-left">
                     <a href="{{ sort.product.url }}" title="{{ __f('Sort by %s', {'%s': 'product'}) }}" class="{{ sort.product.class }}">{{ __('Product') }}</a>
                 </th>
-                <th id="hDescription" scope="col" class="text-left">
+                {#<th id="hDescription" scope="col" class="text-left">
                     <a href="{{ sort.description.url }}" title="{{ __f('Sort by %s', {'%s': 'description'}) }}" class="{{ sort.description.class }}">{{ __('Description') }}</a>
                 </th>
                 <th id="hIsOpen" scope="col" class="text-center">
                     <a href="{{ sort.isOpen.url }}" title="{{ __f('Sort by %s', {'%s': 'is open'}) }}" class="{{ sort.isOpen.class }}">{{ __('Is open') }}</a>
-                </th>
+                </th>#}
                 <th id="hAbo" scope="col" class="text-center">
                     <a href="{{ sort.abo.url }}" title="{{ __f('Sort by %s', {'%s': 'abo'}) }}" class="{{ sort.abo.class }}">{{ __('Abo') }}</a>
                 </th>
@@ -77,9 +77,9 @@
                 <th id="hLocationOfOffer" scope="col" class="text-left">
                     <a href="{{ sort.locationOfOffer.url }}" title="{{ __f('Sort by %s', {'%s': 'location of offer'}) }}" class="{{ sort.locationOfOffer.class }}">{{ __('Location of offer') }}</a>
                 </th>
-                <th id="hPool" scope="col" class="text-left">
+                {#<th id="hPool" scope="col" class="text-left">
                     <a href="{{ sort.pool.url }}" title="{{ __f('Sort by %s', {'%s': 'pool'}) }}" class="{{ sort.pool.class }}">{{ __('Pool') }}</a>
-                </th>
+                </th>#}
             </tr>
             </thead>
             <tbody>
@@ -101,7 +101,7 @@
                 <td headers="hProduct" class="text-left">
                     {{ offer.product }}
                 </td>
-                <td headers="hDescription" class="text-left">
+                {#<td headers="hDescription" class="text-left">
                     {{ offer.description|striptags|truncate(50) }}
                 </td>
                 <td headers="hIsOpen" class="text-center">
@@ -110,7 +110,7 @@
                     {% else %}
                         <i class="fa fa-times" title="{{ __('No') }}"></i>
                     {% endif %}
-                </td>
+                </td>#}
                 <td headers="hAbo" class="text-center">
                     {% if offer.abo %}
                         <i class="fa fa-check" title="{{ __('Yes') }}"></i>
@@ -165,7 +165,7 @@
                         {{ __('Not set.') }}
                     {% endif %}
                 </td>
-                <td headers="hPool" class="text-left">
+                {#<td headers="hPool" class="text-left">
                     {% if offer.pool|default %}
                         <a href="{{ path('musharemodule_pool_' ~ routeArea ~ 'display', {'id': offer.pool.getId()}) }}">{% spaceless %}
                           {{ offer.pool|musharemodule_formattedTitle }}
@@ -174,11 +174,11 @@
                     {% else %}
                         {{ __('Not set.') }}
                     {% endif %}
-                </td>
+                </td>#}
             </tr>
         {% else %}
             <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
-                <td class="text-left" colspan="{% if routeArea == 'admin' %}15{% else %}14{% endif %}">
+                <td class="text-left" colspan="{% if routeArea == 'admin' %}12{% else %}11{% endif %}">
             {{ __('No offers found.') }}
               </td>
             </tr>
@@ -213,7 +213,7 @@
 {% endblock %}
 {% block page_nav_links %}
     <p>
-        {% if canBeCreated %}
+        {#% if canBeCreated %}
             {% if hasPermission('MUShareModule:Offer:', '::', 'ACCESS_EDIT') %}
                 {% set createTitle = __('Create offer') %}
                 <a href="{{ path('musharemodule_offer_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}"><i class="fa fa-plus"></i> {{ createTitle }}</a>
@@ -225,7 +225,7 @@
         {% else %}
             {% set linkTitle = __('Show all entries') %}
             <a href="{{ path('musharemodule_offer_' ~ routeArea ~ 'view', {all: 1}) }}" title="{{ linkTitle|e('html_attr') }}"><i class="fa fa-table"></i> {{ linkTitle }}</a>
-        {% endif %}
+        {% endif %#}
     </p>
 {% endblock %}
 {% block display_hooks %}
