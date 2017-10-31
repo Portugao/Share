@@ -304,6 +304,42 @@ class OfferController extends AbstractOfferController
     {
         return parent::handleSelectedEntriesAction($request);
     }
+    
+    /**
+     * This method includes the common implementation code for adminEdit() and edit().
+     */
+    protected function editInternal(Request $request, $isAdmin = false)
+    {
+    	// parameter specifying which type of objects we are treating
+    	$objectType = 'offer';
+    	$permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_EDIT;
+    	if (!$this->hasPermission('MUShareModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
+    		throw new AccessDeniedException();
+    	}
+    	$templateParameters = [
+    			'routeArea' => $isAdmin ? 'admin' : ''
+    	];
+    
+    	$controllerHelper = $this->get('mu_share_module.controller_helper');
+    	$templateParameters = $controllerHelper->processEditActionParameters($objectType, $templateParameters);
+    
+    	// delegate form processing to the form handler
+    	$formHandler = $this->get('mu_share_module.form.handler.offer');
+    	$result = $formHandler->processForm($templateParameters);
+    	if ($result instanceof RedirectResponse) {
+    		return $result;
+    	}
+    
+    	$templateParameters = $formHandler->getTemplateParameters();
+    	if ($templateParameters['routeArea'] != 'admin') {
+    		$templateParameters['locationId'] = $request->get('locationofoffer');  	
+    	} else {
+    		
+    	}
+    
+    	// fetch and return the appropriate template
+    	return $this->get('mu_share_module.view_helper')->processTemplate($objectType, 'edit', $templateParameters);
+    }
 
     // feel free to add your own controller methods here
 }
