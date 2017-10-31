@@ -144,6 +144,13 @@ class ControllerHelper extends AbstractControllerHelper
         // own code
         if ($objectType == 'location' && $templateParameters['routeArea'] == '') {
         	
+        	if ($uid > 1) {
+        		$loggedIn = 1;
+        	} else {
+        		$loggedIn = 0;
+        	}
+        	$templateParameters['loggedIn'] = $loggedIn;
+        	
         	$offerRepository = $this->entityFactory->getRepository('offer');
         	$where = 'tbl.createdBy = ' . $uid;
         	$where .= ' AND ';
@@ -163,81 +170,84 @@ class ControllerHelper extends AbstractControllerHelper
         		$redirecturl = ModUtil::url($this->name, 'user', 'view', array('ot' => 'location', 'own' => 1));
         		return System::redirect($redirecturl);
         	}
-        	if ($myLocation) {
-        	    $templateParameters['myLocation'] = $myLocation[0];
-        	} else {
-        		$templateParameters['defaultLatitude'] = $this->variableApi->get('MUShareModule', 'defaultLatitude');
-        		$templateParameters['defaultLongitude'] = $this->variableApi->get('MUShareModule', 'defaultLongitude');
-        	}
         	
         	// radius is the radius set by the actual user, standard setting
         	$radius = 1000;
-
-        	// the single offers, that have no other offers entity with
-        	// the same lat and longitude
-        	$where2 = 'tbl.createdBy != ' . $uid;
-        	$where2 .= ' AND ';
-        	$where2 .= 'tbl.isOpen = 1';
-        	$where2 .= ' AND ';
-        	$where2 .= 'tbl.pool is NULL'; 
-        	/*$where2 .= ' AND ';
-        	$where2 .= 'tbl.city = ' . $myLocation[0]['city'];*/
-
-        	// we get all single offers
-        	$singleOffers = $offerRepository->selectWhere($where2);
-
-        	if ($singleOffers) {
-        	// we check the distance for each found location
-        	foreach ($singleOffers as $singleOffer) {
-        		$distance = acos(sin(deg2rad($singleOffer['latitude']))*sin(deg2rad($myLocation[0]['latitude']))+cos(deg2rad($singleOffer['latitude']))*cos(deg2rad($myLocation[0]['latitude']))*cos(deg2rad($singleOffer['longitude']) - deg2rad($myLocation[0]['longitude'])))*6375;
-
-        		if ($distance <= $radius/1000) {
-            		$relevantSingleOffers[] = $singleOffer;
-        		}
-        	}
-        	if ($relevantSingleOffers)
-        	$templateParameters['singleOffers'] = $relevantSingleOffers; 
-        	}
-        	
-        	// we get Offers in pools
-        	$where3 = 'tbl.createdBy != ' . $uid;
-        	$where3 .= ' AND ';
-        	$where3 .= 'tbl.isOpen = 1';
-        	$where3 .= ' AND ';
-        	$where3 .= 'tbl.pool is not NULL';
-        	
-        	// we get all pool offers
-        	$poolOffers = $offerRepository->selectWhere($where3);
-
-        	if ($poolOffers) {
-        		// we check the distance for each found Offer
-        		foreach ($poolOffers as $poolOffer) {
-        			$distance = acos(sin(deg2rad($poolOffer['latitude']))*sin(deg2rad($myLocation[0]['latitude']))+cos(deg2rad($poolOffer['latitude']))*cos(deg2rad($myLocation[0]['latitude']))*cos(deg2rad($poolOffer['longitude']) - deg2rad($myLocation[0]['longitude'])))*6375;
-        	
-        			if ($distance <= $radius/1000) {
-                    	$relevantPoolOffers[] = $poolOffer;
-        			}
-        		}
-        		$pools = array();
-        		foreach ($relevantPoolOffers as $relevantPoolOffer) {
-        			if (!in_array($relevantPoolOffer['pool'], $pools)) {
-        				$pools[] = $relevantPoolOffer['pool'];
-        			}     			
-        		}
-
-        	}
-        	
-        	// we work with pools 
-        	if (isset($pools)) {
-        	    $templateParameters['pools'] = $pools;
-        	}
-        	
-        	/*$offerRepository = $this->entityFactory->getRepository('offer');
-        	$where4 = 'tbl.isOpen = 1';
-        	$offers = $offerRepository->selectWhere($where4);
-
-        	$templateParameters['offers'] = $offers;*/
+        	// we assign the radius to the template
         	$templateParameters['radius'] = $radius;
+        	
+        	if ($myLocation) {
+        	    $templateParameters['myLocation'] = $myLocation[0];
+        	           	    
+        	    // the single offers, that have no other offers entity with
+        	    // the same lat and longitude
+        	    $where2 = 'tbl.createdBy != ' . $uid;
+        	    $where2 .= ' AND ';
+        	    $where2 .= 'tbl.isOpen = 1';
+        	    $where2 .= ' AND ';
+        	    $where2 .= 'tbl.pool is NULL';
+        	    $where2 .= ' AND ';
+        	    //$where2 .= '(tblLocationOfOffer.city = ' . $myLocation[0]['city'] . ')';
+        	    $where2 .= '(tblLocationOfOffer.city LIKE \'%' . $myLocation[0]['city'] . '%\'';
+        	    $where2 .= ' OR ';
+        	    $where2 .= 'tblLocationOfOffer.zipCode LIKE \'%' . $myLocation[0]['zipCode'] . '%\')';
+       	    
+        	    // we get all single offers
+        	    $singleOffers = $offerRepository->selectWhere($where2);
+        	    
+        	    if ($singleOffers) {
+        	    	// we check the distance for each found location
+        	    	foreach ($singleOffers as $singleOffer) {
+        	    		$distance = acos(sin(deg2rad($singleOffer['latitude']))*sin(deg2rad($myLocation[0]['latitude']))+cos(deg2rad($singleOffer['latitude']))*cos(deg2rad($myLocation[0]['latitude']))*cos(deg2rad($singleOffer['longitude']) - deg2rad($myLocation[0]['longitude'])))*6375;
+        	    
+        	    		if ($distance <= $radius/1000) {
+        	    			$relevantSingleOffers[] = $singleOffer;
+        	    		}
+        	    	}
+        	    	if (isset($relevantSingleOffers))
+        	    		$templateParameters['singleOffers'] = $relevantSingleOffers;
+        	    }
+        	     
+        	    // we get offers in pools
+        	    $where3 = 'tbl.createdBy != ' . $uid;
+        	    $where3 .= ' AND ';
+        	    $where3 .= 'tbl.isOpen = 1';
+        	    $where3 .= ' AND ';
+        	    $where3 .= 'tblPool.id is not NULL';
+        	    $where3 .= ' AND ';
+        	    $where3 .= '(tblLocationOfOffer.city LIKE \'%' . $myLocation[0]['city'] . '%\'';
+        	    $where3 .= ' OR ';
+        	    $where3 .= 'tblLocationOfOffer.zipCode LIKE \'%' . $myLocation[0]['zipCode'] . '%\')';
+        	     
+        	    // we get all pool offers
+        	    $poolOffers = $offerRepository->selectWhere($where3);
+        	    
+        	    if (isset($poolOffers)) {
+        	    	$relevantPoolOffers = array();
+        	    	// we check the distance for each found Offer
+        	    	foreach ($poolOffers as $poolOffer) {
+        	    		$distance = acos(sin(deg2rad($poolOffer['latitude']))*sin(deg2rad($myLocation[0]['latitude']))+cos(deg2rad($poolOffer['latitude']))*cos(deg2rad($myLocation[0]['latitude']))*cos(deg2rad($poolOffer['longitude']) - deg2rad($myLocation[0]['longitude'])))*6375;
+        	    		 
+        	    		if ($distance <= $radius/1000) {
+        	    			$relevantPoolOffers[] = $poolOffer;
+        	    		}
+        	    	}
+        	    	$pools = array();
+        	    	foreach ($relevantPoolOffers as $relevantPoolOffer) {
+        	    		if (!in_array($relevantPoolOffer['pool'], $pools)) {
+        	    			$pools[] = $relevantPoolOffer['pool'];
+        	    		}
+        	    	}     	    
+        	    }      	     
+        	    // we work with pools
+        	    if (isset($pools)) {
+        	    	$templateParameters['pools'] = $pools;
+        	    }
+
+        	} else {
+        		$templateParameters['defaultLatitude'] = $this->variableApi->get('MUShareModule', 'defaultLatitude');
+        		$templateParameters['defaultLongitude'] = $this->variableApi->get('MUShareModule', 'defaultLongitude');
+        	}     	
         }
     
         $templateParameters['canBeCreated'] = $this->modelHelper->canBeCreated($objectType);
@@ -269,11 +279,11 @@ class ControllerHelper extends AbstractControllerHelper
     		$templateParameters['currentUrlObject'] = new RouteUrl('musharemodule_' . strtolower($objectType) . '_display', $urlParameters);
     	}
     	
-    	if ($objectType == 'location' && $templateParameters['routeArea'] != 'admin') {
+    	if (($objectType == 'location' || $objectType == 'offer' || $objectType == 'company') && $templateParameters['routeArea'] != 'admin') {
     		$uid = $this->currentUserApi->get('uid');
-    		if ($entity['createdBy'] != $uid) {
+    		if ($entity->getCreatedBy()->getUid() != $uid) {
     			$url = new RouteUrl('musharemodule_location_view');
-    			$serviceContainer = \ServiceUtil::getService();
+    			$serviceContainer = \ServiceUtil::getService('container');
     			$serviceContainer->get('mu'); //TODO
     			
     		}
