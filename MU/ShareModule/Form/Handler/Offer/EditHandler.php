@@ -13,6 +13,7 @@
 namespace MU\ShareModule\Form\Handler\Offer;
 
 use MU\ShareModule\Form\Handler\Offer\Base\AbstractEditHandler;
+use ServiceUtil;
 
 /**
  * This handler class handles the page events of editing forms.
@@ -81,12 +82,11 @@ class EditHandler extends AbstractEditHandler
         	$where2 = 'tbl.latitude = ' . $entity['latitude'];
         	$where2 .= ' AND ';
         	$where2 .= 'tbl.longitude = ' . $entity['longitude'];
-        	/*$where .= ' AND ';
-        	$where .= 'tbl.createdBy != ' . $uid;*/
+        	$where2 .= ' AND ';
+        	$where2 .= 'tbl.id != ' . $this->idValue;
         	
         	$sameOffers = $offerRespository->selectWhere($where2);
         	if (count($sameOffers) > 0) {
-        		//$pool = $this->entityFactory->createPool();
         		if (count($sameOffers) > 1) {
         			$existingPool = $sameOffers[0]['pool'];
         			$entity->setPool($existingPool);
@@ -103,6 +103,8 @@ class EditHandler extends AbstractEditHandler
         				$thisOffer->setPool($pool);
         				$entityManager->flush();
         			}
+        			$entity->setPool($pool);
+        			$entityManager->flush();
         		}
         	}
         }
