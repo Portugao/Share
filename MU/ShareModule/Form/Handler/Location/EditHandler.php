@@ -13,6 +13,7 @@
 namespace MU\ShareModule\Form\Handler\Location;
 
 use MU\ShareModule\Form\Handler\Location\Base\AbstractEditHandler;
+use ServiceUtil;
 
 /**
  * This handler class handles the page events of editing forms.
@@ -20,5 +21,59 @@ use MU\ShareModule\Form\Handler\Location\Base\AbstractEditHandler;
  */
 class EditHandler extends AbstractEditHandler
 {
-    // feel free to extend the base handler class here
+    /**
+     * This method executes a certain workflow action.
+     *
+     * @param array $args Arguments from handleCommand method
+     *
+     * @return bool Whether everything worked well or not
+     *
+     * @throws RuntimeException Thrown if concurrent editing is recognised or another error occurs
+     */
+    public function applyAction(array $args = [])
+    {
+        // get treated entity reference from persisted member var
+        $entity = $this->entityRef;
+    
+        $action = $args['commandName'];
+    
+        $success = false;
+        $flashBag = $this->request->getSession()->getFlashBag();
+        try {
+            // execute the workflow action
+            $success = $this->workflowHelper->executeAction($entity, $action);
+        } catch (\Exception $exception) {
+            $flashBag->add('error', $this->__f('Sorry, but an error occured during the %action% action. Please apply the changes again!', ['%action%' => $action]) . ' ' . $exception->getMessage());
+            $logArgs = ['app' => 'MUShareModule', 'user' => $this->currentUserApi->get('uname'), 'entity' => 'location', 'id' => $entity->getKey(), 'errorMessage' => $exception->getMessage()];
+            $this->logger->error('{app}: User {user} tried to edit the {entity} with id {id}, but failed. Error details: {errorMessage}.', $logArgs);
+        }
+    
+        $this->addDefaultMessage($args, $success);
+    
+        if ($success && $this->templateParameters['mode'] == 'create') {
+            // store new identifier
+            $this->idValue = $entity->getKey();
+        }
+        if ($success) {
+        	$repository = $this->entityFactory->getRepository('location');
+        	$uid = $this->currentUserApi->get('uid');
+        	$where = 'tbl.createdBy = ' . $uid;
+        	$where .= ' AND ';
+        	$where .= 'tbl.id != ' . $entity['id'];
+        	
+        	$otherLocations = $repository->selectWhere($where);
+        	if ($otherLocations) {
+        		$serviceManager = \ServiceUtil::getManager();
+        		$entityManager = $serviceManager->get('doctrine.entitymanager');
+        		foreach ($otherLocations as $otherLocation) {
+        			$thisotherLocation = $repository->selectById($otherLocation['id']);
+        			$thisotherLocation->setForMap(0);
+        			$entityManager->flush();
+        			
+        		}
+        	}
+        }
+    
+        return $success;
+    }
 }
