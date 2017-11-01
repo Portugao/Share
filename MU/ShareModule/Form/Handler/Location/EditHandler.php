@@ -56,6 +56,7 @@ class EditHandler extends AbstractEditHandler
         }
         if ($success) {
         	$repository = $this->entityFactory->getRepository('location');
+        	$offerRepository = $this->entityFactory->getRepository('offer');
         	$uid = $this->currentUserApi->get('uid');
         	$where = 'tbl.createdBy = ' . $uid;
         	$where .= ' AND ';
@@ -72,6 +73,7 @@ class EditHandler extends AbstractEditHandler
         			
         		}
         	}
+        	$where2 = 'tblOfferOfLocation';
         }
     
         return $success;
