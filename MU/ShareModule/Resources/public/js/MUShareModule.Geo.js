@@ -57,8 +57,8 @@ function mUShareInitGeographicalView(parameters, isEditMode)
     }).addTo(map);
     
     circle = L.circle([parameters.latitude , parameters.longitude] , {radius:parameters.radius} , {
-    	color : '#eeeeee',
-    	fillColor : '#ff0033',
+    	color : '#81F79F',
+    	fillColor : '#9FF781',
     	fillOpacity : 0.5
     	}).addTo(map);    
     
