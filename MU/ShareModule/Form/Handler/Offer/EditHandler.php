@@ -40,8 +40,15 @@ class EditHandler extends AbstractEditHandler
         
         // we look for location with the same latitude and longitude
         $offerRespository = $this->entityFactory->getRepository('offer');
+        // we get the location
+        $locationRepository = $this->entityFactory->getRepository('location');
+              
+        // we get serviceManager
+        $serviceManager = \ServiceUtil::getManager();
+        // we get entityManager
+        $entityManager = $serviceManager->getService('doctrine.entitymanager');
         
-        $where = 'tbl.latitude = ' . $entity['latitude'];
+        /*$where = 'tbl.latitude = ' . $entity['latitude'];
         $where .= ' AND ';
         $where .= 'tbl.longitude = ' . $entity['longitude'];
         $where .= ' AND ';
@@ -52,7 +59,7 @@ class EditHandler extends AbstractEditHandler
         if (count($offer) >= 1) {
         	$this->getErrorUrl;
         	return new RedirectResponse($this->getErrorUrl(), 302);
-        }
+        }*/
     
         $action = $args['commandName'];
     
@@ -74,11 +81,19 @@ class EditHandler extends AbstractEditHandler
             $this->idValue = $entity->getKey();
         }
         if ($success) {
+        	// we check for option at Me, if 1, we set the geo datas like the location
+        	if ($entity['atMe'] == 1) {
+        		$thisLocation = $locationRepository->find($entity['locationOfOffer']);
+        		$entity->setLatitude($thisLocation['latitude']);
+        		$entity->setLongitude($thisLocation['longitude']);
+        		$entity->setZipcode($thisLocation['zipCode']);
+        		$entity->setMeetingPlace('');
+        		$entityManager->flush();
+        	}
+       	
+        	// we work with pools
         	$poolRespository = $this->entityFactory->getRepository('pool');      	
-            // we get serviceManager
-            $serviceManager = \ServiceUtil::getManager();
-            // we get entityManager
-            $entityManager = $serviceManager->getService('doctrine.entitymanager');
+
         	$where2 = 'tbl.latitude = ' . $entity['latitude'];
         	$where2 .= ' AND ';
         	$where2 .= 'tbl.longitude = ' . $entity['longitude'];
