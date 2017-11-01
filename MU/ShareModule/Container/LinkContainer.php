@@ -143,14 +143,26 @@ class LinkContainer extends AbstractLinkContainer
         	$offerTitle = $this->__('List of offers', 'musharemodule');
         	$offerUrl = $this->router->generate('musharemodule_offer_' . $routeArea . 'view');
         }
+        
         if (in_array('offer', $allowedObjectTypes)
-            && $this->permissionApi->hasPermission($this->getBundleName() . ':Offer:', '::', $permLevel)) {
+            && $this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADD)) {
             $links[] = [
                 'url' => $offerUrl,
                 'text' => $offerText,
                 'title' => $offerTitle
             ];
         }
+        
+        if ($routeArea != 'admin') {
+        	if ($this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADD)) {
+        		$links[] = [
+        				'url' => $this->router->generate('zikulaprofilemodule_profile_edit', array('uid' => 2)),
+        				'text' => $this->__('Edit profile', 'musharemodule'),
+        				'title' => $this->__('Edit radius or zip codes', 'musharemodule')
+        		];
+        	}
+        }
+        
         if ($routeArea == 'admin' && in_array('pool', $allowedObjectTypes)
             && $this->permissionApi->hasPermission($this->getBundleName() . ':Pool:', '::', $permLevel)) {
             $links[] = [
