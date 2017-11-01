@@ -38,13 +38,14 @@
             <div id="mapContainer" class="musharemodule-mapcontainer">
             </div>
         </fieldset>
-        <input type="hidden" id="musharemodule_offer_locationOfOffer" name="musharemodule_offer[locationOfOffer]" value={{ locationId }} />  
-        <div class="hidden">      
+        {#<input type="hidden" id="musharemodule_offer_locationOfOffer" name="musharemodule_offer[locationOfOffer]" value={{ locationId }} />  
+        <div class="hidden">#}      
         {{ include(
             '@MUShareModule/Location/includeSelectOne.html.twig',
             {group: 'offer', heading: __('Location of offer'), alias: 'locationOfOffer', mandatory: false, idPrefix: 'shareOffer_LocationOfOffer', linkingItem: offer, displayMode: 'choices'}
         ) }}
-
+        {#</div>#}
+        <div class="hidden">
         {{ include(
             '@MUShareModule/Pool/includeSelectOne.html.twig',
             {group: 'offer', heading: __('Pool'), alias: 'pool', mandatory: false, idPrefix: 'shareOffer_Pool', linkingItem: offer, displayMode: 'choices'}
