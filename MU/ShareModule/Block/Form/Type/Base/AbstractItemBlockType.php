@@ -93,7 +93,7 @@ abstract class AbstractItemBlockType extends AbstractType
                 $this->__('Locations') => 'location',
                 $this->__('Offers') => 'offer',
                 $this->__('Pools') => 'pool',
-                $this->__('Companies') => 'company'
+                $this->__('Messages') => 'message'
             ],
             'choices_as_values' => true,
             'multiple' => false,

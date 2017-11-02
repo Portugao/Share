@@ -136,12 +136,12 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
                 }
             }
 
-            if (true === $this->variableApi->get('MUShareModule', 'linkOwnCompaniesOnAccountPage', true)) {
-                $objectType = 'company';
+            if (true === $this->variableApi->get('MUShareModule', 'linkOwnMessagesOnAccountPage', true)) {
+                $objectType = 'message';
                 if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
                     $links[] = [
                         'url' => $this->router->generate('musharemodule_' . strtolower($objectType) . '_view', ['own' => 1]),
-                        'text' => $this->__('My companies', 'musharemodule'),
+                        'text' => $this->__('My messages', 'musharemodule'),
                         'icon' => 'list-alt'
                     ];
                 }
@@ -204,12 +204,12 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
                 'title' => $this->__('Pools list', 'musharemodule')
             ];
         }
-        if (in_array('company', $allowedObjectTypes)
-            && $this->permissionApi->hasPermission($this->getBundleName() . ':Company:', '::', $permLevel)) {
+        if (in_array('message', $allowedObjectTypes)
+            && $this->permissionApi->hasPermission($this->getBundleName() . ':Message:', '::', $permLevel)) {
             $links[] = [
-                'url' => $this->router->generate('musharemodule_company_' . $routeArea . 'view'),
-                'text' => $this->__('Companies', 'musharemodule'),
-                'title' => $this->__('Companies list', 'musharemodule')
+                'url' => $this->router->generate('musharemodule_message_' . $routeArea . 'view'),
+                'text' => $this->__('Messages', 'musharemodule'),
+                'title' => $this->__('Messages list', 'musharemodule')
             ];
         }
         if ($routeArea == 'admin' && $this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {

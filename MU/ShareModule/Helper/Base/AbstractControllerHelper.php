@@ -145,7 +145,7 @@ abstract class AbstractControllerHelper
         $allowedObjectTypes[] = 'location';
         $allowedObjectTypes[] = 'offer';
         $allowedObjectTypes[] = 'pool';
-        $allowedObjectTypes[] = 'company';
+        $allowedObjectTypes[] = 'message';
     
         return $allowedObjectTypes;
     }

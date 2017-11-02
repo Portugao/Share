@@ -15,7 +15,7 @@ namespace MU\ShareModule\Entity\Factory\Base;
 use MU\ShareModule\Entity\LocationEntity;
 use MU\ShareModule\Entity\OfferEntity;
 use MU\ShareModule\Entity\PoolEntity;
-use MU\ShareModule\Entity\CompanyEntity;
+use MU\ShareModule\Entity\MessageEntity;
 use MU\ShareModule\Helper\ListEntriesHelper;
 
 /**
@@ -107,13 +107,13 @@ abstract class AbstractEntityInitialiser
     }
 
     /**
-     * Initialises a given company instance.
+     * Initialises a given message instance.
      *
-     * @param CompanyEntity $entity The newly created entity instance
+     * @param MessageEntity $entity The newly created entity instance
      *
-     * @return CompanyEntity The updated entity instance
+     * @return MessageEntity The updated entity instance
      */
-    public function initCompany(CompanyEntity $entity)
+    public function initMessage(MessageEntity $entity)
     {
 
         return $entity;

@@ -10,7 +10,7 @@ workflow:
                 - MU\ShareModule\Entity\LocationEntity
                 - MU\ShareModule\Entity\OfferEntity
                 - MU\ShareModule\Entity\PoolEntity
-                - MU\ShareModule\Entity\CompanyEntity
+                - MU\ShareModule\Entity\MessageEntity
             places:
                 - initial
                 - approved

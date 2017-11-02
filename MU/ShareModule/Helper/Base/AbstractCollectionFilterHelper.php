@@ -20,7 +20,7 @@ use Zikula\UsersModule\Constant as UsersConstant;
 use MU\ShareModule\Entity\LocationEntity;
 use MU\ShareModule\Entity\OfferEntity;
 use MU\ShareModule\Entity\PoolEntity;
-use MU\ShareModule\Entity\CompanyEntity;
+use MU\ShareModule\Entity\MessageEntity;
 use MU\ShareModule\Helper\CategoryHelper;
 
 /**
@@ -92,8 +92,8 @@ abstract class AbstractCollectionFilterHelper
         if ($objectType == 'pool') {
             return $this->getViewQuickNavParametersForPool($context, $args);
         }
-        if ($objectType == 'company') {
-            return $this->getViewQuickNavParametersForCompany($context, $args);
+        if ($objectType == 'message') {
+            return $this->getViewQuickNavParametersForMessage($context, $args);
         }
     
         return [];
@@ -118,8 +118,8 @@ abstract class AbstractCollectionFilterHelper
         if ($objectType == 'pool') {
             return $this->addCommonViewFiltersForPool($qb);
         }
-        if ($objectType == 'company') {
-            return $this->addCommonViewFiltersForCompany($qb);
+        if ($objectType == 'message') {
+            return $this->addCommonViewFiltersForMessage($qb);
         }
     
         return $qb;
@@ -145,8 +145,8 @@ abstract class AbstractCollectionFilterHelper
         if ($objectType == 'pool') {
             return $this->applyDefaultFiltersForPool($qb, $parameters);
         }
-        if ($objectType == 'company') {
-            return $this->applyDefaultFiltersForCompany($qb, $parameters);
+        if ($objectType == 'message') {
+            return $this->applyDefaultFiltersForMessage($qb, $parameters);
         }
     
         return $qb;
@@ -167,7 +167,6 @@ abstract class AbstractCollectionFilterHelper
             return $parameters;
         }
     
-        $parameters['companyOfLocation'] = $this->request->query->get('companyOfLocation', 0);
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
         $parameters['q'] = $this->request->query->get('q', '');
         $parameters['private'] = $this->request->query->get('private', '');
@@ -237,7 +236,7 @@ abstract class AbstractCollectionFilterHelper
      *
      * @return array List of template variables to be assigned
      */
-    protected function getViewQuickNavParametersForCompany($context = '', $args = [])
+    protected function getViewQuickNavParametersForMessage($context = '', $args = [])
     {
         $parameters = [];
         if (null === $this->request) {
@@ -246,7 +245,6 @@ abstract class AbstractCollectionFilterHelper
     
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
         $parameters['q'] = $this->request->query->get('q', '');
-        $parameters['isPublic'] = $this->request->query->get('isPublic', '');
     
         return $parameters;
     }
@@ -423,7 +421,7 @@ abstract class AbstractCollectionFilterHelper
      *
      * @return QueryBuilder Enriched query builder instance
      */
-    protected function addCommonViewFiltersForCompany(QueryBuilder $qb)
+    protected function addCommonViewFiltersForMessage(QueryBuilder $qb)
     {
         if (null === $this->request) {
             return $qb;
@@ -433,19 +431,12 @@ abstract class AbstractCollectionFilterHelper
             return $qb;
         }
     
-        $parameters = $this->getViewQuickNavParametersForCompany();
+        $parameters = $this->getViewQuickNavParametersForMessage();
         foreach ($parameters as $k => $v) {
             if (in_array($k, ['q', 'searchterm'])) {
                 // quick search
                 if (!empty($v)) {
-                    $qb = $this->addSearchFilter('company', $qb, $v);
-                }
-            } elseif (in_array($k, ['isPublic'])) {
-                // boolean filter
-                if ($v == 'no') {
-                    $qb->andWhere('tbl.' . $k . ' = 0');
-                } elseif ($v == 'yes' || $v == '1') {
-                    $qb->andWhere('tbl.' . $k . ' = 1');
+                    $qb = $this->addSearchFilter('message', $qb, $v);
                 }
             } else if (!is_array($v)) {
                 // field filter
@@ -464,7 +455,7 @@ abstract class AbstractCollectionFilterHelper
             }
         }
     
-        $qb = $this->applyDefaultFiltersForCompany($qb, $parameters);
+        $qb = $this->applyDefaultFiltersForMessage($qb, $parameters);
     
         return $qb;
     }
@@ -568,13 +559,13 @@ abstract class AbstractCollectionFilterHelper
      *
      * @return QueryBuilder Enriched query builder instance
      */
-    protected function applyDefaultFiltersForCompany(QueryBuilder $qb, $parameters = [])
+    protected function applyDefaultFiltersForMessage(QueryBuilder $qb, $parameters = [])
     {
         if (null === $this->request) {
             return $qb;
         }
         $routeName = $this->request->get('_route');
-        $isAdminArea = false !== strpos($routeName, 'musharemodule_company_admin');
+        $isAdminArea = false !== strpos($routeName, 'musharemodule_message_admin');
         if ($isAdminArea) {
             return $qb;
         }
@@ -619,6 +610,18 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchZipCode'] = '%' . $fragment . '%';
             $filters[] = 'tbl.city LIKE :searchCity';
             $parameters['searchCity'] = '%' . $fragment . '%';
+            $filters[] = 'tbl.name LIKE :searchName';
+            $parameters['searchName'] = '%' . $fragment . '%';
+            $filters[] = 'tbl.description LIKE :searchDescription';
+            $parameters['searchDescription'] = '%' . $fragment . '%';
+            $filters[] = 'tbl.mail = :searchMail';
+            $parameters['searchMail'] = $fragment;
+            $filters[] = 'tbl.website = :searchWebsite';
+            $parameters['searchWebsite'] = $fragment;
+            $filters[] = 'tbl.phone LIKE :searchPhone';
+            $parameters['searchPhone'] = '%' . $fragment . '%';
+            $filters[] = 'tbl.mobile LIKE :searchMobile';
+            $parameters['searchMobile'] = '%' . $fragment . '%';
         }
         if ($objectType == 'offer') {
             $filters[] = 'tbl.product LIKE :searchProduct';
@@ -636,19 +639,19 @@ abstract class AbstractCollectionFilterHelper
             $filters[] = 'tbl.collectionOfPool LIKE :searchCollectionOfPool';
             $parameters['searchCollectionOfPool'] = '%' . $fragment . '%';
         }
-        if ($objectType == 'company') {
-            $filters[] = 'tbl.name LIKE :searchName';
-            $parameters['searchName'] = '%' . $fragment . '%';
-            $filters[] = 'tbl.description LIKE :searchDescription';
-            $parameters['searchDescription'] = '%' . $fragment . '%';
-            $filters[] = 'tbl.mail = :searchMail';
-            $parameters['searchMail'] = $fragment;
-            $filters[] = 'tbl.website = :searchWebsite';
-            $parameters['searchWebsite'] = $fragment;
-            $filters[] = 'tbl.phone LIKE :searchPhone';
-            $parameters['searchPhone'] = '%' . $fragment . '%';
-            $filters[] = 'tbl.mobile LIKE :searchMobile';
-            $parameters['searchMobile'] = '%' . $fragment . '%';
+        if ($objectType == 'message') {
+            $filters[] = 'tbl.subject LIKE :searchSubject';
+            $parameters['searchSubject'] = '%' . $fragment . '%';
+            $filters[] = 'tbl.textForMessage LIKE :searchTextForMessage';
+            $parameters['searchTextForMessage'] = '%' . $fragment . '%';
+            $filters[] = 'tbl.recipient = :searchRecipient';
+            $parameters['searchRecipient'] = $fragment;
+            $filters[] = 'tbl.readByRecipient = :searchReadByRecipient';
+            $parameters['searchReadByRecipient'] = $fragment;
+            $filters[] = 'tbl.statusSender = :searchStatusSender';
+            $parameters['searchStatusSender'] = $fragment;
+            $filters[] = 'tbl.statusRecipient = :searchStatusRecipient';
+            $parameters['searchStatusRecipient'] = $fragment;
         }
     
         $qb->andWhere('(' . implode(' OR ', $filters) . ')');

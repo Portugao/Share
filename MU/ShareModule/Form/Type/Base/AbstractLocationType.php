@@ -12,15 +12,17 @@
 
 namespace MU\ShareModule\Form\Type\Base;
 
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -108,7 +110,6 @@ abstract class AbstractLocationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addEntityFields($builder, $options);
-        $this->addIncomingRelationshipFields($builder, $options);
         $this->addModerationFields($builder, $options);
         $this->addSubmitButtons($builder, $options);
     }
@@ -124,6 +125,11 @@ abstract class AbstractLocationType extends AbstractType
         
         $builder->add('title', TextType::class, [
             'label' => $this->__('Title') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Enter a title for better management of your locations.')
+            ],
+            'help' => $this->__('Enter a title for better management of your locations.'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 255,
@@ -186,6 +192,92 @@ abstract class AbstractLocationType extends AbstractType
             'required' => false,
         ]);
         
+        $builder->add('name', TextType::class, [
+            'label' => $this->__('Name') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Enter the name of your company.')
+            ],
+            'help' => $this->__('Enter the name of your company.'),
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => $this->__('Enter the name of the location')
+            ],
+            'required' => true,
+        ]);
+        
+        $builder->add('description', TextareaType::class, [
+            'label' => $this->__('Description') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('here you can enter more informations about the company.')
+            ],
+            'help' => [$this->__('here you can enter more informations about the company.'), $this->__f('Note: this value must not exceed %amount% characters.', ['%amount%' => 2000])],
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 2000,
+                'class' => '',
+                'title' => $this->__('Enter the description of the location')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('mail', EmailType::class, [
+            'label' => $this->__('Mail') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Mail of the company.')
+            ],
+            'help' => $this->__('Mail of the company.'),
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => $this->__('Enter the mail of the location')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('website', UrlType::class, [
+            'label' => $this->__('Website') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Homepage of your company.')
+            ],
+            'help' => $this->__('Homepage of your company.'),
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => $this->__('Enter the website of the location')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('phone', TextType::class, [
+            'label' => $this->__('Phone') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => $this->__('Enter the phone of the location')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('mobile', TextType::class, [
+            'label' => $this->__('Mobile') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => $this->__('Enter the mobile of the location')
+            ],
+            'required' => false,
+        ]);
+        
         $builder->add('forMap', CheckboxType::class, [
             'label' => $this->__('For map') . ':',
             'attr' => [
@@ -212,37 +304,6 @@ abstract class AbstractLocationType extends AbstractType
         $builder->add('longitude', GeoType::class, [
             'label' => $this->__('Longitude') . ':',
             'required' => false
-        ]);
-    }
-
-    /**
-     * Adds fields for incoming relationships.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function addIncomingRelationshipFields(FormBuilderInterface $builder, array $options)
-    {
-        $queryBuilder = function(EntityRepository $er) {
-            // select without joins
-            return $er->getListQueryBuilder('', '', false);
-        };
-        $entityDisplayHelper = $this->entityDisplayHelper;
-        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
-            return $entityDisplayHelper->getFormattedTitle($entity);
-        };
-        $builder->add('companyOfLocation', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
-            'class' => 'MUShareModule:CompanyEntity',
-            'choice_label' => $choiceLabelClosure,
-            'multiple' => false,
-            'expanded' => false,
-            'query_builder' => $queryBuilder,
-            'placeholder' => $this->__('Please choose an option'),
-            'required' => false,
-            'label' => $this->__('Company of location'),
-            'attr' => [
-                'title' => $this->__('Choose the company of location')
-            ]
         ]);
     }
 

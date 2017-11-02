@@ -36,6 +36,7 @@ services:
         class: MU\ShareModule\Helper\EntityDisplayHelper
         arguments:
             - "@translator.default"
+            - "@request_stack"
             - "@mu_share_module.listentries_helper"
     
     mu_share_module.feature_activation_helper:

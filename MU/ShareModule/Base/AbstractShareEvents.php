@@ -270,87 +270,87 @@ abstract class AbstractShareEvents
     const POOL_POST_UPDATE = 'musharemodule.pool_post_update';
     
     /**
-     * The musharemodule.company_post_load event is thrown when companies
+     * The musharemodule.message_post_load event is thrown when messages
      * are loaded from the database.
      *
      * The event listener receives an
-     * MU\ShareModule\Event\FilterCompanyEvent instance.
+     * MU\ShareModule\Event\FilterMessageEvent instance.
      *
      * @see MU\ShareModule\Listener\EntityLifecycleListener::postLoad()
      * @var string
      */
-    const COMPANY_POST_LOAD = 'musharemodule.company_post_load';
+    const MESSAGE_POST_LOAD = 'musharemodule.message_post_load';
     
     /**
-     * The musharemodule.company_pre_persist event is thrown before a new company
+     * The musharemodule.message_pre_persist event is thrown before a new message
      * is created in the system.
      *
      * The event listener receives an
-     * MU\ShareModule\Event\FilterCompanyEvent instance.
+     * MU\ShareModule\Event\FilterMessageEvent instance.
      *
      * @see MU\ShareModule\Listener\EntityLifecycleListener::prePersist()
      * @var string
      */
-    const COMPANY_PRE_PERSIST = 'musharemodule.company_pre_persist';
+    const MESSAGE_PRE_PERSIST = 'musharemodule.message_pre_persist';
     
     /**
-     * The musharemodule.company_post_persist event is thrown after a new company
+     * The musharemodule.message_post_persist event is thrown after a new message
      * has been created in the system.
      *
      * The event listener receives an
-     * MU\ShareModule\Event\FilterCompanyEvent instance.
+     * MU\ShareModule\Event\FilterMessageEvent instance.
      *
      * @see MU\ShareModule\Listener\EntityLifecycleListener::postPersist()
      * @var string
      */
-    const COMPANY_POST_PERSIST = 'musharemodule.company_post_persist';
+    const MESSAGE_POST_PERSIST = 'musharemodule.message_post_persist';
     
     /**
-     * The musharemodule.company_pre_remove event is thrown before an existing company
+     * The musharemodule.message_pre_remove event is thrown before an existing message
      * is removed from the system.
      *
      * The event listener receives an
-     * MU\ShareModule\Event\FilterCompanyEvent instance.
+     * MU\ShareModule\Event\FilterMessageEvent instance.
      *
      * @see MU\ShareModule\Listener\EntityLifecycleListener::preRemove()
      * @var string
      */
-    const COMPANY_PRE_REMOVE = 'musharemodule.company_pre_remove';
+    const MESSAGE_PRE_REMOVE = 'musharemodule.message_pre_remove';
     
     /**
-     * The musharemodule.company_post_remove event is thrown after an existing company
+     * The musharemodule.message_post_remove event is thrown after an existing message
      * has been removed from the system.
      *
      * The event listener receives an
-     * MU\ShareModule\Event\FilterCompanyEvent instance.
+     * MU\ShareModule\Event\FilterMessageEvent instance.
      *
      * @see MU\ShareModule\Listener\EntityLifecycleListener::postRemove()
      * @var string
      */
-    const COMPANY_POST_REMOVE = 'musharemodule.company_post_remove';
+    const MESSAGE_POST_REMOVE = 'musharemodule.message_post_remove';
     
     /**
-     * The musharemodule.company_pre_update event is thrown before an existing company
+     * The musharemodule.message_pre_update event is thrown before an existing message
      * is updated in the system.
      *
      * The event listener receives an
-     * MU\ShareModule\Event\FilterCompanyEvent instance.
+     * MU\ShareModule\Event\FilterMessageEvent instance.
      *
      * @see MU\ShareModule\Listener\EntityLifecycleListener::preUpdate()
      * @var string
      */
-    const COMPANY_PRE_UPDATE = 'musharemodule.company_pre_update';
+    const MESSAGE_PRE_UPDATE = 'musharemodule.message_pre_update';
     
     /**
-     * The musharemodule.company_post_update event is thrown after an existing new company
+     * The musharemodule.message_post_update event is thrown after an existing new message
      * has been updated in the system.
      *
      * The event listener receives an
-     * MU\ShareModule\Event\FilterCompanyEvent instance.
+     * MU\ShareModule\Event\FilterMessageEvent instance.
      *
      * @see MU\ShareModule\Listener\EntityLifecycleListener::postUpdate()
      * @var string
      */
-    const COMPANY_POST_UPDATE = 'musharemodule.company_post_update';
+    const MESSAGE_POST_UPDATE = 'musharemodule.message_post_update';
     
 }

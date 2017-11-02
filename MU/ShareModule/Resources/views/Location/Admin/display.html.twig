@@ -52,6 +52,44 @@
             {% endif %}
             </dd>
         {% endif %}
+        {% if location.name is not empty %}
+            <dt>{{ __('Name') }}</dt>
+            <dd>{{ location.name }}</dd>
+        {% endif %}
+        {% if location.description is not empty %}
+            <dt>{{ __('Description') }}</dt>
+            <dd>{{ location.description|safeHtml }}</dd>
+        {% endif %}
+        {% if location.mail is not empty %}
+            <dt>{{ __('Mail') }}</dt>
+            <dd>{% if location.mail is not empty %}
+            {% if not isQuickView %}
+            <a href="mailto:{{ location.mail|protectMail }}" title="{{ __('Send an email') }}"><i class="fa fa-envelope"></i></a>
+            {% else %}
+                {{ location.mail|protectMail }}
+            {% endif %}
+            {% else %}&nbsp;{% endif %}
+            </dd>
+        {% endif %}
+        {% if location.website is not empty %}
+            <dt>{{ __('Website') }}</dt>
+            <dd>{% if location.website is not empty %}
+            {% if not isQuickView %}
+            <a href="{{ location.website }}" title="{{ __('Visit this page') }}"><i class="fa fa-external-link-square"></i></a>
+            {% else %}
+                {{ location.website }}
+            {% endif %}
+            {% else %}&nbsp;{% endif %}
+            </dd>
+        {% endif %}
+        {% if location.phone is not empty %}
+            <dt>{{ __('Phone') }}</dt>
+            <dd>{{ location.phone }}</dd>
+        {% endif %}
+        {% if location.mobile is not empty %}
+            <dt>{{ __('Mobile') }}</dt>
+            <dd>{{ location.mobile }}</dd>
+        {% endif %}
         {% if location.forMap is not empty %}
             <dt>{{ __('For map') }}</dt>
             <dd>{% if location.forMap %}

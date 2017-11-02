@@ -35,7 +35,7 @@
         {% endif %}
         <description>
             <![CDATA[
-            {{ location.title|replace({'<br>': '<br />'}) }}
+            {{ location.description|replace({'<br>': '<br />'}) }}
             ]]>
         </description>
         {% if location.createdDate|default %}

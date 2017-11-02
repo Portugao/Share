@@ -11,21 +11,17 @@
         {{ form_start(form) }}
         <div class="zikula-bootstrap-tab-container">
             <ul class="nav nav-tabs">
-                {% set tabTitle = __('General') %}
+                {% set tabTitle = __('List views') %}
                 <li role="presentation" class="active">
                     <a id="vars1Tab" href="#tab1" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
                 </li>
-                {% set tabTitle = __('List views') %}
+                {% set tabTitle = __('Integration') %}
                 <li role="presentation">
                     <a id="vars2Tab" href="#tab2" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
                 </li>
-                {% set tabTitle = __('Integration') %}
-                <li role="presentation">
-                    <a id="vars3Tab" href="#tab3" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
-                </li>
                 {% set tabTitle = __('Geo') %}
                 <li role="presentation">
-                    <a id="vars4Tab" href="#tab4" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
+                    <a id="vars3Tab" href="#tab3" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
                 </li>
                 {% set tabTitle = __('Workflows') %}
                 <li role="presentation">
@@ -36,19 +32,6 @@
             {{ form_errors(form) }}
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane fade in active" id="tab1" aria-labelledby="vars1Tab">
-                    {% set tabTitle = __('General') %}
-                    <fieldset>
-                        <legend>{{ tabTitle }}</legend>
-                    
-                        <p class="alert alert-info">{{ __('Here you can manage all basic settings for this application.') }}</p>
-                    
-                        {{ form_row(form.zicCode) }}
-                        {{ form_row(form.city) }}
-                        {{ form_row(form.state) }}
-                        {{ form_row(form.offersPerPage) }}
-                    </fieldset>
-                </div>
-                <div role="tabpanel" class="tab-pane fade" id="tab2" aria-labelledby="vars2Tab">
                     {% set tabTitle = __('List views') %}
                     <fieldset>
                         <legend>{{ tabTitle }}</legend>
@@ -61,11 +44,11 @@
                         {{ form_row(form.linkOwnOffersOnAccountPage) }}
                         {{ form_row(form.poolEntriesPerPage) }}
                         {{ form_row(form.linkOwnPoolsOnAccountPage) }}
-                        {{ form_row(form.companyEntriesPerPage) }}
-                        {{ form_row(form.linkOwnCompaniesOnAccountPage) }}
+                        {{ form_row(form.messageEntriesPerPage) }}
+                        {{ form_row(form.linkOwnMessagesOnAccountPage) }}
                     </fieldset>
                 </div>
-                <div role="tabpanel" class="tab-pane fade" id="tab3" aria-labelledby="vars3Tab">
+                <div role="tabpanel" class="tab-pane fade" id="tab2" aria-labelledby="vars2Tab">
                     {% set tabTitle = __('Integration') %}
                     <fieldset>
                         <legend>{{ tabTitle }}</legend>
@@ -75,7 +58,7 @@
                         {{ form_row(form.enabledFinderTypes) }}
                     </fieldset>
                 </div>
-                <div role="tabpanel" class="tab-pane fade" id="tab4" aria-labelledby="vars4Tab">
+                <div role="tabpanel" class="tab-pane fade" id="tab3" aria-labelledby="vars3Tab">
                     {% set tabTitle = __('Geo') %}
                     <fieldset>
                         <legend>{{ tabTitle }}</legend>
@@ -104,8 +87,8 @@
                         <p><a href="{{ path('zikula_workflow_editor_index', {workflow: 'musharemodule_none'}) }}" title="{{ __('Edit workflow for offers') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit offers workflow') }}</a>
                         <h4>{{ __('Pools') }}</h4>
                         <p><a href="{{ path('zikula_workflow_editor_index', {workflow: 'musharemodule_none'}) }}" title="{{ __('Edit workflow for pools') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit pools workflow') }}</a>
-                        <h4>{{ __('Companies') }}</h4>
-                        <p><a href="{{ path('zikula_workflow_editor_index', {workflow: 'musharemodule_none'}) }}" title="{{ __('Edit workflow for companies') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit companies workflow') }}</a>
+                        <h4>{{ __('Messages') }}</h4>
+                        <p><a href="{{ path('zikula_workflow_editor_index', {workflow: 'musharemodule_none'}) }}" title="{{ __('Edit workflow for messages') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit messages workflow') }}</a>
                     </fieldset>
                 </div>
             </div>

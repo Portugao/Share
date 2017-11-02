@@ -27,7 +27,7 @@ use MU\ShareModule\ShareEvents;
 use MU\ShareModule\Event\FilterLocationEvent;
 use MU\ShareModule\Event\FilterOfferEvent;
 use MU\ShareModule\Event\FilterPoolEvent;
-use MU\ShareModule\Event\FilterCompanyEvent;
+use MU\ShareModule\Event\FilterMessageEvent;
 
 /**
  * Event subscriber base class for entity lifecycle events.

@@ -26,6 +26,12 @@
                     <option value="zipCode"{if $sort eq 'zipCode'} selected="selected"{/if}>{gt text='Zip code'}</option>
                     <option value="city"{if $sort eq 'city'} selected="selected"{/if}>{gt text='City'}</option>
                     <option value="private"{if $sort eq 'private'} selected="selected"{/if}>{gt text='Private'}</option>
+                    <option value="name"{if $sort eq 'name'} selected="selected"{/if}>{gt text='Name'}</option>
+                    <option value="description"{if $sort eq 'description'} selected="selected"{/if}>{gt text='Description'}</option>
+                    <option value="mail"{if $sort eq 'mail'} selected="selected"{/if}>{gt text='Mail'}</option>
+                    <option value="website"{if $sort eq 'website'} selected="selected"{/if}>{gt text='Website'}</option>
+                    <option value="phone"{if $sort eq 'phone'} selected="selected"{/if}>{gt text='Phone'}</option>
+                    <option value="mobile"{if $sort eq 'mobile'} selected="selected"{/if}>{gt text='Mobile'}</option>
                     <option value="forMap"{if $sort eq 'forMap'} selected="selected"{/if}>{gt text='For map'}</option>
                     <option value="createdDate"{if $sort eq 'createdDate'} selected="selected"{/if}>{gt text='Creation date'}</option>
                     <option value="createdBy"{if $sort eq 'createdBy'} selected="selected"{/if}>{gt text='Creator'}</option>

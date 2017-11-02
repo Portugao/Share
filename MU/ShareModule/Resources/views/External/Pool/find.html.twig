@@ -16,8 +16,8 @@
             {% if 'pool' in activatedObjectTypes %}
                 <li{{ objectType == 'pool' ? ' class="active"' : '' }}><a href="{{ path('musharemodule_external_finder', {objectType: 'pool', editor: editorName}) }}" title="{{ __('Search and select pool') }}">{{ __('Pools') }}</a></li>
             {% endif %}
-            {% if 'company' in activatedObjectTypes %}
-                <li{{ objectType == 'company' ? ' class="active"' : '' }}><a href="{{ path('musharemodule_external_finder', {objectType: 'company', editor: editorName}) }}" title="{{ __('Search and select company') }}">{{ __('Companies') }}</a></li>
+            {% if 'message' in activatedObjectTypes %}
+                <li{{ objectType == 'message' ? ' class="active"' : '' }}><a href="{{ path('musharemodule_external_finder', {objectType: 'message', editor: editorName}) }}" title="{{ __('Search and select message') }}">{{ __('Messages') }}</a></li>
             {% endif %}
             </ul>
         </div>

@@ -1,0 +1,13 @@
+{# Purpose of this template: Display messages within an external context #}
+<dl>
+    {% for message in items %}
+        <dt>{{ message|musharemodule_formattedTitle }}</dt>
+        {% if message.textForMessage %}
+            <dd>{{ message.textForMessage|striptags|truncate(200, true, '&hellip;') }}</dd>
+        {% endif %}
+        <dd><a href="{{ path('musharemodule_message_display', {'id': message.getId()}) }}" title="{{ __('Read more')|e('html_attr') }}">{{ __('Read more') }}</a>
+        </dd>
+    {% else %}
+        <dt>{{ __('No entries found.') }}</dt>
+    {% endfor %}
+</dl>

@@ -12,11 +12,13 @@
 
 namespace MU\ShareModule\Helper\Base;
 
+use IntlDateFormatter;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Zikula\Common\Translator\TranslatorInterface;
 use MU\ShareModule\Entity\LocationEntity;
 use MU\ShareModule\Entity\OfferEntity;
 use MU\ShareModule\Entity\PoolEntity;
-use MU\ShareModule\Entity\CompanyEntity;
+use MU\ShareModule\Entity\MessageEntity;
 use MU\ShareModule\Helper\ListEntriesHelper;
 
 /**
@@ -35,17 +37,26 @@ abstract class AbstractEntityDisplayHelper
     protected $listEntriesHelper;
 
     /**
+     * @var IntlDateFormatter Formatter for dates
+     */
+    protected $dateFormatter;
+
+    /**
      * EntityDisplayHelper constructor.
      *
      * @param TranslatorInterface $translator        Translator service instance
+     * @param RequestStack        $requestStack      RequestStack service instance
      * @param ListEntriesHelper   $listEntriesHelper Helper service for managing list entries
      */
     public function __construct(
         TranslatorInterface $translator,
+        RequestStack $requestStack,
         ListEntriesHelper $listEntriesHelper
     ) {
         $this->translator = $translator;
         $this->listEntriesHelper = $listEntriesHelper;
+        $locale = null !== $requestStack->getCurrentRequest() ? $requestStack->getCurrentRequest()->getLocale() : null;
+        $this->dateFormatter = new IntlDateFormatter($locale, null, null);
     }
 
     /**
@@ -66,8 +77,8 @@ abstract class AbstractEntityDisplayHelper
         if ($entity instanceof PoolEntity) {
             return $this->formatPool($entity);
         }
-        if ($entity instanceof CompanyEntity) {
-            return $this->formatCompany($entity);
+        if ($entity instanceof MessageEntity) {
+            return $this->formatMessage($entity);
         }
     
         return '';
@@ -118,14 +129,14 @@ abstract class AbstractEntityDisplayHelper
     /**
      * Returns the formatted title for a given entity.
      *
-     * @param CompanyEntity $entity The given entity instance
+     * @param MessageEntity $entity The given entity instance
      *
      * @return string The formatted title
      */
-    protected function formatCompany(CompanyEntity $entity)
+    protected function formatMessage(MessageEntity $entity)
     {
-        return $this->translator->__f('%name%', [
-            '%name%' => $entity->getName()
+        return $this->translator->__f('%subject%', [
+            '%subject%' => $entity->getSubject()
         ]);
     }
     
@@ -147,8 +158,8 @@ abstract class AbstractEntityDisplayHelper
         if ($objectType == 'pool') {
             return 'collectionOfPool';
         }
-        if ($objectType == 'company') {
-            return 'name';
+        if ($objectType == 'message') {
+            return 'subject';
         }
     
         return '';
@@ -164,7 +175,7 @@ abstract class AbstractEntityDisplayHelper
     public function getDescriptionFieldName($objectType)
     {
         if ($objectType == 'location') {
-            return 'street';
+            return 'description';
         }
         if ($objectType == 'offer') {
             return 'description';
@@ -172,8 +183,8 @@ abstract class AbstractEntityDisplayHelper
         if ($objectType == 'pool') {
             return 'collectionOfPool';
         }
-        if ($objectType == 'company') {
-            return 'description';
+        if ($objectType == 'message') {
+            return 'textForMessage';
         }
     
         return '';
@@ -198,7 +209,7 @@ abstract class AbstractEntityDisplayHelper
         if ($objectType == 'pool') {
             return 'createdDate';
         }
-        if ($objectType == 'company') {
+        if ($objectType == 'message') {
             return 'createdDate';
         }
     

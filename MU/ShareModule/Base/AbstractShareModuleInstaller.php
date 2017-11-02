@@ -45,19 +45,15 @@ abstract class AbstractShareModuleInstaller extends AbstractExtensionInstaller
         }
     
         // set up all our vars with initial values
-        $this->setVar('zicCode', '');
-        $this->setVar('city', '');
-        $this->setVar('state', '');
-        $this->setVar('offersPerPage', '10');
         $this->setVar('locationEntriesPerPage', '10');
         $this->setVar('linkOwnLocationsOnAccountPage', true);
         $this->setVar('offerEntriesPerPage', '10');
         $this->setVar('linkOwnOffersOnAccountPage', true);
         $this->setVar('poolEntriesPerPage', '10');
         $this->setVar('linkOwnPoolsOnAccountPage', true);
-        $this->setVar('companyEntriesPerPage', '10');
-        $this->setVar('linkOwnCompaniesOnAccountPage', true);
-        $this->setVar('enabledFinderTypes', [ 'location' ,  'offer' ,  'pool' ,  'company' ]);
+        $this->setVar('messageEntriesPerPage', '10');
+        $this->setVar('linkOwnMessagesOnAccountPage', true);
+        $this->setVar('enabledFinderTypes', [ 'location' ,  'offer' ,  'pool' ,  'message' ]);
         $this->setVar('defaultLatitude', '0.00');
         $this->setVar('defaultLongitude', '0.00');
         $this->setVar('defaultZoomLevel', '5');
@@ -301,7 +297,7 @@ abstract class AbstractShareModuleInstaller extends AbstractExtensionInstaller
         $conn->update('workflows', ['obj_table' => 'LocationEntity'], ['module' => 'MUShareModule', 'obj_table' => 'location']);
         $conn->update('workflows', ['obj_table' => 'OfferEntity'], ['module' => 'MUShareModule', 'obj_table' => 'offer']);
         $conn->update('workflows', ['obj_table' => 'PoolEntity'], ['module' => 'MUShareModule', 'obj_table' => 'pool']);
-        $conn->update('workflows', ['obj_table' => 'CompanyEntity'], ['module' => 'MUShareModule', 'obj_table' => 'company']);
+        $conn->update('workflows', ['obj_table' => 'MessageEntity'], ['module' => 'MUShareModule', 'obj_table' => 'message']);
     }
     
     /**
@@ -363,7 +359,7 @@ abstract class AbstractShareModuleInstaller extends AbstractExtensionInstaller
         $classNames[] = 'MU\ShareModule\Entity\OfferEntity';
         $classNames[] = 'MU\ShareModule\Entity\OfferCategoryEntity';
         $classNames[] = 'MU\ShareModule\Entity\PoolEntity';
-        $classNames[] = 'MU\ShareModule\Entity\CompanyEntity';
+        $classNames[] = 'MU\ShareModule\Entity\MessageEntity';
     
         return $classNames;
     }

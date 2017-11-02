@@ -60,11 +60,12 @@ abstract class AbstractModelHelper
                 break;
             case 'offer':
                 $result = true;
+                $result &= $this->hasExistingInstances('location');
                 break;
             case 'pool':
                 $result = true;
                 break;
-            case 'company':
+            case 'message':
                 $result = true;
                 break;
         }

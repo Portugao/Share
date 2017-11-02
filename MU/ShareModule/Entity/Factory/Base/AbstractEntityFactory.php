@@ -121,17 +121,17 @@ abstract class AbstractEntityFactory
     }
 
     /**
-     * Creates a new company instance.
+     * Creates a new message instance.
      *
-     * @return MU\ShareModule\Entity\companyEntity The newly created entity instance
+     * @return MU\ShareModule\Entity\messageEntity The newly created entity instance
      */
-    public function createCompany()
+    public function createMessage()
     {
-        $entityClass = 'MU\\ShareModule\\Entity\\CompanyEntity';
+        $entityClass = 'MU\\ShareModule\\Entity\\MessageEntity';
 
         $entity = new $entityClass();
 
-        $this->entityInitialiser->initCompany($entity);
+        $this->entityInitialiser->initMessage($entity);
 
         return $entity;
     }

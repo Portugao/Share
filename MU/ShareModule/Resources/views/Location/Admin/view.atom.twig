@@ -37,12 +37,12 @@
         {% endif %}
         <summary type="html">
             <![CDATA[
-            {{ location.title|truncate(150, true, '&hellip;')|default('-') }}
+            {{ location.description|truncate(150, true, '&hellip;')|default('-') }}
             ]]>
         </summary>
         <content type="html">
             <![CDATA[
-            {{ location.street|replace({ '<br>': '<br />' }) }}
+            {{ location.title|replace({ '<br>': '<br />' }) }}
             ]]>
         </content>
     </entry>

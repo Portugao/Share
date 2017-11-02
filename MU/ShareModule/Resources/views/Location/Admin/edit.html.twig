@@ -25,6 +25,12 @@
             {{ form_row(form.zipCode) }}
             {{ form_row(form.city) }}
             {{ form_row(form.private) }}
+            {{ form_row(form.name) }}
+            {{ form_row(form.description) }}
+            {{ form_row(form.mail) }}
+            {{ form_row(form.website) }}
+            {{ form_row(form.phone) }}
+            {{ form_row(form.mobile) }}
             {{ form_row(form.forMap) }}
             {{ form_row(form.latitude) }}
             {{ form_row(form.longitude) }}
@@ -36,10 +42,6 @@
             </div>
         </fieldset>
         
-        {{ include(
-            '@MUShareModule/Company/Admin/includeSelectOne.html.twig',
-            {group: 'location', heading: __('Company of location'), alias: 'companyOfLocation', mandatory: false, idPrefix: 'shareLocation_CompanyOfLocation', linkingItem: location, displayMode: 'choices'}
-        ) }}
         {% if mode != 'create' %}
             {{ include('@MUShareModule/Helper/includeStandardFieldsEdit.html.twig', {obj: location}) }}
         {% endif %}
@@ -97,8 +99,6 @@
     {% set formInitScript %}
         <script type="text/javascript">
         /* <![CDATA[ */
-            var mUShareInlineEditHandlers = [];
-            var mUShareEditHandler = null;
             
             ( function($) {
                 $(document).ready(function() {

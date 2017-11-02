@@ -158,9 +158,13 @@ abstract class AbstractOfferType extends AbstractType
             'label' => $this->__('Is open') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
-                'title' => $this->__('Is your offer active?')
+                'title' => $this->__('Is your offer active?
+                Is it available at the moment?
+                If you disable, it will not appear in the map.')
             ],
-            'help' => $this->__('Is your offer active?'),
+            'help' => $this->__('Is your offer active?
+            Is it available at the moment?
+            If you disable, it will not appear in the map.'),
             'attr' => [
                 'class' => '',
                 'title' => $this->__('is open ?')
@@ -172,9 +176,9 @@ abstract class AbstractOfferType extends AbstractType
             'label' => $this->__('Abo') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
-                'title' => $this->__('Do you have an abo of your offer?')
+                'title' => $this->__('Do you have an abonnement of your offer?')
             ],
-            'help' => $this->__('Do you have an abo of your offer?'),
+            'help' => $this->__('Do you have an abonnement of your offer?'),
             'attr' => [
                 'class' => '',
                 'title' => $this->__('abo ?')
@@ -207,6 +211,11 @@ abstract class AbstractOfferType extends AbstractType
         
         $builder->add('totalYear', CheckboxType::class, [
             'label' => $this->__('Total year') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('If you have magazines or something else and a complete year, you can set this option.')
+            ],
+            'help' => $this->__('If you have magazines or something else and a complete year, you can set this option.'),
             'attr' => [
                 'class' => '',
                 'title' => $this->__('total year ?')
@@ -216,6 +225,13 @@ abstract class AbstractOfferType extends AbstractType
         
         $builder->add('splitCosts', CheckboxType::class, [
             'label' => $this->__('Split costs') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Do you wish to get a small part of your costs?
+                Maximal 15% of the price are allowed for new magazines, books and so on.')
+            ],
+            'help' => $this->__('Do you wish to get a small part of your costs?
+            Maximal 15% of the price are allowed for new magazines, books and so on.'),
             'attr' => [
                 'class' => '',
                 'title' => $this->__('split costs ?')
@@ -241,9 +257,11 @@ abstract class AbstractOfferType extends AbstractType
             'label' => $this->__('At me') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
-                'title' => $this->__('Is the meeting place at you?')
+                'title' => $this->__('If enabled the latitude and longitude get set like the location from where or for what you created the offer.
+                It does not work, what you set by clicking into the map.')
             ],
-            'help' => $this->__('Is the meeting place at you?'),
+            'help' => $this->__('If enabled the latitude and longitude get set like the location from where or for what you created the offer.
+            It does not work, what you set by clicking into the map.'),
             'attr' => [
                 'class' => '',
                 'title' => $this->__('at me ?')
@@ -264,7 +282,7 @@ abstract class AbstractOfferType extends AbstractType
                 'class' => '',
                 'title' => $this->__('Enter the zip code of the offer')
             ],
-            'required' => false,
+            'required' => true,
         ]);
         
         $builder->add('meetingPlace', TextType::class, [
@@ -347,8 +365,6 @@ abstract class AbstractOfferType extends AbstractType
             'multiple' => false,
             'expanded' => false,
             'query_builder' => $queryBuilder,
-            'placeholder' => $this->__('Please choose an option'),
-            'required' => false,
             'label' => $this->__('Location of offer'),
             'attr' => [
                 'title' => $this->__('Choose the location of offer')

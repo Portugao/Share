@@ -5,6 +5,7 @@
 {% for location in items %}
     <Placemark>
         <name>{{ location.getTitle() }}</name>
+        <description><![CDATA[{{ location.getDescription() }}<br /><a href="{{ url('musharemodule_location_display', {'id': location.getId()}) }}">{{ __('Details') }}</a>]]></description>
         <Point>
             <coordinates>{{ location.getLongitude() }}, {{ location.getLatitude() }}, 0</coordinates>
         </Point>

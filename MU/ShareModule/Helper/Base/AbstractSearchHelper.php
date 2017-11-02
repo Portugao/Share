@@ -163,7 +163,7 @@ abstract class AbstractSearchHelper implements SearchableInterface
     
         // retrieve list of activated object types
         $searchTypes = $this->getSearchTypes();
-        $entitiesWithDisplayAction = ['location', 'offer', 'pool', 'company'];
+        $entitiesWithDisplayAction = ['location', 'offer', 'pool', 'message'];
     
         foreach ($searchTypes as $searchTypeCode => $typeInfo) {
             $isActivated = false;
@@ -188,6 +188,12 @@ abstract class AbstractSearchHelper implements SearchableInterface
                     $whereArray[] = 'tbl.numberOfStreet';
                     $whereArray[] = 'tbl.zipCode';
                     $whereArray[] = 'tbl.city';
+                    $whereArray[] = 'tbl.name';
+                    $whereArray[] = 'tbl.description';
+                    $whereArray[] = 'tbl.mail';
+                    $whereArray[] = 'tbl.website';
+                    $whereArray[] = 'tbl.phone';
+                    $whereArray[] = 'tbl.mobile';
                     break;
                 case 'offer':
                     $whereArray[] = 'tbl.workflowState';
@@ -201,14 +207,10 @@ abstract class AbstractSearchHelper implements SearchableInterface
                     $whereArray[] = 'tbl.workflowState';
                     $whereArray[] = 'tbl.collectionOfPool';
                     break;
-                case 'company':
+                case 'message':
                     $whereArray[] = 'tbl.workflowState';
-                    $whereArray[] = 'tbl.name';
-                    $whereArray[] = 'tbl.description';
-                    $whereArray[] = 'tbl.mail';
-                    $whereArray[] = 'tbl.website';
-                    $whereArray[] = 'tbl.phone';
-                    $whereArray[] = 'tbl.mobile';
+                    $whereArray[] = 'tbl.subject';
+                    $whereArray[] = 'tbl.textForMessage';
                     break;
             }
     
@@ -296,9 +298,9 @@ abstract class AbstractSearchHelper implements SearchableInterface
                 'value' => 'pool',
                 'label' => $this->__('Pools')
             ],
-            'mUShareModuleCompanies' => [
-                'value' => 'company',
-                'label' => $this->__('Companies')
+            'mUShareModuleMessages' => [
+                'value' => 'message',
+                'label' => $this->__('Messages')
             ]
         ];
     

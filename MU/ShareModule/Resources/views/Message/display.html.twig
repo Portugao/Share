@@ -1,0 +1,46 @@
+{# purpose of this template: messages user display view #}
+{% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : 'base' %}
+{% extends 'MUShareModule::' ~ baseTemplate ~ '.html.twig' %}
+{% block pageTitle %}{{ message|musharemodule_formattedTitle|default(__('Message')) }}{% endblock %}
+{% block title %}
+    {% set templateTitle = message|musharemodule_formattedTitle|default(__('Message')) %}
+    {{ templateTitle|notifyFilters('musharemodule.filter_hooks.messages.filter')|safeHtml }}
+    {% set itemActions = knp_menu_get('MUShareModule:ItemActionsMenu:menu', [], {entity: message, area: routeArea, context: 'display'}) %}
+    <div class="dropdown">
+        <a id="itemActions{{ message.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
+        {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:actions.html.twig'}) }}
+    </div>
+{% endblock %}
+{% block content %}
+    {% set isQuickView = app.request.query.getBoolean('raw', false) %}
+    <div class="musharemodule-message musharemodule-display">
+
+    <dl>
+        {% if message.subject is not empty %}
+            <dt>{{ __('Subject') }}</dt>
+            <dd>{{ message.subject }}</dd>
+        {% endif %}
+        {% if message.textForMessage is not empty %}
+            <dt>{{ __('Text for message') }}</dt>
+            <dd>{{ message.textForMessage|safeHtml }}</dd>
+        {% endif %}
+        {% if message.recipient is not empty %}
+            <dt>{{ __('Recipient') }}</dt>
+            <dd>{{ message.recipient }}</dd>
+        {% endif %}
+        
+    </dl>
+
+    {{ include('@MUShareModule/Helper/includeStandardFieldsDisplay.html.twig', {obj: message}) }}
+
+    {{ block('display_hooks') }}
+</div>
+{% endblock %}
+{% block display_hooks %}
+    {% set hooks = notifyDisplayHooks(eventName='musharemodule.ui_hooks.messages.display_view', id=message.getKey(), urlObject=currentUrlObject, outputAsArray=true) %}
+    {% if hooks is iterable and hooks|length > 0 %}
+        {% for area, hook in hooks %}
+            <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook }}</div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

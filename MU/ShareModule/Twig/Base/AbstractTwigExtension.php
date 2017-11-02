@@ -192,8 +192,8 @@ abstract class AbstractTwigExtension extends Twig_Extension
             'value' => 'pool'
         ];
         $result[] = [
-            'text' => $this->__('Companies'),
-            'value' => 'company'
+            'text' => $this->__('Messages'),
+            'value' => 'message'
         ];
     
         return $result;

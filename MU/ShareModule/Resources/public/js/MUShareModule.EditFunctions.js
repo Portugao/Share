@@ -1,5 +1,16 @@
 'use strict';
 
+/**
+ * Initialises the reset button for a certain date input.
+ */
+function mUShareInitDateField(fieldName)
+{
+    jQuery('#' + fieldName + 'ResetVal').click(function (event) {
+        event.preventDefault();
+        jQuery('#' + fieldName).val('');
+    }).removeClass('hidden');
+}
+
 var editedObjectType;
 var editedEntityId;
 var editForm;

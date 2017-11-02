@@ -1,0 +1,11 @@
+{# purpose of this template: messages xml inclusion template #}
+<message id="{{ message.getId() }}" createdon="{{ message.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ message.updatedDate|localizeddate('medium', 'short') }}">
+    <id>{{ message.id }}</id>
+    <subject><![CDATA[{{ message.subject }}]]></subject>
+    <textForMessage><![CDATA[{{ message.textForMessage|safeHtml }}]]></textForMessage>
+    <recipient>{{ message.recipient }}</recipient>
+    <readByRecipient>{{ message.readByRecipient|localizeddate('medium', 'short') }}</readByRecipient>
+    <statusSender>{{ message.statusSender }}</statusSender>
+    <statusRecipient>{{ message.statusRecipient }}</statusRecipient>
+    <workflowState>{{ message.workflowState|musharemodule_objectState(false)|lower }}</workflowState>
+</message>

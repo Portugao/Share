@@ -1,0 +1,5 @@
+{# Purpose of this template: Display item information for previewing from other modules #}
+<dl id="message{{ message.getKey() }}">
+<dt>{{ message|musharemodule_formattedTitle|notifyFilters('share.filter_hooks.messages.filter')|safeHtml }}</dt>
+{% if message.textForMessage is not empty %}<dd>{{ message.textForMessage }}</dd>{% endif %}
+</dl>

@@ -5,8 +5,6 @@ services:
         class: MU\ShareModule\Form\Type\QuickNavigation\LocationQuickNavType
         arguments:
             - "@translator.default"
-            - "@request_stack"
-            - "@mu_share_module.entity_display_helper"
             - "@mu_share_module.listentries_helper"
             - "@mu_share_module.feature_activation_helper"
         tags:
@@ -32,8 +30,8 @@ services:
         tags:
             - { name: form.type }
     
-    mu_share_module.form.type.companyquicknav:
-        class: MU\ShareModule\Form\Type\QuickNavigation\CompanyQuickNavType
+    mu_share_module.form.type.messagequicknav:
+        class: MU\ShareModule\Form\Type\QuickNavigation\MessageQuickNavType
         arguments:
             - "@translator.default"
             - "@mu_share_module.listentries_helper"
@@ -110,17 +108,15 @@ services:
         tags:
             - { name: form.type }
     
-    mu_share_module.form.handler.company:
-        class: MU\ShareModule\Form\Handler\Company\EditHandler
+    mu_share_module.form.handler.message:
+        class: MU\ShareModule\Form\Handler\Message\EditHandler
         parent: mu_share_module.form.handler.common
     
-    mu_share_module.form.type.company:
-        class: MU\ShareModule\Form\Type\CompanyType
+    mu_share_module.form.type.message:
+        class: MU\ShareModule\Form\Type\MessageType
         arguments:
             - "@translator.default"
             - "@mu_share_module.entity_factory"
-            - "@mu_share_module.collection_filter_helper"
-            - "@mu_share_module.entity_display_helper"
             - "@mu_share_module.listentries_helper"
             - "@mu_share_module.feature_activation_helper"
         tags:
@@ -166,8 +162,8 @@ services:
         tags:
             - { name: form.type }
     
-    mu_share_module.form.type.companyfinder:
-        class: MU\ShareModule\Form\Type\Finder\CompanyFinderType
+    mu_share_module.form.type.messagefinder:
+        class: MU\ShareModule\Form\Type\Finder\MessageFinderType
         arguments:
             - "@translator.default"
             - "@mu_share_module.feature_activation_helper"

@@ -7,6 +7,12 @@
     <zipCode><![CDATA[{{ location.zipCode }}]]></zipCode>
     <city><![CDATA[{{ location.city }}]]></city>
     <private>{% if not location.private %}0{% else %}1{% endif %}</private>
+    <name><![CDATA[{{ location.name }}]]></name>
+    <description><![CDATA[{{ location.description|safeHtml }}]]></description>
+    <mail>{{ location.mail }}</mail>
+    <website>{{ location.website }}</website>
+    <phone><![CDATA[{{ location.phone }}]]></phone>
+    <mobile><![CDATA[{{ location.mobile }}]]></mobile>
     <forMap>{% if not location.forMap %}0{% else %}1{% endif %}</forMap>
     <latitude>{{ location.latitude|musharemodule_geoData }}</latitude>
     <longitude>{{ location.longitude|musharemodule_geoData }}</longitude>

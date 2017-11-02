@@ -206,14 +206,14 @@ abstract class AbstractUserListener implements EventSubscriberInterface
         $logArgs = ['app' => 'MUShareModule', 'user' => $this->currentUserApi->get('uname'), 'entities' => 'pools'];
         $this->logger->notice('{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.', $logArgs);
         
-        $repo = $this->entityFactory->getRepository('company');
-        // set creator to admin (UsersConstant::USER_ID_ADMIN) for all companies created by this user
+        $repo = $this->entityFactory->getRepository('message');
+        // set creator to admin (UsersConstant::USER_ID_ADMIN) for all messages created by this user
         $repo->updateCreator($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
-        // set last editor to admin (UsersConstant::USER_ID_ADMIN) for all companies updated by this user
+        // set last editor to admin (UsersConstant::USER_ID_ADMIN) for all messages updated by this user
         $repo->updateLastEditor($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
-        $logArgs = ['app' => 'MUShareModule', 'user' => $this->currentUserApi->get('uname'), 'entities' => 'companies'];
+        $logArgs = ['app' => 'MUShareModule', 'user' => $this->currentUserApi->get('uname'), 'entities' => 'messages'];
         $this->logger->notice('{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.', $logArgs);
     }
 }

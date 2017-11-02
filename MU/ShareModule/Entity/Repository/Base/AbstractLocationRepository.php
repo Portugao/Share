@@ -62,6 +62,12 @@ abstract class AbstractLocationRepository extends EntityRepository
             'zipCode',
             'city',
             'private',
+            'name',
+            'description',
+            'mail',
+            'website',
+            'phone',
+            'mobile',
             'forMap',
             'latitude',
             'longitude',
@@ -653,7 +659,7 @@ abstract class AbstractLocationRepository extends EntityRepository
      */
     protected function addJoinsToSelection()
     {
-        $selection = ', tblCompanyOfLocation, tblOfferOfLocation';
+        $selection = ', tblOfferOfLocation';
     
         return $selection;
     }
@@ -667,7 +673,6 @@ abstract class AbstractLocationRepository extends EntityRepository
      */
     protected function addJoinsToFrom(QueryBuilder $qb)
     {
-        $qb->leftJoin('tbl.companyOfLocation', 'tblCompanyOfLocation');
         $qb->leftJoin('tbl.offerOfLocation', 'tblOfferOfLocation');
     
         return $qb;

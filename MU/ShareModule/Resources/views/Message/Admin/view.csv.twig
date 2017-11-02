@@ -1,0 +1,8 @@
+{# purpose of this template: messages view csv view #}
+{% spaceless %}"{{ __('Subject') }}";"{{ __('Text for message') }}";"{{ __('Recipient') }}";"{{ __('Read by recipient') }}";"{{ __('Status sender') }}";"{{ __('Status recipient') }}";"{{ __('Workflow state') }}"
+{% endspaceless %}
+{% for message in items %}
+{% spaceless %}
+    "{{ message.subject }}";"{{ message.textForMessage|safeHtml }}";"{{ message.recipient }}";"{{ message.readByRecipient|localizeddate('medium', 'short') }}";"{{ message.statusSender }}";"{{ message.statusRecipient }}";"{{ message.workflowState|musharemodule_objectState(false)|lower }}"
+{% endspaceless %}
+{% endfor %}

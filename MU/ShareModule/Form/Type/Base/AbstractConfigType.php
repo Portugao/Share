@@ -63,7 +63,6 @@ abstract class AbstractConfigType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addGeneralFields($builder, $options);
         $this->addListViewsFields($builder, $options);
         $this->addIntegrationFields($builder, $options);
         $this->addGeoFields($builder, $options);
@@ -83,58 +82,6 @@ abstract class AbstractConfigType extends AbstractType
                     'class' => 'btn btn-default',
                     'formnovalidate' => 'formnovalidate'
                 ]
-            ])
-        ;
-    }
-
-    /**
-     * Adds fields for general fields.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function addGeneralFields(FormBuilderInterface $builder, array $options)
-    {
-        $builder
-            ->add('zicCode', TextType::class, [
-                'label' => $this->__('Zic code') . ':',
-                'required' => false,
-                'data' => isset($this->moduleVars['zicCode']) ? $this->moduleVars['zicCode'] : '',
-                'empty_data' => '',
-                'attr' => [
-                    'maxlength' => 255,
-                    'title' => $this->__('Enter the zic code.')
-                ],
-            ])
-            ->add('city', TextType::class, [
-                'label' => $this->__('City') . ':',
-                'required' => false,
-                'data' => isset($this->moduleVars['city']) ? $this->moduleVars['city'] : '',
-                'empty_data' => '',
-                'attr' => [
-                    'maxlength' => 255,
-                    'title' => $this->__('Enter the city.')
-                ],
-            ])
-            ->add('state', TextType::class, [
-                'label' => $this->__('State') . ':',
-                'required' => false,
-                'data' => isset($this->moduleVars['state']) ? $this->moduleVars['state'] : '',
-                'empty_data' => '',
-                'attr' => [
-                    'maxlength' => 255,
-                    'title' => $this->__('Enter the state.')
-                ],
-            ])
-            ->add('offersPerPage', IntegerType::class, [
-                'label' => $this->__('Offers per page') . ':',
-                'required' => false,
-                'data' => isset($this->moduleVars['offersPerPage']) ? intval($this->moduleVars['offersPerPage']) : intval(10),
-                'empty_data' => intval('10'),
-                'attr' => [
-                    'maxlength' => 255,
-                    'title' => $this->__('Enter the offers per page.') . ' ' . $this->__('Only digits are allowed.')
-                ],'scale' => 0
             ])
         ;
     }
@@ -232,32 +179,32 @@ abstract class AbstractConfigType extends AbstractType
                     'title' => $this->__('The link own pools on account page option.')
                 ],
             ])
-            ->add('companyEntriesPerPage', IntegerType::class, [
-                'label' => $this->__('Company entries per page') . ':',
+            ->add('messageEntriesPerPage', IntegerType::class, [
+                'label' => $this->__('Message entries per page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
-                    'title' => $this->__('The amount of companies shown per page')
+                    'title' => $this->__('The amount of messages shown per page')
                 ],
-                'help' => $this->__('The amount of companies shown per page'),
+                'help' => $this->__('The amount of messages shown per page'),
                 'required' => false,
-                'data' => isset($this->moduleVars['companyEntriesPerPage']) ? intval($this->moduleVars['companyEntriesPerPage']) : intval(10),
+                'data' => isset($this->moduleVars['messageEntriesPerPage']) ? intval($this->moduleVars['messageEntriesPerPage']) : intval(10),
                 'empty_data' => intval('10'),
                 'attr' => [
                     'maxlength' => 255,
-                    'title' => $this->__('Enter the company entries per page.') . ' ' . $this->__('Only digits are allowed.')
+                    'title' => $this->__('Enter the message entries per page.') . ' ' . $this->__('Only digits are allowed.')
                 ],'scale' => 0
             ])
-            ->add('linkOwnCompaniesOnAccountPage', CheckboxType::class, [
-                'label' => $this->__('Link own companies on account page') . ':',
+            ->add('linkOwnMessagesOnAccountPage', CheckboxType::class, [
+                'label' => $this->__('Link own messages on account page') . ':',
                 'label_attr' => [
                     'class' => 'tooltips',
-                    'title' => $this->__('Whether to add a link to companies of the current user on his account page')
+                    'title' => $this->__('Whether to add a link to messages of the current user on his account page')
                 ],
-                'help' => $this->__('Whether to add a link to companies of the current user on his account page'),
+                'help' => $this->__('Whether to add a link to messages of the current user on his account page'),
                 'required' => false,
-                'data' => (bool)(isset($this->moduleVars['linkOwnCompaniesOnAccountPage']) ? $this->moduleVars['linkOwnCompaniesOnAccountPage'] : true),
+                'data' => (bool)(isset($this->moduleVars['linkOwnMessagesOnAccountPage']) ? $this->moduleVars['linkOwnMessagesOnAccountPage'] : true),
                 'attr' => [
-                    'title' => $this->__('The link own companies on account page option.')
+                    'title' => $this->__('The link own messages on account page option.')
                 ],
             ])
         ;
@@ -287,7 +234,7 @@ abstract class AbstractConfigType extends AbstractType
                     $this->__('Location') => 'location',
                     $this->__('Offer') => 'offer',
                     $this->__('Pool') => 'pool',
-                    $this->__('Company') => 'company'
+                    $this->__('Message') => 'message'
                 ],
                 'choices_as_values' => true,
                 'multiple' => true

@@ -65,6 +65,7 @@ abstract class AbstractLocationEntity extends EntityAccess
     protected $workflowState = 'initial';
     
     /**
+     * Enter a title for better management of your locations.
      * @ORM\Column(length=255)
      * @Assert\NotBlank()
      * @Assert\Length(min="0", max="255")
@@ -113,6 +114,59 @@ abstract class AbstractLocationEntity extends EntityAccess
     protected $private = false;
     
     /**
+     * Enter the name of your company.
+     * @ORM\Column(length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(min="0", max="255")
+     * @var string $name
+     */
+    protected $name = '';
+    
+    /**
+     * here you can enter more informations about the company.
+     * @ORM\Column(type="text", length=2000)
+     * @Assert\NotNull()
+     * @Assert\Length(min="0", max="2000")
+     * @var text $description
+     */
+    protected $description = '';
+    
+    /**
+     * Mail of the company.
+     * @ORM\Column(length=255)
+     * @Assert\NotNull()
+     * @Assert\Length(min="0", max="255")
+     * @var string $mail
+     */
+    protected $mail = '';
+    
+    /**
+     * Homepage of your company.
+     * @ORM\Column(length=255)
+     * @Assert\NotNull()
+     * @Assert\Length(min="0", max="255")
+     * @Assert\Url(checkDNS=false)
+     * @var string $website
+     */
+    protected $website = '';
+    
+    /**
+     * @ORM\Column(length=255)
+     * @Assert\NotNull()
+     * @Assert\Length(min="0", max="255")
+     * @var string $phone
+     */
+    protected $phone = '';
+    
+    /**
+     * @ORM\Column(length=255)
+     * @Assert\NotNull()
+     * @Assert\Length(min="0", max="255")
+     * @var string $mobile
+     */
+    protected $mobile = '';
+    
+    /**
      * @ORM\Column(type="boolean")
      * @Assert\NotNull()
      * @Assert\Type(type="bool")
@@ -122,20 +176,14 @@ abstract class AbstractLocationEntity extends EntityAccess
     
     
     /**
-     * Bidirectional - One locationOfCompany [location] is linked by one companyOfLocation [company] (INVERSE SIDE).
-     *
-     * @ORM\OneToOne(targetEntity="MU\ShareModule\Entity\CompanyEntity", inversedBy="locationOfCompany")
-     * @ORM\JoinTable(name="mu_share_company")
-     * @Assert\Type(type="MU\ShareModule\Entity\CompanyEntity")
-     * @var \MU\ShareModule\Entity\CompanyEntity $companyOfLocation
-     */
-    protected $companyOfLocation;
-    
-    /**
      * Bidirectional - One locationOfOffer [location] has many offerOfLocation [offers] (INVERSE SIDE).
      *
      * @ORM\OneToMany(targetEntity="MU\ShareModule\Entity\OfferEntity", mappedBy="locationOfOffer")
-     * @ORM\JoinTable(name="mu_share_locationofofferofferoflocation")
+     * @ORM\JoinTable(name="mu_share_locationofofferofferoflocation",
+     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
+     * )
+     * @Assert\NotNull(message="Choosing at least one of the offer of location is required.")
      * @var \MU\ShareModule\Entity\OfferEntity[] $offerOfLocation
      */
     protected $offerOfLocation = null;
@@ -371,6 +419,150 @@ abstract class AbstractLocationEntity extends EntityAccess
     }
     
     /**
+     * Returns the name.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+    
+    /**
+     * Sets the name.
+     *
+     * @param string $name
+     *
+     * @return void
+     */
+    public function setName($name)
+    {
+        if ($this->name !== $name) {
+            $this->name = isset($name) ? $name : '';
+        }
+    }
+    
+    /**
+     * Returns the description.
+     *
+     * @return text
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+    
+    /**
+     * Sets the description.
+     *
+     * @param text $description
+     *
+     * @return void
+     */
+    public function setDescription($description)
+    {
+        if ($this->description !== $description) {
+            $this->description = isset($description) ? $description : '';
+        }
+    }
+    
+    /**
+     * Returns the mail.
+     *
+     * @return string
+     */
+    public function getMail()
+    {
+        return $this->mail;
+    }
+    
+    /**
+     * Sets the mail.
+     *
+     * @param string $mail
+     *
+     * @return void
+     */
+    public function setMail($mail)
+    {
+        if ($this->mail !== $mail) {
+            $this->mail = isset($mail) ? $mail : '';
+        }
+    }
+    
+    /**
+     * Returns the website.
+     *
+     * @return string
+     */
+    public function getWebsite()
+    {
+        return $this->website;
+    }
+    
+    /**
+     * Sets the website.
+     *
+     * @param string $website
+     *
+     * @return void
+     */
+    public function setWebsite($website)
+    {
+        if ($this->website !== $website) {
+            $this->website = isset($website) ? $website : '';
+        }
+    }
+    
+    /**
+     * Returns the phone.
+     *
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+    
+    /**
+     * Sets the phone.
+     *
+     * @param string $phone
+     *
+     * @return void
+     */
+    public function setPhone($phone)
+    {
+        if ($this->phone !== $phone) {
+            $this->phone = isset($phone) ? $phone : '';
+        }
+    }
+    
+    /**
+     * Returns the mobile.
+     *
+     * @return string
+     */
+    public function getMobile()
+    {
+        return $this->mobile;
+    }
+    
+    /**
+     * Sets the mobile.
+     *
+     * @param string $mobile
+     *
+     * @return void
+     */
+    public function setMobile($mobile)
+    {
+        if ($this->mobile !== $mobile) {
+            $this->mobile = isset($mobile) ? $mobile : '';
+        }
+    }
+    
+    /**
      * Returns the for map.
      *
      * @return boolean
@@ -394,28 +586,6 @@ abstract class AbstractLocationEntity extends EntityAccess
         }
     }
     
-    
-    /**
-     * Returns the company of location.
-     *
-     * @return \MU\ShareModule\Entity\CompanyEntity
-     */
-    public function getCompanyOfLocation()
-    {
-        return $this->companyOfLocation;
-    }
-    
-    /**
-     * Sets the company of location.
-     *
-     * @param \MU\ShareModule\Entity\CompanyEntity $companyOfLocation
-     *
-     * @return void
-     */
-    public function setCompanyOfLocation($companyOfLocation = null)
-    {
-        $this->companyOfLocation = $companyOfLocation;
-    }
     
     /**
      * Returns the offer of location.

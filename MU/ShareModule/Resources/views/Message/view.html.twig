@@ -1,0 +1,134 @@
+{# purpose of this template: messages user list view #}
+{% extends 'MUShareModule::base.html.twig' %}
+{% block title own ? __('My messages') : __('Messages list') %}
+{% block content %}
+<div class="musharemodule-message musharemodule-view">
+
+    {{ block('page_nav_links') }}
+
+    {{ include('@MUShareModule/Message/viewQuickNav.html.twig', {workflowStateFilter: false}) }}{# see template file for available options #}
+
+    {% if routeArea == 'admin' %}
+    <form action="{{ path('musharemodule_message_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="messagesViewForm" class="form-horizontal" role="form">
+        <div>
+    {% endif %}
+        <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover{% if routeArea == 'admin' %} table-condensed{% endif %}">
+            <colgroup>
+                {% if routeArea == 'admin' %}
+                    <col id="cSelect" />
+                {% endif %}
+                <col id="cItemActions" />
+                <col id="cSubject" />
+                <col id="cRecipient" />
+                <col id="cReadByRecipient" />
+            </colgroup>
+            <thead>
+            <tr>
+                {% if routeArea == 'admin' %}
+                    <th id="hSelect" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}text-center z-w02">
+                        <input type="checkbox" class="mushare-mass-toggle" />
+                    </th>
+                {% endif %}
+                <th id="hItemActions" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}z-order-unsorted z-w02">{{ __('Actions') }}</th>
+                <th id="hSubject" scope="col" class="text-left">
+                    <a href="{{ sort.subject.url }}" title="{{ __f('Sort by %s', {'%s': 'subject'}) }}" class="{{ sort.subject.class }}">{{ __('Subject') }}</a>
+                </th>
+                <th id="hRecipient" scope="col" class="text-right">
+                    <a href="{{ sort.recipient.url }}" title="{{ __f('Sort by %s', {'%s': 'recipient'}) }}" class="{{ sort.recipient.class }}">{{ __('Recipient') }}</a>
+                </th>
+                <th id="hReadByRecipient" scope="col" class="text-left z-order-unsorted">
+                    {{ __('Read by recipient') }}
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+        
+        {% for message in items %}
+            <tr>
+                {% if routeArea == 'admin' %}
+                    <td headers="hSelect" class="fixed-column text-center z-w02">
+                        <input type="checkbox" name="items[]" value="{{ message.getKey() }}" class="mushare-toggle-checkbox" />
+                    </td>
+                {% endif %}
+                <td id="itemActions{{ message.getKey() }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
+                    {% set itemActions = knp_menu_get('MUShareModule:ItemActionsMenu:menu', [], {entity: message, area: routeArea, context: 'view'}) %}
+                    <div class="dropdown">
+                        <a id="itemActions{{ message.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
+                        {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:actions.html.twig'}) }}
+                    </div>
+                </td>
+                <td headers="hSubject" class="text-left">
+                    {{ message.subject }}
+                </td>
+                <td headers="hRecipient" class="text-right">
+                    {{ message.recipient }}
+                </td>
+                <td headers="hReadByRecipient" class="text-left">
+                    {{ message.readByRecipient|localizeddate('medium', 'short') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
+                <td class="text-left" colspan="{% if routeArea == 'admin' %}5{% else %}4{% endif %}">
+            {{ __('No messages found.') }}
+              </td>
+            </tr>
+        {% endfor %}
+        
+            </tbody>
+        </table>
+        </div>
+        
+        {% if all != 1 and pager|default %}
+            {{ pager({rowcount: pager.amountOfItems, limit: pager.itemsPerPage, display: 'page', route: 'musharemodule_message_' ~ routeArea ~ 'view'}) }}
+        {% endif %}
+    {% if routeArea == 'admin' %}
+            <fieldset>
+                <label for="mUShareModuleAction" class="col-sm-3 control-label">{{ __('With selected messages') }}</label>
+                <div class="col-sm-6">
+                    <select id="mUShareModuleAction" name="action" class="form-control input-sm">
+                        <option value="">{{ __('Choose action') }}</option>
+                        <option value="delete" title="{{ __('Delete content permanently.') }}">{{ __('Delete') }}</option>
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <input type="submit" value="{{ __('Submit') }}" class="btn btn-default btn-sm" />
+                </div>
+            </fieldset>
+        </div>
+    </form>
+    {% endif %}
+
+    {{ block('display_hooks') }}
+</div>
+{% endblock %}
+{% block page_nav_links %}
+    <p>
+        {% if canBeCreated %}
+            {% if hasPermission('MUShareModule:Message:', '::', 'ACCESS_EDIT') %}
+                {% set createTitle = __('Create message') %}
+                <a href="{{ path('musharemodule_message_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}"><i class="fa fa-plus"></i> {{ createTitle }}</a>
+            {% endif %}
+        {% endif %}
+        {% if all == 1 %}
+            {% set linkTitle = __('Back to paginated view') %}
+            <a href="{{ path('musharemodule_message_' ~ routeArea ~ 'view') }}" title="{{ linkTitle|e('html_attr') }}"><i class="fa fa-table"></i> {{ linkTitle }}</a>
+        {% else %}
+            {% set linkTitle = __('Show all entries') %}
+            <a href="{{ path('musharemodule_message_' ~ routeArea ~ 'view', {all: 1}) }}" title="{{ linkTitle|e('html_attr') }}"><i class="fa fa-table"></i> {{ linkTitle }}</a>
+        {% endif %}
+    </p>
+{% endblock %}
+{% block display_hooks %}
+    
+    {# here you can activate calling display hooks for the view page if you need it #}
+    {# % if routeArea != 'admin' %}
+        {% set hooks = notifyDisplayHooks(eventName='musharemodule.ui_hooks.messages.display_view', urlObject=currentUrlObject, outputAsArray=true) %}
+        {% if hooks is iterable and hooks|length > 0 %}
+            {% for area, hook in hooks %}
+                <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endif % #}
+{% endblock %}

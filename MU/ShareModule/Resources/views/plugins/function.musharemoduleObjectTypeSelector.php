@@ -39,8 +39,8 @@ function smarty_function_musharemoduleObjectTypeSelector($params, $view)
         'value' => 'pool'
     ];
     $result[] = [
-        'text' => __('Companies', $dom),
-        'value' => 'company'
+        'text' => __('Messages', $dom),
+        'value' => 'message'
     ];
 
     if (array_key_exists('assign', $params)) {

@@ -13,7 +13,7 @@ application "Share" {
         separateAdminTemplates true
         generatePoweredByBacklinksIntoFooterTemplates false
         generateTests false
-    markFiles "composer.json,\r\nContainer/LinkContainer.php,\r\nForm/Handler/Offer/EditHandler.php,\r\nHelper/ControllerHelper.php,\r\nResources/public/js/MUShareModule.Geo.js,\r\nResources/views/Location/view.html.twig"
+    markFiles "composer.json,\r\nContainer/LinkContainer.php,\r\nController/OfferController.php,\r\nEntity/Factory/EntityInitializer.php,\r\nForm/Handler/Location/EditHandler.php,\r\nForm/Handler/Offer/EditHandler.php,\r\nHelper/ControllerHelper.php,\r\nMenu/ItemActionsMenu.php,\r\nResources/config/entityFactory.yml,\r\nResources/config/linkContainer.yml,\r\nResources/public/js/MUShareModule.Geo.js,\r\nResources/views/Location/display.html.twig,\r\nResources/views/Location/view.html.twig,\r\nResources/views/Offer/display.html.twig,\r\nResources/views/Offer/edit.html.twig,\r\nResources/views/Offer/view.html.twig"
     }
 
 			entities {
@@ -23,12 +23,38 @@ application "Share" {
 					displayPattern "#title#"
 					hasTray true
             fields {
-						string "title",
+						string "title" {
+                    documentation "Enter a title for better management of your locations."
+                },
 						string "street",
 						string "numberOfStreet",
 						string "zipCode",
 						string "city",
 						boolean "private" {
+							defaultValue "1"
+							mandatory false
+						},
+                string "name" {
+                    documentation "Enter the name of your company."
+                },
+                text "description" {
+                    documentation "here you can enter more informations about the company."
+                    mandatory false
+                },
+                email "mail" {
+							documentation "Mail of the company."
+                    defaultValue ""
+							mandatory false
+						},
+                url "website" {
+							documentation "Homepage of your company."
+                    defaultValue ""
+							mandatory false
+						},
+                string "phone" {
+							mandatory false
+						},
+                string "mobile" {
 							defaultValue ""
 							mandatory false
 						},
@@ -58,12 +84,12 @@ application "Share" {
 							length 4000
 						},
 						boolean "isOpen" {
-							documentation "Is your offer active?"
+							documentation "Is your offer active?\r\nIs it available at the moment?\r\nIf you disable, it will not appear in the map."
                     defaultValue "true"
 							mandatory false
 						},
 						boolean "abo" {
-							documentation "Do you have an abo of your offer?"
+							documentation "Do you have an abonnement of your offer?"
                     defaultValue ""
 							mandatory false
 						},
@@ -72,17 +98,20 @@ application "Share" {
 							mandatory false
                     items {
                         default listItem "not set",
-								listItem  "daily" ( "daily" ),
-                        listItem  "weekly" ( "weekly" ),
-                        listItem "monthly" ( "monthly" )
+								listItem   "daily" ( "daily" ),
+                        listItem   "weekly" ( "weekly" ),
+                        listItem  "monthly" ( "monthly" ),
+                        listItem "quarterly" ( "quarterly" )
                     }
                 },
 						boolean "totalYear" {
-							defaultValue ""
+							documentation "If you have magazines or something else and a complete year, you can set this option."
+                    defaultValue ""
 							mandatory false
 						},
 						boolean "splitCosts" {
-							defaultValue ""
+							documentation "Do you wish to get a small part of your costs?\r\nMaximal 15% of the price are allowed for new magazines, books and so on."
+                    defaultValue ""
 							mandatory false
 						},
 						boolean "back" {
@@ -91,13 +120,13 @@ application "Share" {
 							mandatory false
 						},
 						boolean "atMe" {
-							documentation "Is the meeting place at you?"
+							documentation "If enabled the latitude and longitude get set like the location from where or for what you created the offer.\r\nIt does not work, what you set by clicking into the map."
                     defaultValue ""
 							mandatory false
 						},
 						string "zipCode" {
                     documentation "Enter the zip code for the meeting place!"
-                    mandatory false
+                    mandatory true
                 },
                 string "meetingPlace" {
 							documentation "Enter the street (and number) for the meeting place!"
@@ -128,44 +157,43 @@ application "Share" {
                 editAction "Edit",
                 deleteAction "Delete"
             }
-				},
-				entity "company" {
-					nameMultiple "companies"
-					displayPattern "#name#"
-
-					fields {
-						string "name",
-                text "description" {
-                    mandatory false
+				}
+    ,
+        entity "message" {
+            nameMultiple "messages"
+            displayPattern "#subject#"
+            fields {
+                string "subject" {
+                    documentation "Enter a subject for your message!"
                 },
-						email "mail" {
-							defaultValue ""
-							mandatory false
-						},
-						url "website" {
-							defaultValue ""
-							mandatory false
-						},
-						string "phone" {
-							mandatory false
-						},
-						string "mobile" {
-							defaultValue ""
-							mandatory false
-						},
-						boolean "isPublic" {
-							defaultValue "true"
-							mandatory false
-						}
-					}
-					            actions {
+                text "textForMessage" {
+                    documentation "Enter your text for your message."
+                    displayType DISPLAY
+                    length 4000
+                },
+                integer "recipient" {
+                    defaultValue "0"
+                },
+                datetime "readByRecipient" {
+                    displayType VIEW
+                },
+                integer "statusSender" {
+                    defaultValue "0"
+                    displayType NONE
+                },
+                integer "statusRecipient" {
+                    defaultValue "0"
+                    displayType NONE
+                }
+            }
+            actions {
                 mainAction "Index",
                 viewAction "View",
                 displayAction "Display",
                 editAction "Edit",
                 deleteAction "Delete"
             }
-				}
+        }
     }
     relations {
 				one2many bidirectional {
@@ -173,17 +201,9 @@ application "Share" {
 					sourceAlias "locationOfOffer"
 					target "offer"
 					targetAlias "offerOfLocation"
-					cascade NONE
-					orderBy ""
+					nullable false
+            orderBy ""
 				},
-				one2one bidirectional {
-					source "company"
-					sourceAlias "companyOfLocation"
-					target "location"
-					targetAlias "locationOfCompany"
-					cascade REMOVE
-				}
-			,
         one2many bidirectional {
             source "pool"
             sourceAlias "pool"
@@ -191,17 +211,4 @@ application "Share" {
             targetAlias "offers"
         }
     }
-			variables {
-				varContainer "General" {
-        sortOrder 1
-					vars {
-						textVar "zicCode",
-						textVar "city",
-						textVar "state",
-						intVar "offersPerPage" {
-							value "10"
-						}
-					}
-				}
 			}
-		}

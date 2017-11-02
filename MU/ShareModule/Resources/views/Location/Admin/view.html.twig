@@ -32,6 +32,12 @@
                 <col id="cZipCode" />
                 <col id="cCity" />
                 <col id="cPrivate" />
+                <col id="cName" />
+                <col id="cDescription" />
+                <col id="cMail" />
+                <col id="cWebsite" />
+                <col id="cPhone" />
+                <col id="cMobile" />
                 <col id="cForMap" />
             </colgroup>
             <thead>
@@ -64,6 +70,24 @@
                 </th>
                 <th id="hPrivate" scope="col" class="text-center">
                     <a href="{{ sort.private.url }}" title="{{ __f('Sort by %s', {'%s': 'private'}) }}" class="{{ sort.private.class }}">{{ __('Private') }}</a>
+                </th>
+                <th id="hName" scope="col" class="text-left">
+                    <a href="{{ sort.name.url }}" title="{{ __f('Sort by %s', {'%s': 'name'}) }}" class="{{ sort.name.class }}">{{ __('Name') }}</a>
+                </th>
+                <th id="hDescription" scope="col" class="text-left">
+                    <a href="{{ sort.description.url }}" title="{{ __f('Sort by %s', {'%s': 'description'}) }}" class="{{ sort.description.class }}">{{ __('Description') }}</a>
+                </th>
+                <th id="hMail" scope="col" class="text-center">
+                    <a href="{{ sort.mail.url }}" title="{{ __f('Sort by %s', {'%s': 'mail'}) }}" class="{{ sort.mail.class }}">{{ __('Mail') }}</a>
+                </th>
+                <th id="hWebsite" scope="col" class="text-center">
+                    <a href="{{ sort.website.url }}" title="{{ __f('Sort by %s', {'%s': 'website'}) }}" class="{{ sort.website.class }}">{{ __('Website') }}</a>
+                </th>
+                <th id="hPhone" scope="col" class="text-left">
+                    <a href="{{ sort.phone.url }}" title="{{ __f('Sort by %s', {'%s': 'phone'}) }}" class="{{ sort.phone.class }}">{{ __('Phone') }}</a>
+                </th>
+                <th id="hMobile" scope="col" class="text-left">
+                    <a href="{{ sort.mobile.url }}" title="{{ __f('Sort by %s', {'%s': 'mobile'}) }}" class="{{ sort.mobile.class }}">{{ __('Mobile') }}</a>
                 </th>
                 <th id="hForMap" scope="col" class="text-center">
                     <a href="{{ sort.forMap.url }}" title="{{ __f('Sort by %s', {'%s': 'for map'}) }}" class="{{ sort.forMap.class }}">{{ __('For map') }}</a>
@@ -111,6 +135,28 @@
                         <i class="fa fa-times" title="{{ __('No') }}"></i>
                     {% endif %}
                 </td>
+                <td headers="hName" class="text-left">
+                    <a href="{{ path('musharemodule_location_' ~ routeArea ~ 'display', {'id': location.getId()}) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ location.name|notifyFilters('musharemodule.filterhook.locations')|safeHtml }}</a>
+                </td>
+                <td headers="hDescription" class="text-left">
+                    {{ location.description|striptags|truncate(50) }}
+                </td>
+                <td headers="hMail" class="text-center">
+                    {% if location.mail is not empty %}
+                    <a href="mailto:{{ location.mail|protectMail }}" title="{{ __('Send an email') }}"><i class="fa fa-envelope"></i></a>
+                    {% else %}&nbsp;{% endif %}
+                </td>
+                <td headers="hWebsite" class="text-center">
+                    {% if location.website is not empty %}
+                    <a href="{{ location.website }}" title="{{ __('Visit this page') }}"><i class="fa fa-external-link-square"></i></a>
+                    {% else %}&nbsp;{% endif %}
+                </td>
+                <td headers="hPhone" class="text-left">
+                    {{ location.phone }}
+                </td>
+                <td headers="hMobile" class="text-left">
+                    {{ location.mobile }}
+                </td>
                 <td headers="hForMap" class="text-center">
                     {% if location.forMap %}
                         <i class="fa fa-check" title="{{ __('Yes') }}"></i>
@@ -121,7 +167,7 @@
             </tr>
         {% else %}
             <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
-                <td class="text-left" colspan="{% if routeArea == 'admin' %}10{% else %}9{% endif %}">
+                <td class="text-left" colspan="{% if routeArea == 'admin' %}16{% else %}15{% endif %}">
             {{ __('No locations found.') }}
               </td>
             </tr>

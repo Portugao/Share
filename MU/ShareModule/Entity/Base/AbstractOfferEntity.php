@@ -83,6 +83,8 @@ abstract class AbstractOfferEntity extends EntityAccess
     
     /**
      * Is your offer active?
+     Is it available at the moment?
+     If you disable, it will not appear in the map.
      * @ORM\Column(type="boolean")
      * @Assert\NotNull()
      * @Assert\Type(type="bool")
@@ -91,7 +93,7 @@ abstract class AbstractOfferEntity extends EntityAccess
     protected $isOpen = true;
     
     /**
-     * Do you have an abo of your offer?
+     * Do you have an abonnement of your offer?
      * @ORM\Column(type="boolean")
      * @Assert\NotNull()
      * @Assert\Type(type="bool")
@@ -108,6 +110,7 @@ abstract class AbstractOfferEntity extends EntityAccess
     protected $period = '';
     
     /**
+     * If you have magazines or something else and a complete year, you can set this option.
      * @ORM\Column(type="boolean")
      * @Assert\NotNull()
      * @Assert\Type(type="bool")
@@ -116,6 +119,8 @@ abstract class AbstractOfferEntity extends EntityAccess
     protected $totalYear = false;
     
     /**
+     * Do you wish to get a small part of your costs?
+     Maximal 15% of the price are allowed for new magazines, books and so on.
      * @ORM\Column(type="boolean")
      * @Assert\NotNull()
      * @Assert\Type(type="bool")
@@ -133,7 +138,8 @@ abstract class AbstractOfferEntity extends EntityAccess
     protected $back = false;
     
     /**
-     * Is the meeting place at you?
+     * If enabled the latitude and longitude get set like the location from where or for what you created the offer.
+     It does not work, what you set by clicking into the map.
      * @ORM\Column(type="boolean")
      * @Assert\NotNull()
      * @Assert\Type(type="bool")
@@ -144,7 +150,7 @@ abstract class AbstractOfferEntity extends EntityAccess
     /**
      * Enter the zip code for the meeting place!
      * @ORM\Column(length=255)
-     * @Assert\NotNull()
+     * @Assert\NotBlank()
      * @Assert\Length(min="0", max="255")
      * @var string $zipCode
      */
@@ -172,7 +178,11 @@ abstract class AbstractOfferEntity extends EntityAccess
      * Bidirectional - Many offerOfLocation [offers] are linked by one locationOfOffer [location] (OWNING SIDE).
      *
      * @ORM\ManyToOne(targetEntity="MU\ShareModule\Entity\LocationEntity", inversedBy="offerOfLocation")
-     * @ORM\JoinTable(name="mu_share_location")
+     * @ORM\JoinTable(name="mu_share_location",
+     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" , nullable=false)}
+     * )
+     * @Assert\NotNull(message="Choosing a location of offer is required.")
      * @Assert\Type(type="MU\ShareModule\Entity\LocationEntity")
      * @var \MU\ShareModule\Entity\LocationEntity $locationOfOffer
      */

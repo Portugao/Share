@@ -67,28 +67,6 @@ abstract class AbstractEditHandler extends EditHandler
     }
     
     /**
-     * Initialises relationship presets.
-     */
-    protected function initRelationPresets()
-    {
-        $entity = $this->entityRef;
-    
-        
-        // assign identifiers of predefined incoming relationships
-        // editable relation, we store the id and assign it now to show it in UI
-        $this->relationPresets['companyOfLocation'] = $this->request->get('companyOfLocation', '');
-        if (!empty($this->relationPresets['companyOfLocation'])) {
-            $relObj = $this->entityFactory->getRepository('company')->selectById($this->relationPresets['companyOfLocation']);
-            if (null !== $relObj) {
-                $relObj->setLocationOfCompany($entity);
-            }
-        }
-    
-        // save entity reference for later reuse
-        $this->entityRef = $entity;
-    }
-    
-    /**
      * Creates the form type.
      */
     protected function createForm()
@@ -131,18 +109,6 @@ abstract class AbstractEditHandler extends EditHandler
         // admin detail page of treated location
         $codes[] = 'adminDisplay';
     
-        // user list of companies
-        $codes[] = 'userViewCompanies';
-        // admin list of companies
-        $codes[] = 'adminViewCompanies';
-        // user list of own companies
-        $codes[] = 'userOwnViewCompanies';
-        // admin list of own companies
-        $codes[] = 'adminOwnViewCompanies';
-        // user detail page of related company
-        $codes[] = 'userDisplayCompany';
-        // admin detail page of related company
-        $codes[] = 'adminDisplayCompany';
     
         return $codes;
     }
@@ -322,19 +288,6 @@ abstract class AbstractEditHandler extends EditHandler
             case 'adminDisplay':
                 if ($args['commandName'] != 'delete' && !($this->templateParameters['mode'] == 'create' && $args['commandName'] == 'cancel')) {
                     return $this->router->generate($routePrefix . 'display', $this->entityRef->createUrlArgs());
-                }
-    
-                return $this->getDefaultReturnUrl($args);
-            case 'userViewCompanies':
-            case 'adminViewCompanies':
-                return $this->router->generate('musharemodule_company_' . $routeArea . 'view');
-            case 'userOwnViewCompanies':
-            case 'adminOwnViewCompanies':
-                return $this->router->generate('musharemodule_company_' . $routeArea . 'view', ['own' => 1]);
-            case 'userDisplayCompany':
-            case 'adminDisplayCompany':
-                if (!empty($this->relationPresets['companyOfLocation'])) {
-                    return $this->router->generate('musharemodule_company_' . $routeArea . 'display',  ['id' => $this->relationPresets['companyOfLocation']]);
                 }
     
                 return $this->getDefaultReturnUrl($args);

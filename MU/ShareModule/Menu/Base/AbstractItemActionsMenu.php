@@ -21,7 +21,7 @@ use Zikula\UsersModule\Constant as UsersConstant;
 use MU\ShareModule\Entity\LocationEntity;
 use MU\ShareModule\Entity\OfferEntity;
 use MU\ShareModule\Entity\PoolEntity;
-use MU\ShareModule\Entity\CompanyEntity;
+use MU\ShareModule\Entity\MessageEntity;
 
 /**
  * This is the item actions menu implementation class.
@@ -238,10 +238,10 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$title]->setLinkAttribute('title', $title);
             }
         }
-        if ($entity instanceof CompanyEntity) {
-            $component = 'MUShareModule:Company:';
+        if ($entity instanceof MessageEntity) {
+            $component = 'MUShareModule:Message:';
             $instance = $entity->getKey() . '::';
-            $routePrefix = 'musharemodule_company_';
+            $routePrefix = 'musharemodule_message_';
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
         
             if ($routeArea == 'admin') {
@@ -264,19 +264,19 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
                 ])->setAttribute('icon', 'fa fa-pencil-square-o');
-                $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this company'));
+                $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this message'));
                 $menu->addChild($this->__('Reuse'), [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => ['astemplate' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-files-o');
-                $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new company'));
+                $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new message'));
             }
             if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
                 $menu->addChild($this->__('Delete'), [
                     'route' => $routePrefix . $routeArea . 'delete',
                     'routeParameters' => $entity->createUrlArgs()
                 ])->setAttribute('icon', 'fa fa-trash-o');
-                $menu[$this->__('Delete')]->setLinkAttribute('title', $this->__('Delete this company'));
+                $menu[$this->__('Delete')]->setLinkAttribute('title', $this->__('Delete this message'));
             }
             if ($context == 'display') {
                 $title = $this->__('Back to overview');
@@ -284,21 +284,6 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                     'route' => $routePrefix . $routeArea . 'view'
                 ])->setAttribute('icon', 'fa fa-reply');
                 $menu[$title]->setLinkAttribute('title', $title);
-            }
-            
-            // more actions for adding new related items
-            
-            $relatedComponent = 'MUShareModule:Location:';
-            $relatedInstance = $entity->getKey() . '::';
-            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
-                if (!isset($entity->locationOfCompany) || null === $entity->locationOfCompany) {
-                    $title = $this->__('Create location of company');
-                    $menu->addChild($title, [
-                        'route' => 'musharemodule_location_' . $routeArea . 'edit',
-                        'routeParameters' => ['companyoflocation' => $entity->getKey()]
-                    ])->setAttribute('icon', 'fa fa-plus');
-                    $menu[$title]->setLinkAttribute('title', $title);
-                }
             }
         }
 

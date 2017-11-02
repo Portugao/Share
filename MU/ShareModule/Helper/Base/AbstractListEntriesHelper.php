@@ -154,7 +154,7 @@ abstract class AbstractListEntriesHelper
                         break;
                 }
                 break;
-            case 'company':
+            case 'message':
                 switch ($fieldName) {
                     case 'workflowState':
                         $result = false;
@@ -207,10 +207,10 @@ abstract class AbstractListEntriesHelper
                         break;
                 }
                 break;
-            case 'company':
+            case 'message':
                 switch ($fieldName) {
                     case 'workflowState':
-                        $entries = $this->getWorkflowStateEntriesForCompany();
+                        $entries = $this->getWorkflowStateEntriesForMessage();
                         break;
                 }
                 break;
@@ -322,6 +322,13 @@ abstract class AbstractListEntriesHelper
             'image'   => '',
             'default' => false
         ];
+        $states[] = [
+            'value'   => 'quarterly',
+            'text'    => $this->__('Quarterly'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
     
         return $states;
     }
@@ -357,7 +364,7 @@ abstract class AbstractListEntriesHelper
      *
      * @return array Array with desired list entries
      */
-    public function getWorkflowStateEntriesForCompany()
+    public function getWorkflowStateEntriesForMessage()
     {
         $states = [];
         $states[] = [

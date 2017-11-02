@@ -62,24 +62,24 @@ services:
         tags:
             - { name: zikula.hook_subscriber, areaName: 'subscriber.musharemodule.ui_hooks.pools' }
 
-    mu_share_module.hook_subscriber.filter_hooks.companies:
-        class: MU\ShareModule\HookSubscriber\CompanyFilterHooksSubscriber
+    mu_share_module.hook_subscriber.filter_hooks.messages:
+        class: MU\ShareModule\HookSubscriber\MessageFilterHooksSubscriber
         arguments:
             - "@translator.default"
         tags:
-            - { name: zikula.hook_subscriber, areaName: 'subscriber.musharemodule.filter_hooks.companies' }
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.musharemodule.filter_hooks.messages' }
 
-    mu_share_module.hook_subscriber.form_aware_hook.companies:
-        class: MU\ShareModule\HookSubscriber\CompanyFormAwareHookSubscriber
+    mu_share_module.hook_subscriber.form_aware_hook.messages:
+        class: MU\ShareModule\HookSubscriber\MessageFormAwareHookSubscriber
         arguments:
             - "@translator.default"
         tags:
-            - { name: zikula.hook_subscriber, areaName: 'subscriber.musharemodule.form_aware_hook.companies' }
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.musharemodule.form_aware_hook.messages' }
 
-    mu_share_module.hook_subscriber.ui_hooks.companies:
-        class: MU\ShareModule\HookSubscriber\CompanyUiHooksSubscriber
+    mu_share_module.hook_subscriber.ui_hooks.messages:
+        class: MU\ShareModule\HookSubscriber\MessageUiHooksSubscriber
         arguments:
             - "@translator.default"
         tags:
-            - { name: zikula.hook_subscriber, areaName: 'subscriber.musharemodule.ui_hooks.companies' }
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.musharemodule.ui_hooks.messages' }
 
