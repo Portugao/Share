@@ -1,0 +1,22 @@
+{# purpose of this template: reusable display of standard fields #}
+{% if (obj.createdBy|default and obj.createdBy.getUid() > 0) or (obj.updatedBy|default and obj.updatedBy.getUid() > 0) %}
+    <dl class="propertylist">
+    {% if obj.createdBy|default and obj.createdBy.getUid() > 0 %}
+        <dt>{{ __('Sent by and sent on') }}</dt>
+        {% set profileLink = obj.createdBy.getUid()|profileLinkByUserId() %}
+        <dd class="avatar">{{ userAvatar(obj.createdBy.getUid(), {rating: 'g'}) }}</dd>
+        <dd>
+            {{ __f('Sent by %user on %date', {'%user': profileLink, '%date': obj.createdDate|localizeddate('medium', 'short')})|raw }}
+            {% if currentUser.loggedIn %}
+                {% set sendMessageUrl = obj.createdBy.getUid()|messageSendLink(urlOnly=true) %}
+                {% if sendMessageUrl != '#' %}
+                    <a href="{{ sendMessageUrl }}" title="{{ __f('Send private message to %userName%', {'%userName%': obj.createdBy.getUname()}) }}"><i class="fa fa-envelope-o"></i></a>
+                {% endif %}
+            {% endif %}
+        </dd>
+    {% endif %}
+    </dl>
+    {% if tabs|default(false) == true %}
+        </div>
+    {% endif %}
+{% endif %}
