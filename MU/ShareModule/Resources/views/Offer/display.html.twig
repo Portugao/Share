@@ -24,7 +24,7 @@
             <dt>{{ __('Description') }}</dt>
             <dd>{{ offer.description|safeHtml }}</dd>
         {% endif %}
-        {% if offer.isOpen is not empty %}
+        {#% if offer.isOpen is not empty %}
             <dt>{{ __('Is open') }}</dt>
             <dd>{% if offer.isOpen %}
                 <i class="fa fa-check" title="{{ __('Yes') }}"></i>
@@ -32,7 +32,7 @@
                 <i class="fa fa-times" title="{{ __('No') }}"></i>
             {% endif %}
             </dd>
-        {% endif %}
+        {% endif %#}
         {% if offer.abo is not empty %}
             <dt>{{ __('Abo') }}</dt>
             <dd>{% if offer.abo %}
