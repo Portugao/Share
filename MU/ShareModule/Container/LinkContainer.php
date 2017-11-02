@@ -114,12 +114,12 @@ class LinkContainer extends AbstractLinkContainer
                 }
             }
 
-            if (true === $this->variableApi->get('MUShareModule', 'linkOwnCompaniesOnAccountPage', true)) {
-                $objectType = 'company';
+            if (true === $this->variableApi->get('MUShareModule', 'linkOwnMessagesOnAccountPage', true)) {
+                $objectType = 'message';
                 if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
                     $links[] = [
                         'url' => $this->router->generate('musharemodule_' . strtolower($objectType) . '_view', ['own' => 1]),
-                        'text' => $this->__('My companies', 'musharemodule'),
+                        'text' => $this->__('My messages', 'musharemodule'),
                         'icon' => 'list-alt'
                     ];
                 }
@@ -190,6 +190,23 @@ class LinkContainer extends AbstractLinkContainer
                 'title' => $offerTitle
             ];
         }
+        if (in_array('message', $allowedObjectTypes)
+        		&& $this->permissionApi->hasPermission($this->getBundleName() . ':Message:', '::', $permLevel)) {
+        			$links[] = [
+        					'url' => $this->router->generate('musharemodule_message_' . $routeArea . 'view'),
+        					'text' => $this->__('Messages', 'musharemodule'),
+        					'title' => $this->__('Messages list', 'musharemodule')
+        			];
+        		}
+        if (in_array('message', $allowedObjectTypes)
+        		&& $this->permissionApi->hasPermission($this->getBundleName() . ':Message:', '::', $permLevel)) {
+        			$links[] = [
+        					'url' => $this->router->generate('musharemodule_message_' . $routeArea . 'edit', array('offererId' => 2)),
+        					'text' => $this->__('Send message', 'musharemodule'),
+        					'title' => $this->__('Send a message to the offerer', 'musharemodule')
+        					];
+        				}
+        
         $uid = $this->currentUserApi->get('uid');
         if ($routeArea != 'admin' && $uid >= 2) {
         	if ($this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADD)) {
