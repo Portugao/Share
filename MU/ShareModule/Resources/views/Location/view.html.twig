@@ -15,7 +15,9 @@
     
     <h3 class="musharemodule-map">{{ __('Map of your location set for the map and offers') }}</h3>
     {% if myLocation is defined %}
-        
+        {#% if status == 0 %}
+            <div class="alert alert-warning">{{ __('Sorry. We could not find any locations within the radius for your location, you set in your profile settings.') }}</div> 
+        {% endif %#}
     {% else %}
         {% if loggedIn == 1 %}
         <div class="alert alert-info">{{ __('You get a default view, because you have not yet created your first location. Use the link Create Location for that.') }}</div>
