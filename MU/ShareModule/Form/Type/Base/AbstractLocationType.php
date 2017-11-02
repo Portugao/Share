@@ -205,7 +205,7 @@ abstract class AbstractLocationType extends AbstractType
                 'class' => '',
                 'title' => $this->__('Enter the name of the location')
             ],
-            'required' => true,
+            'required' => false,
         ]);
         
         $builder->add('description', TextareaType::class, [
