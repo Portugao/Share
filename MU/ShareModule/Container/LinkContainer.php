@@ -14,6 +14,13 @@ namespace MU\ShareModule\Container;
 
 use MU\ShareModule\Container\Base\AbstractLinkContainer;
 use Zikula\Core\LinkContainer\LinkContainerInterface;
+use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
+
+use Symfony\Component\Routing\RouterInterface;
+use Zikula\Common\Translator\TranslatorInterface;
+use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
+use Zikula\PermissionsModule\Api\ApiInterface\PermissionApiInterface;
+use MU\ShareModule\Helper\ControllerHelper;
 
 
 /**
@@ -21,6 +28,37 @@ use Zikula\Core\LinkContainer\LinkContainerInterface;
  */
 class LinkContainer extends AbstractLinkContainer
 {
+    /**
+     * @var CurrentUserApiInterface
+     */
+    protected $currentUserApi;
+
+    /**
+     * LinkContainer constructor.
+     *
+     * @param TranslatorInterface    $translator       Translator service instance
+     * @param Routerinterface        $router           Router service instance
+     * @param PermissionApiInterface $permissionApi    PermissionApi service instance
+     * @param VariableApiInterface   $variableApi      VariableApi service instance
+     * @param ControllerHelper       $controllerHelper ControllerHelper service instance
+     * @param VariableApiInterface $variableApi     VariableApi service instance
+     */
+    public function __construct(
+    		TranslatorInterface $translator,
+    		RouterInterface $router,
+    		PermissionApiInterface $permissionApi,
+    		VariableApiInterface $variableApi,
+    		ControllerHelper $controllerHelper,
+    		CurrentUserApiInterface $currentUserApi
+    		) {
+    			$this->setTranslator($translator);
+    			$this->router = $router;
+    			$this->permissionApi = $permissionApi;
+    			$this->variableApi = $variableApi;
+    			$this->controllerHelper = $controllerHelper;
+    			$this->currentUserApi = $currentUserApi;
+    }
+    
     /**
      * Returns available header links.
      *
@@ -152,11 +190,11 @@ class LinkContainer extends AbstractLinkContainer
                 'title' => $offerTitle
             ];
         }
-        
-        if ($routeArea != 'admin') {
+        $uid = $this->currentUserApi->get('uid');
+        if ($routeArea != 'admin' && $uid >= 2) {
         	if ($this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADD)) {
         		$links[] = [
-        				'url' => $this->router->generate('zikulaprofilemodule_profile_edit', array('uid' => 2)),
+        				'url' => $this->router->generate('zikulaprofilemodule_profile_edit', array('uid' => $uid)),
         				'text' => $this->__('Edit profile', 'musharemodule'),
         				'title' => $this->__('Edit radius or zip codes', 'musharemodule')
         		];
