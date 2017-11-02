@@ -109,7 +109,7 @@ class ControllerHelper extends AbstractControllerHelper
         $sortableColumns->setAdditionalUrlParameters($urlParameters);
     
         $where = '';
-        if ($templateParameters['routeArea'] != 'admin') {
+        if ($templateParameters['routeArea'] != 'admin' && ($objectType == 'location' || $objectType == 'offer')) {
             $uid = $this->currentUserApi->get('uid');
             $where = 'tbl.createdBy = ' . $uid;
         }
@@ -289,6 +289,11 @@ class ControllerHelper extends AbstractControllerHelper
         	// we assign the radius to the template
         	$templateParameters['radius'] = $radius;
         	$templateParameters['status'] = $status;
+        }
+        
+        if ($objectType == 'message') {
+        	$kind = $request->get('kind', 'inbox');   
+        	$templateParameters['kind'] = $kind;
         }
     
         $templateParameters['canBeCreated'] = $this->modelHelper->canBeCreated($objectType);
