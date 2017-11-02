@@ -190,6 +190,8 @@ class LinkContainer extends AbstractLinkContainer
                 'title' => $offerTitle
             ];
         }
+        $uid = $this->currentUserApi->get('uid');
+        if ($routeArea != 'admin' && $uid >= 2) {
         if (in_array('message', $allowedObjectTypes)
         		&& $this->permissionApi->hasPermission($this->getBundleName() . ':Message:', '::', $permLevel)) {
         			$links[] = [
@@ -206,8 +208,8 @@ class LinkContainer extends AbstractLinkContainer
         					'title' => $this->__('Send a message to the offerer', 'musharemodule')
         					];
         				}
-        
-        $uid = $this->currentUserApi->get('uid');
+        }
+
         if ($routeArea != 'admin' && $uid >= 2) {
         	if ($this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADD)) {
         		$links[] = [
@@ -226,14 +228,7 @@ class LinkContainer extends AbstractLinkContainer
                 'title' => $this->__('Pools list', 'musharemodule')
             ];
         }
-        if ($routeArea == 'admin' && in_array('company', $allowedObjectTypes)
-            && $this->permissionApi->hasPermission($this->getBundleName() . ':Company:', '::', $permLevel)) {
-            $links[] = [
-                'url' => $this->router->generate('musharemodule_company_' . $routeArea . 'view'),
-                'text' => $this->__('Companies', 'musharemodule'),
-                'title' => $this->__('Companies list', 'musharemodule')
-            ];
-        }
+
         if ($routeArea == 'admin' && $this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {
             $links[] = [
                 'url' => $this->router->generate('musharemodule_config_config'),
