@@ -50,10 +50,18 @@ class ItemActionsMenu extends AbstractItemActionsMenu
         $permissionApi = $this->container->get('zikula_permissions_module.api.permission');
         $currentUserApi = $this->container->get('zikula_users_module.current_user');
         $entityDisplayHelper = $this->container->get('mu_share_module.entity_display_helper');
+        $entityFactory = $this->container->get('mu_share_module.entity_factory');
         $menu->setChildrenAttribute('class', 'list-inline');
 
         $currentUserId = $currentUserApi->isLoggedIn() ? $currentUserApi->get('uid') : UsersConstant::USER_ID_ANONYMOUS;
         if ($entity instanceof LocationEntity) {
+        	// we check how many locations are there for the current user
+        	$locationRespository = $entityFactory->getRepository('location');
+        	$locations = $locationRespository->selectWhere();
+        	$countLocations = count($locations);
+        	// we check the number of offers for this location
+        	$locationOffers = $entity->getOfferOfLocation();
+        	$countOffers = count($locationOffers);
             $component = 'MUShareModule:Location:';
             $instance = $entity->getKey() . '::';
             $routePrefix = 'musharemodule_location_';
@@ -86,7 +94,7 @@ class ItemActionsMenu extends AbstractItemActionsMenu
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new location'));
             }
-            if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE) && $currentUserId == $entity->getCreatedBy()->getUid()) {
+            if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE) && $currentUserId == $entity->getCreatedBy()->getUid() && $countOffers == 0 && $countLocations > 1) {
                 $menu->addChild($this->__('Delete'), [
                     'route' => $routePrefix . $routeArea . 'delete',
                     'routeParameters' => $entity->createUrlArgs()
