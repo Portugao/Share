@@ -144,6 +144,9 @@ class ControllerHelper extends AbstractControllerHelper
         $templateParameters['sort'] = $sortableColumns->generateSortableColumns();
         $templateParameters['quickNavForm'] = $quickNavForm->createView();
         
+        // no offers as standard
+        $status = 0;
+        
         // own code
         if ($objectType == 'location' && $templateParameters['routeArea'] == '') {
         	
@@ -223,7 +226,7 @@ class ControllerHelper extends AbstractControllerHelper
         	    $singleOffers = $offerRepository->selectWhere($where2);
         	    
         	    if ($singleOffers) {
-        	    	// we check the distance for each found location
+        	    	// we check the distance for each found offer
         	    	foreach ($singleOffers as $singleOffer) {
         	    		$distance = acos(sin(deg2rad($singleOffer['latitude']))*sin(deg2rad($myLocation[0]['latitude']))+cos(deg2rad($singleOffer['latitude']))*cos(deg2rad($myLocation[0]['latitude']))*cos(deg2rad($singleOffer['longitude']) - deg2rad($myLocation[0]['longitude'])))*6375;
         	    
@@ -231,8 +234,9 @@ class ControllerHelper extends AbstractControllerHelper
         	    			$relevantSingleOffers[] = $singleOffer;
         	    		}
         	    	}
-        	    	if (isset($relevantSingleOffers))
+        	    	if (isset($relevantSingleOffers)) {
         	    		$templateParameters['singleOffers'] = $relevantSingleOffers;
+        	    	}  	    	
         	    }
         	     
         	    // we get offers in pools
@@ -272,19 +276,19 @@ class ControllerHelper extends AbstractControllerHelper
         	    		if (!in_array($relevantPoolOffer['pool'], $pools)) {
         	    			$pools[] = $relevantPoolOffer['pool'];
         	    		}
-        	    	}     	    
-        	    }      	     
+        	    	}
+        	    }
         	    // we work with pools
         	    if (isset($pools)) {
         	    	$templateParameters['pools'] = $pools;
         	    }
-
         	} else {
         		$templateParameters['defaultLatitude'] = $this->variableApi->get('MUShareModule', 'defaultLatitude');
         		$templateParameters['defaultLongitude'] = $this->variableApi->get('MUShareModule', 'defaultLongitude');
         	}
         	// we assign the radius to the template
         	$templateParameters['radius'] = $radius;
+        	$templateParameters['status'] = $status;
         }
     
         $templateParameters['canBeCreated'] = $this->modelHelper->canBeCreated($objectType);
@@ -320,9 +324,8 @@ class ControllerHelper extends AbstractControllerHelper
     		$uid = $this->currentUserApi->get('uid');
     		if ($entity->getCreatedBy()->getUid() != $uid) {
     			$url = new RouteUrl('musharemodule_location_view');
-    			/*$serviceContainer = \ServiceUtil::getService('container');
-    			$serviceContainer->get('mu'); //TODO*/
-    			
+    			/*$serviceContainer = \ServiceUtil::getService();
+    			$serviceContainer->get('musharemodule'); //TODO*/		
     		}
     	}
     
