@@ -212,6 +212,8 @@ abstract class AbstractUserListener implements EventSubscriberInterface
         
         // set last editor to admin (UsersConstant::USER_ID_ADMIN) for all messages updated by this user
         $repo->updateLastEditor($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
+        // set last editor to guest (UsersConstant::USER_ID_ANONYMOUS) for all messages affected by this user
+        $repo->updateUserField('recipient', $userId, UsersConstant::USER_ID_ANONYMOUS, $this->translator, $this->logger, $this->currentUserApi);
         
         $logArgs = ['app' => 'MUShareModule', 'user' => $this->currentUserApi->get('uname'), 'entities' => 'messages'];
         $this->logger->notice('{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.', $logArgs);

@@ -3,7 +3,7 @@
     <id>{{ message.id }}</id>
     <subject><![CDATA[{{ message.subject }}]]></subject>
     <textForMessage><![CDATA[{{ message.textForMessage|safeHtml }}]]></textForMessage>
-    <recipient>{{ message.recipient }}</recipient>
+    <recipient>{{ message.recipient.getUname() }}</recipient>
     <readByRecipient>{{ message.readByRecipient|localizeddate('medium', 'short') }}</readByRecipient>
     <statusSender>{{ message.statusSender }}</statusSender>
     <statusRecipient>{{ message.statusRecipient }}</statusRecipient>

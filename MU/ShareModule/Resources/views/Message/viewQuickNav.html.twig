@@ -18,6 +18,13 @@
             {% if workflowStateFilter is defined and workflowStateFilter != true %}
                 </div>
             {% endif %}
+            {% if recipientFilter is defined and recipientFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.recipient) }}
+            {% if recipientFilter is defined and recipientFilter != true %}
+                </div>
+            {% endif %}
             {% if searchFilter is defined and searchFilter != true %}
                 <div class="hidden">
             {% endif %}

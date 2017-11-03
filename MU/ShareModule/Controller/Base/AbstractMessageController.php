@@ -137,7 +137,6 @@ abstract class AbstractMessageController extends AbstractController
         
         $sortableColumns->addColumns([
             new Column('subject'),
-            new Column('recipient'),
             new Column('createdBy'),
             new Column('createdDate'),
             new Column('updatedBy'),

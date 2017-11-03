@@ -2,17 +2,11 @@
 {% extends 'MUShareModule::base.html.twig' %}
 {% block title own ? __('My messages') : __('Messages list') %}
 {% block content %}
-<h3>{% if kind == 'inbox' %}
-    {{ __('Inbox') }}
-{% endif %}
-{% if kind == 'sentbox' %}
-   {{ __('Sentbox') }}
-{% endif %}</h3>
 <div class="musharemodule-message musharemodule-view">
 
     {{ block('page_nav_links') }}
 
-    {#{ include('@MUShareModule/Message/viewQuickNav.html.twig', {workflowStateFilter: false}) }}{# see template file for available options #}
+    {{ include('@MUShareModule/Message/viewQuickNav.html.twig', {workflowStateFilter: false}) }}{# see template file for available options #}
 
     {% if routeArea == 'admin' %}
     <form action="{{ path('musharemodule_message_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="messagesViewForm" class="form-horizontal" role="form">
@@ -20,74 +14,6 @@
     {% endif %}
         <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover{% if routeArea == 'admin' %} table-condensed{% endif %}">
-            {% if kind == 'inbox' %}
-            <colgroup>
-                {% if routeArea == 'admin' %}
-                    <col id="cSelect" />
-                {% endif %}
-                <col id="cItemActions" />
-                <col id="cSubject" />
-                <col id="cSender" />
-                <col id="cCreatedDate" />
-            </colgroup>
-            <thead>
-            <tr>
-                {% if routeArea == 'admin' %}
-                    <th id="hSelect" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}text-center z-w02">
-                        <input type="checkbox" class="mushare-mass-toggle" />
-                    </th>
-                {% endif %}
-                <th id="hItemActions" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}z-order-unsorted z-w02">{{ __('Actions') }}</th>
-                <th id="hSubject" scope="col" class="text-left">
-                    <a href="{{ sort.subject.url }}" title="{{ __f('Sort by %s', {'%s': 'subject'}) }}" class="{{ sort.subject.class }}">{{ __('Subject') }}</a>
-                </th>
-                <th id="hSender" scope="col" class="text-right">
-                    <a href="{{ sort.recipient.url }}" title="{{ __f('Sort by %s', {'%s': 'recipient'}) }}" class="{{ sort.recipient.class }}">{{ __('Sender') }}</a>
-                </th>
-                <th id="hCreatedDate scope="col" class="text-left z-order-unsorted">
-                    {{ __('Sent on') }}
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-        
-        {% for message in items %}
-            <tr>
-                {% if routeArea == 'admin' %}
-                    <td headers="hSelect" class="fixed-column text-center z-w02">
-                        <input type="checkbox" name="items[]" value="{{ message.getKey() }}" class="mushare-toggle-checkbox" />
-                    </td>
-                {% endif %}
-                <td id="itemActions{{ message.getKey() }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
-                    {% set itemActions = knp_menu_get('MUShareModule:ItemActionsMenu:menu', [], {entity: message, area: routeArea, context: 'view'}) %}
-                    <div class="dropdown">
-                        <a id="itemActions{{ message.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
-                        {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:actions.html.twig'}) }}
-                    </div>
-                </td>
-                <td headers="hSubject" class="text-left">
-                    {{ message.subject }}
-                </td>
-                <td headers="hSender" class="text-left">
-                {% set profileLink = message.createdBy.getUid()|profileLinkByUserId() %}
-                <dd class="avatar">{{ userAvatar(message.createdBy.getUid(), {rating: 'g'}) }} {{ profileLink|raw }}</dd>
-                </td>
-                <td headers="hCreatedDate" class="text-left">
-                    {{ message.createdDate|localizeddate('medium', 'short') }}
-                </td>
-            </tr>
-        {% else %}
-            <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
-                <td class="text-left" colspan="{% if routeArea == 'admin' %}5{% else %}4{% endif %}">
-            {{ __('No messages found.') }}
-              </td>
-            </tr>
-        {% endfor %}
-        
-            </tbody>
-            {% endif %}
-            
-            {% if kind == 'sentbox' %}
             <colgroup>
                 {% if routeArea == 'admin' %}
                     <col id="cSelect" />
@@ -108,8 +34,8 @@
                 <th id="hSubject" scope="col" class="text-left">
                     <a href="{{ sort.subject.url }}" title="{{ __f('Sort by %s', {'%s': 'subject'}) }}" class="{{ sort.subject.class }}">{{ __('Subject') }}</a>
                 </th>
-                <th id="hRecipient" scope="col" class="text-right">
-                    <a href="{{ sort.recipient.url }}" title="{{ __f('Sort by %s', {'%s': 'recipient'}) }}" class="{{ sort.recipient.class }}">{{ __('Recipient') }}</a>
+                <th id="hRecipient" scope="col" class="text-left z-order-unsorted">
+                    {{ __('Recipient') }}
                 </th>
                 <th id="hReadByRecipient" scope="col" class="text-left z-order-unsorted">
                     {{ __('Read by recipient') }}
@@ -136,8 +62,8 @@
                     {{ message.subject }}
                 </td>
                 <td headers="hRecipient" class="text-left">
-                {% set profileLink = message.recipient.getUid()|profileLinkByUserId() %}
-                <dd class="avatar">{{ userAvatar(message.recipient.getUid(), {rating: 'g'}) }} {{ profileLink|raw }}</dd>
+                        {{ message.recipient.getUid()|profileLinkByUserId() }}{% if currentUser.loggedIn %}{% set sendMessageUrl = message.recipient.getUid()|messageSendLink(urlOnly=true) %}{% if sendMessageUrl != '#' %}<a href="{{ sendMessageUrl }}" title="{{ __f('Send private message to %userName%', { '%userName%': message.recipient.getUname() }) }}"><i class="fa fa-envelope-o"></i></a>{% endif %}{% endif %}
+                        <span class="avatar">{{ userAvatar(message.recipient.getUid(), { rating: 'g' }) }}</span>
                 </td>
                 <td headers="hReadByRecipient" class="text-left">
                     {{ message.readByRecipient|localizeddate('medium', 'short') }}
@@ -152,8 +78,6 @@
         {% endfor %}
         
             </tbody>
-            {% endif %}
-            
         </table>
         </div>
         
@@ -182,7 +106,7 @@
 {% endblock %}
 {% block page_nav_links %}
     <p>
-        {#% if canBeCreated %}
+        {% if canBeCreated %}
             {% if hasPermission('MUShareModule:Message:', '::', 'ACCESS_EDIT') %}
                 {% set createTitle = __('Create message') %}
                 <a href="{{ path('musharemodule_message_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}"><i class="fa fa-plus"></i> {{ createTitle }}</a>
@@ -194,7 +118,7 @@
         {% else %}
             {% set linkTitle = __('Show all entries') %}
             <a href="{{ path('musharemodule_message_' ~ routeArea ~ 'view', {all: 1}) }}" title="{{ linkTitle|e('html_attr') }}"><i class="fa fa-table"></i> {{ linkTitle }}</a>
-        {% endif %#}
+        {% endif %}
     </p>
 {% endblock %}
 {% block display_hooks %}

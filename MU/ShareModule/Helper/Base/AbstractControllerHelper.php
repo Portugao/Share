@@ -22,6 +22,7 @@ use Zikula\Component\SortableColumns\SortableColumns;
 use Zikula\Core\RouteUrl;
 use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
+use Zikula\UsersModule\Entity\UserEntity;
 use MU\ShareModule\Entity\Factory\EntityFactory;
 use MU\ShareModule\Helper\CollectionFilterHelper;
 use MU\ShareModule\Helper\FeatureActivationHelper;
@@ -233,6 +234,9 @@ abstract class AbstractControllerHelper
                     $sortdir = $fieldValue;
                 } elseif (false === stripos($fieldName, 'thumbRuntimeOptions')) {
                     // set filter as query argument, fetched inside repository
+                    if ($fieldValue instanceof UserEntity) {
+                        $fieldValue = $fieldValue->getUid();
+                    }
                     $request->query->set($fieldName, $fieldValue);
                 }
             }

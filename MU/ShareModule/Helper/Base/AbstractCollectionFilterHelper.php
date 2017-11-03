@@ -244,6 +244,7 @@ abstract class AbstractCollectionFilterHelper
         }
     
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
+        $parameters['recipient'] = $this->request->query->getInt('recipient', 0);
         $parameters['q'] = $this->request->query->get('q', '');
     
         return $parameters;
@@ -448,8 +449,14 @@ abstract class AbstractCollectionFilterHelper
                         $qb->andWhere('tbl.' . $k . ' LIKE :' . $k)
                            ->setParameter($k, '%' . $v . '%');
                     } else {
-                        $qb->andWhere('tbl.' . $k . ' = :' . $k)
-                           ->setParameter($k, $v);
+                        if (in_array($k, ['recipient'])) {
+                            $qb->leftJoin('tbl.' . $k, 'tbl' . ucfirst($k))
+                               ->andWhere('tbl' . ucfirst($k) . '.uid = :' . $k)
+                               ->setParameter($k, $v);
+                        } else {
+                            $qb->andWhere('tbl.' . $k . ' = :' . $k)
+                               ->setParameter($k, $v);
+                        }
                    }
                 }
             }
@@ -644,8 +651,6 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchSubject'] = '%' . $fragment . '%';
             $filters[] = 'tbl.textForMessage LIKE :searchTextForMessage';
             $parameters['searchTextForMessage'] = '%' . $fragment . '%';
-            $filters[] = 'tbl.recipient = :searchRecipient';
-            $parameters['searchRecipient'] = $fragment;
             $filters[] = 'tbl.readByRecipient = :searchReadByRecipient';
             $parameters['searchReadByRecipient'] = $fragment;
             $filters[] = 'tbl.statusSender = :searchStatusSender';

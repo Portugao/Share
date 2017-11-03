@@ -45,6 +45,8 @@ abstract class AbstractShareModuleInstaller extends AbstractExtensionInstaller
         }
     
         // set up all our vars with initial values
+        $this->setVar('maxRadius', '5000');
+        $this->setVar('maxLocations', '5');
         $this->setVar('locationEntriesPerPage', '10');
         $this->setVar('linkOwnLocationsOnAccountPage', true);
         $this->setVar('offerEntriesPerPage', '10');

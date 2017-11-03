@@ -257,10 +257,10 @@ abstract class AbstractOfferType extends AbstractType
             'label' => $this->__('At me') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
-                'title' => $this->__('If enabled the latitude and longitude get set like the location from where or for what you created the offer.
+                'title' => $this->__('If enabled the latitude and longitude get set like the location from where or for what you create the offer.
                 It does not work, what you set by clicking into the map.')
             ],
-            'help' => $this->__('If enabled the latitude and longitude get set like the location from where or for what you created the offer.
+            'help' => $this->__('If enabled the latitude and longitude get set like the location from where or for what you create the offer.
             It does not work, what you set by clicking into the map.'),
             'attr' => [
                 'class' => '',

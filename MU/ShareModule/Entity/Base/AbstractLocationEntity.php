@@ -111,18 +111,19 @@ abstract class AbstractLocationEntity extends EntityAccess
      * @Assert\Type(type="bool")
      * @var boolean $private
      */
-    protected $private = true;
+    protected $private = false;
     
     /**
      * Enter the name of your company.
      * @ORM\Column(length=255)
+     * @Assert\NotNull()
      * @Assert\Length(min="0", max="255")
      * @var string $name
      */
     protected $name = '';
     
     /**
-     * here you can enter more informations about the company.
+     * Here you can enter more informations about the company.
      * @ORM\Column(type="text", length=2000)
      * @Assert\NotNull()
      * @Assert\Length(min="0", max="2000")

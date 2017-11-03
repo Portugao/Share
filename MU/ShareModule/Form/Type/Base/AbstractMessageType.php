@@ -13,6 +13,8 @@
 namespace MU\ShareModule\Form\Type\Base;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
@@ -150,7 +152,7 @@ abstract class AbstractMessageType extends AbstractType
                 'title' => $this->__('Enter the read by recipient of the message')
             ],
             'required' => false,
-            'empty_data' => '0000-00-00 00:00:00',
+            'empty_data' => date('Y-m-d H:i:s'),
             'with_seconds' => true,
             'date_widget' => 'single_text',
             'time_widget' => 'single_text'
@@ -164,7 +166,7 @@ abstract class AbstractMessageType extends AbstractType
                 'class' => '',
                 'title' => $this->__('Enter the status sender of the message.') . ' ' . $this->__('Only digits are allowed.')
             ],
-            'required' => true,
+            'required' => false,
             'scale' => 0
         ]);
         
@@ -176,7 +178,7 @@ abstract class AbstractMessageType extends AbstractType
                 'class' => '',
                 'title' => $this->__('Enter the status recipient of the message.') . ' ' . $this->__('Only digits are allowed.')
             ],
-            'required' => true,
+            'required' => false,
             'scale' => 0
         ]);
     }
@@ -286,6 +288,7 @@ abstract class AbstractMessageType extends AbstractType
                     return $this->entityFactory->createMessage();
                 },
                 'error_mapping' => [
+                    'isRecipientUserValid' => 'recipient',
                 ],
                 'mode' => 'create',
                 'actions' => [],

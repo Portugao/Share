@@ -35,8 +35,8 @@
                 <th id="hSubject" scope="col" class="text-left">
                     <a href="{{ sort.subject.url }}" title="{{ __f('Sort by %s', {'%s': 'subject'}) }}" class="{{ sort.subject.class }}">{{ __('Subject') }}</a>
                 </th>
-                <th id="hRecipient" scope="col" class="text-right">
-                    <a href="{{ sort.recipient.url }}" title="{{ __f('Sort by %s', {'%s': 'recipient'}) }}" class="{{ sort.recipient.class }}">{{ __('Recipient') }}</a>
+                <th id="hRecipient" scope="col" class="text-left z-order-unsorted">
+                    {{ __('Recipient') }}
                 </th>
                 <th id="hReadByRecipient" scope="col" class="text-left z-order-unsorted">
                     {{ __('Read by recipient') }}
@@ -62,8 +62,9 @@
                 <td headers="hSubject" class="text-left">
                     {{ message.subject }}
                 </td>
-                <td headers="hRecipient" class="text-right">
-                    {{ message.recipient }}
+                <td headers="hRecipient" class="text-left">
+                        {{ message.recipient.getUid()|profileLinkByUserId() }}{% if currentUser.loggedIn %}{% set sendMessageUrl = message.recipient.getUid()|messageSendLink(urlOnly=true) %}{% if sendMessageUrl != '#' %}<a href="{{ sendMessageUrl }}" title="{{ __f('Send private message to %userName%', { '%userName%': message.recipient.getUname() }) }}"><i class="fa fa-envelope-o"></i></a>{% endif %}{% endif %}
+                        <span class="avatar">{{ userAvatar(message.recipient.getUid(), { rating: 'g' }) }}</span>
                 </td>
                 <td headers="hReadByRecipient" class="text-left">
                     {{ message.readByRecipient|localizeddate('medium', 'short') }}

@@ -12,6 +12,7 @@
 
 namespace MU\ShareModule\Controller\Base;
 
+use Doctrine\ORM\AbstractQuery;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Zikula\Core\Controller\AbstractController;

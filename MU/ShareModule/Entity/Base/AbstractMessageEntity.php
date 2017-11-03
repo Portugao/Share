@@ -16,6 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Zikula\Core\Doctrine\EntityAccess;
+use Zikula\UsersModule\Entity\UserEntity;
 use MU\ShareModule\Traits\StandardFieldsTrait;
 use MU\ShareModule\Validator\Constraints as ShareAssert;
 
@@ -88,6 +89,7 @@ abstract class AbstractMessageEntity extends EntityAccess
     
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotNull()
      * @Assert\DateTime()
      * @var DateTime $readByRecipient
      */
@@ -96,8 +98,7 @@ abstract class AbstractMessageEntity extends EntityAccess
     /**
      * @ORM\Column(type="integer")
      * @Assert\Type(type="integer")
-     * @Assert\NotBlank()
-     * @Assert\NotEqualTo(value=0)
+     * @Assert\NotNull()
      * @Assert\LessThan(value=100000000000)
      * @var integer $statusSender
      */
@@ -106,8 +107,7 @@ abstract class AbstractMessageEntity extends EntityAccess
     /**
      * @ORM\Column(type="integer")
      * @Assert\Type(type="integer")
-     * @Assert\NotBlank()
-     * @Assert\NotEqualTo(value=0)
+     * @Assert\NotNull()
      * @Assert\LessThan(value=100000000000)
      * @var integer $statusRecipient
      */
@@ -250,7 +250,7 @@ abstract class AbstractMessageEntity extends EntityAccess
     /**
      * Returns the recipient.
      *
-     * @return integer
+     * @return UserEntity
      */
     public function getRecipient()
     {
@@ -260,14 +260,14 @@ abstract class AbstractMessageEntity extends EntityAccess
     /**
      * Sets the recipient.
      *
-     * @param integer $recipient
+     * @param UserEntity $recipient
      *
      * @return void
      */
     public function setRecipient($recipient)
     {
-        if (intval($this->recipient) !== intval($recipient)) {
-            $this->recipient = intval($recipient);
+        if ($this->recipient !== $recipient) {
+            $this->recipient = isset($recipient) ? $recipient : '';
         }
     }
     
@@ -349,6 +349,19 @@ abstract class AbstractMessageEntity extends EntityAccess
     
     
     
+    
+    /**
+     * Checks whether the recipient field contains a valid user reference.
+     * This method is used for validation.
+     *
+     * @Assert\IsTrue(message="This value must be a valid user id.")
+     *
+     * @return boolean True if data is valid else false
+     */
+    public function isRecipientUserValid()
+    {
+        return $this['recipient'] instanceof UserEntity;
+    }
     
     /**
      * Creates url arguments array for easy creation of display urls.

@@ -138,7 +138,7 @@ abstract class AbstractOfferEntity extends EntityAccess
     protected $back = false;
     
     /**
-     * If enabled the latitude and longitude get set like the location from where or for what you created the offer.
+     * If enabled the latitude and longitude get set like the location from where or for what you create the offer.
      It does not work, what you set by clicking into the map.
      * @ORM\Column(type="boolean")
      * @Assert\NotNull()

@@ -212,9 +212,9 @@ abstract class AbstractLocationType extends AbstractType
             'label' => $this->__('Description') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
-                'title' => $this->__('here you can enter more informations about the company.')
+                'title' => $this->__('Here you can enter more informations about the company.')
             ],
-            'help' => [$this->__('here you can enter more informations about the company.'), $this->__f('Note: this value must not exceed %amount% characters.', ['%amount%' => 2000])],
+            'help' => [$this->__('Here you can enter more informations about the company.'), $this->__f('Note: this value must not exceed %amount% characters.', ['%amount%' => 2000])],
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 2000,

@@ -132,7 +132,6 @@ abstract class AbstractMessageFinderType extends AbstractType
                 'empty_data' => '',
                 'choices' => [
                     $this->__('Subject') => 'subject',
-                    $this->__('Recipient') => 'recipient',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',
                     $this->__('Update date') => 'updatedDate',

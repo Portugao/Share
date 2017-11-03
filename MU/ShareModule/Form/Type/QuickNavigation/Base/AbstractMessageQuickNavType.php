@@ -12,6 +12,7 @@
 
 namespace MU\ShareModule\Form\Type\QuickNavigation\Base;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -80,6 +81,7 @@ abstract class AbstractMessageQuickNavType extends AbstractType
         ;
 
         $this->addListFields($builder, $options);
+        $this->addUserFields($builder, $options);
         $this->addSearchField($builder, $options);
         $this->addSortingFields($builder, $options);
         $this->addAmountField($builder, $options);
@@ -122,6 +124,27 @@ abstract class AbstractMessageQuickNavType extends AbstractType
     }
 
     /**
+     * Adds user fields.
+     *
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
+     */
+    public function addUserFields(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('recipient', EntityType::class, [
+            'label' => $this->__('Recipient'),
+            'attr' => [
+                'class' => 'input-sm'
+            ],
+            'required' => false,
+            'placeholder' => $this->__('All'),
+            // Zikula core should provide a form type for this to hide entity details
+            'class' => 'Zikula\UsersModule\Entity\UserEntity',
+            'choice_label' => 'uname'
+        ]);
+    }
+
+    /**
      * Adds a search field.
      *
      * @param FormBuilderInterface $builder The form builder
@@ -156,7 +179,6 @@ abstract class AbstractMessageQuickNavType extends AbstractType
                 ],
                 'choices' =>             [
                     $this->__('Subject') => 'subject',
-                    $this->__('Recipient') => 'recipient',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',
                     $this->__('Update date') => 'updatedDate',

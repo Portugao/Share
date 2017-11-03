@@ -3,6 +3,6 @@
 {% endspaceless %}
 {% for message in items %}
 {% spaceless %}
-    "{{ message.subject }}";"{{ message.textForMessage|safeHtml }}";"{{ message.recipient }}";"{{ message.readByRecipient|localizeddate('medium', 'short') }}";"{{ message.statusSender }}";"{{ message.statusRecipient }}";"{{ message.workflowState|musharemodule_objectState(false)|lower }}"
+    "{{ message.subject }}";"{{ message.textForMessage|safeHtml }}";"{{ message.recipient.getUname() }}";"{{ message.readByRecipient|localizeddate('medium', 'short') }}";"{{ message.statusSender }}";"{{ message.statusRecipient }}";"{{ message.workflowState|musharemodule_objectState(false)|lower }}"
 {% endspaceless %}
 {% endfor %}

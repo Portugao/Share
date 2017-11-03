@@ -83,10 +83,12 @@
             ( function($) {
                 $(document).ready(function() {
                     // initialise auto completion for user fields
+                    initUserLiveSearch('musharemodule_message_recipient');
                     {% if form.moderationSpecificCreator is defined %}
                         initUserLiveSearch('musharemodule_message_moderationSpecificCreator');
                     {% endif %}
                     mUShareInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ message.id }}{% endif %}');
+                    mUShareInitDateField('musharemodule_message_readByRecipient');
                 });
             })(jQuery);
         /* ]]> */

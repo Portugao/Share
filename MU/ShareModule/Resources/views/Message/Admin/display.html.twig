@@ -27,7 +27,13 @@
         {% endif %}
         {% if message.recipient is not empty %}
             <dt>{{ __('Recipient') }}</dt>
-            <dd>{{ message.recipient }}</dd>
+            <dd>{% if not isQuickView %}
+                {{ message.recipient.getUid()|profileLinkByUserId() }}{% if currentUser.loggedIn %}{% set sendMessageUrl = message.recipient.getUid()|messageSendLink(urlOnly=true) %}{% if sendMessageUrl != '#' %}<a href="{{ sendMessageUrl }}" title="{{ __f('Send private message to %userName%', { '%userName%': message.recipient.getUname() }) }}"><i class="fa fa-envelope-o"></i></a>{% endif %}{% endif %}
+                <span class="avatar">{{ userAvatar(message.recipient.getUid(), { rating: 'g' }) }}</span>
+            {% else %}
+                {{ message.recipient.getUname() }}
+            {% endif %}
+            </dd>
         {% endif %}
         
     </dl>

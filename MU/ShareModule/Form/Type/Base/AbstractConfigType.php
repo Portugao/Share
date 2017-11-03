@@ -63,6 +63,7 @@ abstract class AbstractConfigType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->addGeneralFields($builder, $options);
         $this->addListViewsFields($builder, $options);
         $this->addIntegrationFields($builder, $options);
         $this->addGeoFields($builder, $options);
@@ -82,6 +83,38 @@ abstract class AbstractConfigType extends AbstractType
                     'class' => 'btn btn-default',
                     'formnovalidate' => 'formnovalidate'
                 ]
+            ])
+        ;
+    }
+
+    /**
+     * Adds fields for general fields.
+     *
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
+     */
+    public function addGeneralFields(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('maxRadius', IntegerType::class, [
+                'label' => $this->__('Max radius') . ':',
+                'required' => false,
+                'data' => isset($this->moduleVars['maxRadius']) ? intval($this->moduleVars['maxRadius']) : intval(5000),
+                'empty_data' => intval('5000'),
+                'attr' => [
+                    'maxlength' => 255,
+                    'title' => $this->__('Enter the max radius.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0
+            ])
+            ->add('maxLocations', IntegerType::class, [
+                'label' => $this->__('Max locations') . ':',
+                'required' => false,
+                'data' => isset($this->moduleVars['maxLocations']) ? intval($this->moduleVars['maxLocations']) : intval(5),
+                'empty_data' => intval('5'),
+                'attr' => [
+                    'maxlength' => 255,
+                    'title' => $this->__('Enter the max locations.') . ' ' . $this->__('Only digits are allowed.')
+                ],'scale' => 0
             ])
         ;
     }
