@@ -16,18 +16,18 @@
     <div class="musharemodule-message musharemodule-display">
 
     <dl>
-        {% if message.subject is not empty %}
+        {#% if message.subject is not empty %}
             <dt>{{ __('Subject') }}</dt>
             <dd>{{ message.subject }}</dd>
-        {% endif %}
+        {% endif %#}
         {% if message.textForMessage is not empty %}
             <dt>{{ __('Text for message') }}</dt>
             <dd>{{ message.textForMessage|safeHtml }}</dd>
         {% endif %}
-        {% if message.recipient is not empty %}
+        {#% if message.recipient is not empty %}
             <dt>{{ __('Recipient') }}</dt>
-            <dd>{{ message.recipient }}</dd>
-        {% endif %}
+            <dd>{{ message.recipient.getUname() }}</dd>
+        {% endif %#}
         
     </dl>
 
