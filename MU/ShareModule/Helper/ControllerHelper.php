@@ -17,6 +17,7 @@ use MU\ShareModule\Helper\Base\AbstractControllerHelper;
 use Zikula\Component\SortableColumns\SortableColumns;
 use Zikula\Core\RouteUrl;
 use ServiceUtil;
+use DateTime;
 
 /**
  * Helper implementation class for controller layer methods.
@@ -108,11 +109,29 @@ class ControllerHelper extends AbstractControllerHelper
         $sortdir = $sortableColumns->getSortDirection();
         $sortableColumns->setAdditionalUrlParameters($urlParameters);
     
+        // we get the current user id
+        $uid = $this->currentUserApi->get('uid');
+        
         $where = '';
+        // special where clause for location and offers
         if ($templateParameters['routeArea'] != 'admin' && ($objectType == 'location' || $objectType == 'offer')) {
-            $uid = $this->currentUserApi->get('uid');
             $where = 'tbl.createdBy = ' . $uid;
         }
+        // special where clause for messages
+        if ($templateParameters['routeArea'] != 'admin' && $objectType == 'message') {
+        	$kind = $request->get('kind', 'inbox');
+        	if ($kind == 'inbox') {
+                $where = 'tbl.createdBy != ' . $uid;
+                $where .= ' AND ';
+                $where .= 'tbl.statusRecipient = 1';
+        	} else {
+                $where = 'tbl.createdBy = ' . $uid;
+                $where .= ' AND ';
+                $where .= 'tbl.statusSender = 1';
+        	}
+        	$templateParameters['kind'] = $kind;
+        }
+        
         if ($templateParameters['all'] == 1) {
             // retrieve item list without pagination
             $entities = $repository->selectWhere($where, $sort . ' ' . $sortdir);
@@ -290,11 +309,6 @@ class ControllerHelper extends AbstractControllerHelper
         	$templateParameters['radius'] = $radius;
         	$templateParameters['status'] = $status;
         }
-        
-        if ($objectType == 'message') {
-        	$kind = $request->get('kind', 'inbox');   
-        	$templateParameters['kind'] = $kind;
-        }
     
         $templateParameters['canBeCreated'] = $this->modelHelper->canBeCreated($objectType);
     
@@ -332,6 +346,15 @@ class ControllerHelper extends AbstractControllerHelper
     			/*$serviceContainer = \ServiceUtil::getService();
     			$serviceContainer->get('musharemodule'); //TODO*/		
     		}
+    	}
+    	if ($objectType == 'message' && $templateParameters['routeArea'] == '' && $this->currentUserApi->get('uid') != $entity->getCreatedBy()->getUid()) {
+    		// we get serviceManager
+    		$serviceManager = ServiceUtil::getManager();
+    		// we get entityManager
+    		$entityManager = $serviceManager->getService('doctrine.entitymanager');
+
+    		$entity->setReadByRecipient(new \DateTime());
+    		$entityManager->flush();
     	}
     
     	return $this->addTemplateParameters($objectType, $templateParameters, 'controllerAction', $contextArgs);
