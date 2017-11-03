@@ -79,18 +79,15 @@ abstract class AbstractMessageEntity extends EntityAccess
     protected $textForMessage = '';
     
     /**
-     * @ORM\Column(type="integer")
-     * @Assert\Type(type="integer")
+     * @ORM\ManyToOne(targetEntity="Zikula\UsersModule\Entity\UserEntity")
+     * @ORM\JoinColumn(referencedColumnName="uid")
      * @Assert\NotBlank()
-     * @Assert\NotEqualTo(value=0)
-     * @Assert\LessThan(value=100000000000)
-     * @var integer $recipient
+     * @var UserEntity $recipient
      */
-    protected $recipient = 0;
+    protected $recipient = null;
     
     /**
      * @ORM\Column(type="datetime")
-     * @Assert\NotBlank()
      * @Assert\DateTime()
      * @var DateTime $readByRecipient
      */
@@ -104,7 +101,7 @@ abstract class AbstractMessageEntity extends EntityAccess
      * @Assert\LessThan(value=100000000000)
      * @var integer $statusSender
      */
-    protected $statusSender = 0;
+    protected $statusSender = 1;
     
     /**
      * @ORM\Column(type="integer")
@@ -114,7 +111,7 @@ abstract class AbstractMessageEntity extends EntityAccess
      * @Assert\LessThan(value=100000000000)
      * @var integer $statusRecipient
      */
-    protected $statusRecipient = 0;
+    protected $statusRecipient = 1;
     
     
     
