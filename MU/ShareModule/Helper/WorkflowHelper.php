@@ -14,10 +14,220 @@ namespace MU\ShareModule\Helper;
 
 use MU\ShareModule\Helper\Base\AbstractWorkflowHelper;
 
+use Zikula\Core\Doctrine\EntityAccess;
+use MU\ShareModule\Entity\LocationEntity;
+use MU\ShareModule\Entity\MessageEntity;
+
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Workflow\Registry;
+use Zikula\Common\Translator\TranslatorInterface;
+use Zikula\PermissionsModule\Api\ApiInterface\PermissionApiInterface;
+use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
+use MU\ShareModule\Entity\Factory\EntityFactory;
+use MU\ShareModule\Helper\ListEntriesHelper;
+
+use Zikula\MailerModule\Api\ApiInterface\MailerApiInterface;
+use Swift_Mailer;
+use Swift_Message;
+
 /**
  * Helper implementation class for workflow methods.
  */
 class WorkflowHelper extends AbstractWorkflowHelper
-{
-    // feel free to add your own convenience methods here
+{	
+	/**
+	 * @var MailerApiInterface
+	 */
+	protected $mailerApi;
+	
+	/**
+	 * @var CurrentUserApiInterface
+	 */
+	protected $currentUserApi;
+	
+	/**
+	 * WorkflowHelper constructor.
+	 *
+	 * @param TranslatorInterface     $translator        Translator service instance
+	 * @param Registry                $registry          Workflow registry service instance
+	 * @param LoggerInterface         $logger            Logger service instance
+	 * @param PermissionApiInterface  $permissionApi     PermissionApi service instance
+	 * @param CurrentUserApiInterface $currentUserApi    CurrentUserApi service instance
+	 * @param EntityFactory           $entityFactory     EntityFactory service instance
+	 * @param ListEntriesHelper       $listEntriesHelper ListEntriesHelper service instance
+     * @param MailerApiInterface        $mailerApi           MailerApi service instance
+     * @param CurrentUserApiInterface $currentUserApi  CurrentUserApi service instance
+	 *
+	 * @return void
+	 */
+	public function __construct(
+			TranslatorInterface $translator,
+			Registry $registry,
+			LoggerInterface $logger,
+			PermissionApiInterface $permissionApi,
+			CurrentUserApiInterface $currentUserApi,
+			EntityFactory $entityFactory,
+			ListEntriesHelper $listEntriesHelper,
+            MailerApiInterface $mailerApi,
+			CurrentUserApiInterface $currentUserApi
+			) {
+				$this->translator = $translator;
+				$this->workflowRegistry = $registry;
+				$this->logger = $logger;
+				$this->permissionApi = $permissionApi;
+				$this->currentUserApi = $currentUserApi;
+				$this->entityFactory = $entityFactory;
+				$this->listEntriesHelper = $listEntriesHelper;
+                $this->mailerApi = $mailerApi;
+                $this->currentUserApi = $currentUserApi;
+	}
+	
+    /**
+     * Executes a certain workflow action for a given entity object.
+     *
+     * @param EntityAccess $entity    The given entity instance
+     * @param string       $actionId  Name of action to be executed
+     * @param bool         $recursive True if the function called itself
+     *
+     * @return bool False on error or true if everything worked well
+     */
+    /*public function executeAction(EntityAccess $entity, $actionId = '', $recursive = false)
+    {
+    	if ($actionId == 'delete') {
+    		if ($entity instanceof LocationEntity) {
+    		    $locationRepository = $this->entityFactory->getRepository('location');
+    		    $where = 'tbl.id != ' . $entity['id'];
+    		    $where .= ' AND ';
+    		    $where .= 'tbl.createdBy = ' . $entity->getCreatedBy()->getUid();
+    		    $locations = $locationRepository->selectWhere($where);
+    		    if (count($locations) == 0) {
+    		    	die('T'); // TODO
+    		    } else {
+    		    	// get entity manager
+    		    	$entityManager = $this->entityFactory->getObjectManager();
+    		    	$thisLocation = $locationRepository->find($locations[0]['id']);
+    		    	$thisLocation->setForMap(1);
+    		    	$entityManager->flush();
+    		    }
+    		}
+    	}
+    	if ($actionId == 'submit' && $entity instanceof MessageEntity) {
+    		//$this->notificationHelper->process($args);
+    		//$mailer = new \Swift_Mailer();
+    		$message = Swift_Message::newInstance();
+    		$message->setFrom('info@homepages-mit-zikula.de');
+    		$message->setTo('ue.mi@gmx.de');
+    		$message->setBody('Hallo Leute');
+    		$this->mailerApi->sendMessage($message, 'neue NAchricht', 'Alles Supi');
+    	}
+    	
+    	return parent::executeAction($entity, $actionId);
+    }*/
+    
+    /**
+     * Executes a certain workflow action for a given entity object.
+     *
+     * @param EntityAccess $entity    The given entity instance
+     * @param string       $actionId  Name of action to be executed
+     * @param bool         $recursive True if the function called itself
+     *
+     * @return bool False on error or true if everything worked well
+     */
+    public function executeAction(EntityAccess $entity, $actionId = '', $recursive = false)
+    {
+    	$workflow = $this->workflowRegistry->get($entity);
+    	if (!$workflow->can($entity, $actionId)) {
+    		return false;
+    	}
+    
+    	// get entity manager
+    	$entityManager = $this->entityFactory->getObjectManager();
+    	$logArgs = ['app' => 'MUShareModule', 'user' => $this->currentUserApi->get('uname')];
+    
+    	$result = false;
+    	
+    	$uid = $this->currentUserApi->get('uid');
+    
+    	try {
+    		$workflow->apply($entity, $actionId);
+    
+    		if ($actionId == 'delete') {
+    			// if item is a message
+    			if ($entity instanceof MesageEntity) {
+    				if ($entity['statusSender'] == 1 && $entity['statusRecipient'] == 1) {
+    					if ($uid == $entity->getCreatedBy()->getUid()) {
+    					$entity->setStatusSender(2);
+    					} else {
+    						$entity->setStatusRecipient(2);
+    					}
+    					$entityManager->flush();
+    				} elseif ($entity['statusSender'] == 1 && $entity['statusRecipient'] == 2) {
+    					if ($uid == $entity->getCreatedBy()->getUid()) {
+    						$entityManager->remove($entity);
+    					}  					
+    				} elseif ($entity['statusSender'] == 2 && $entity['statusRecipient'] == 1) {
+    					if ($uid != $entity->getCreatedBy()->getUid()) {
+    						$entityManager->remove($entity);
+    					}    					
+    				}
+    			} elseif ($entity instanceof LocationEntity) {
+    				$locationRepository = $this->entityFactory->getRepository('location');
+    				$where = 'tbl.id != ' . $entity['id'];
+    				$where .= ' AND ';
+    				$where .= 'tbl.createdBy = ' . $entity->getCreatedBy()->getUid();
+    				$locations = $locationRepository->selectWhere($where);
+    				if (count($locations) == 0) {
+    					die('T'); // TODO
+    				} else {
+    					// get entity manager
+    					$entityManager = $this->entityFactory->getObjectManager();
+    					$thisLocation = $locationRepository->find($locations[0]['id']);
+    					$thisLocation->setForMap(1);
+    					$entityManager->flush();
+    				}
+    				$entityManager->remove($entity);
+    			} else {
+    				$entityManager->remove($entity);
+    			}
+    		} else {
+    			$entityManager->persist($entity);
+    			if ($actionId == 'submit' && $entity instanceof MessageEntity) {
+    				//$this->notificationHelper->process($args);
+    				//$mailer = new \Swift_Mailer();
+    				$message = Swift_Message::newInstance();
+    				$message->setFrom('info@homepages-mit-zikula.de');
+    				$message->setTo('ue.mi@gmx.de');
+    				$message->setBody('Hallo Leute');
+    				$this->mailerApi->sendMessage($message, 'neue NAchricht', 'Alles Supi');
+    			}
+    		}
+    		$entityManager->flush();
+    
+    		$result = true;
+    		if ($actionId == 'delete') {
+    			$this->logger->notice('{app}: User {user} deleted an entity.', $logArgs);
+    		} else {
+    			$this->logger->notice('{app}: User {user} updated an entity.', $logArgs);
+    		}
+    	} catch (\Exception $exception) {
+    		if ($actionId == 'delete') {
+    			$this->logger->error('{app}: User {user} tried to delete an entity, but failed.', $logArgs);
+    		} else {
+    			$this->logger->error('{app}: User {user} tried to update an entity, but failed.', $logArgs);
+    		}
+    		throw new \RuntimeException($exception->getMessage());
+    	}
+    
+    	if (false !== $result && !$recursive) {
+    		$entities = $entity->getRelatedObjectsToPersist();
+    		foreach ($entities as $rel) {
+    			if ($rel->getWorkflowState() == 'initial') {
+    				$this->executeAction($rel, $actionId, true);
+    			}
+    		}
+    	}
+    
+    	return (false !== $result);
+    }
+    
 }
