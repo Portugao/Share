@@ -13,14 +13,15 @@
 namespace MU\ShareModule\Controller;
 
 use MU\ShareModule\Controller\Base\AbstractOfferController;
-
 use RuntimeException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Zikula\ThemeModule\Engine\Annotation\Theme;
 use MU\ShareModule\Entity\OfferEntity;
 
@@ -303,6 +304,17 @@ class OfferController extends AbstractOfferController
     public function handleSelectedEntriesAction(Request $request)
     {
         return parent::handleSelectedEntriesAction($request);
+    }
+    
+    /**
+     * This method includes the common implementation code for adminDisplay() and display().
+     */
+    protected function displayInternal(Request $request, OfferEntity $offer, $isAdmin = false)
+    {
+    	$session = $request->getSession();
+    	$session->set('offerDisplay', $offer['id']);
+    	
+    	return parent::displayInternal($request, $offer);
     }
     
     /**
