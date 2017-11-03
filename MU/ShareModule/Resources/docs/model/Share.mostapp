@@ -13,7 +13,7 @@ application "Share" {
         separateAdminTemplates true
         generatePoweredByBacklinksIntoFooterTemplates false
         generateTests false
-    markFiles "composer.json,\r\nContainer/LinkContainer.php,\r\nController/OfferController.php,\r\nEntity/Factory/EntityInitializer.php,\r\nForm/Handler/Location/EditHandler.php,\r\nForm/Handler/Offer/EditHandler.php,\r\nHelper/ControllerHelper.php,\r\nMenu/ItemActionsMenu.php,\r\nResources/config/entityFactory.yml,\r\nResources/config/linkContainer.yml,\r\nResources/public/js/MUShareModule.Geo.js,\r\nResources/views/Location/display.html.twig,\r\nResources/views/Location/view.html.twig,\r\nResources/views/Offer/display.html.twig,\r\nResources/views/Offer/edit.html.twig,\r\nResources/views/Offer/view.html.twig"
+    markFiles "composer.json,\r\nContainer/LinkContainer.php,\r\nController/OfferController.php,\r\nEntity/Factory/EntityInitialiser.php,\r\nForm/Handler/Location/EditHandler.php,\r\nForm/Handler/Offer/EditHandler.php,\r\nHelper/ControllerHelper.php,\r\nHelper/WorkflowHelper,\r\nMenu/ItemActionsMenu.php,\r\nResources/config/entityFactory.yml,\r\nResources/config/helper.yml,\r\nResources/config/linkContainer.yml,\r\nResources/public/js/MUShareModule.Geo.js,\r\nResources/views/Location/display.html.twig,\r\nResources/views/Location/view.html.twig,\r\nResources/views/Message/display.html.twig,\r\nResources/views/Message/edit.html.twig,\r\nResources/views/Offer/display.html.twig,\r\nResources/views/Offer/edit.html.twig,\r\nResources/views/Offer/view.html.twig"
     }
 
 			entities {
@@ -36,9 +36,10 @@ application "Share" {
 						},
                 string "name" {
                     documentation "Enter the name of your company."
+                mandatory false
                 },
                 text "description" {
-                    documentation "here you can enter more informations about the company."
+                    documentation "Here you can enter more informations about the company."
                     mandatory false
                 },
                 email "mail" {
@@ -120,7 +121,7 @@ application "Share" {
 							mandatory false
 						},
 						boolean "atMe" {
-							documentation "If enabled the latitude and longitude get set like the location from where or for what you created the offer.\r\nIt does not work, what you set by clicking into the map."
+							documentation "If enabled the latitude and longitude get set like the location from where or for what you create the offer.\r\nIt does not work, what you set by clicking into the map."
                     defaultValue ""
 							mandatory false
 						},
@@ -171,18 +172,19 @@ application "Share" {
                     displayType DISPLAY
                     length 4000
                 },
-                integer "recipient" {
-                    defaultValue "0"
-                },
+                user "recipient",
                 datetime "readByRecipient" {
+                    mandatory false
                     displayType VIEW
                 },
                 integer "statusSender" {
-                    defaultValue "0"
+                    defaultValue "1"
+                    mandatory false
                     displayType NONE
                 },
                 integer "statusRecipient" {
-                    defaultValue "0"
+                    defaultValue "1"
+                    mandatory false
                     displayType NONE
                 }
             }
@@ -211,4 +213,16 @@ application "Share" {
             targetAlias "offers"
         }
     }
+			variables {
+        varContainer "General" {
+            vars {
+                intVar "maxRadius" {
+                    value "5000"
+                },
+                intVar "maxLocations" {
+                    value "5"
+                }
+            }
+        }
 			}
+		}
