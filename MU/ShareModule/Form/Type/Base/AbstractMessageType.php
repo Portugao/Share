@@ -13,8 +13,6 @@
 namespace MU\ShareModule\Form\Type\Base;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
@@ -134,16 +132,15 @@ abstract class AbstractMessageType extends AbstractType
             'required' => true,
         ]);
         
-        $builder->add('recipient', IntegerType::class, [
+        $builder->add('recipient', UserLiveSearchType::class, [
             'label' => $this->__('Recipient') . ':',
-            'empty_data' => '0',
+            'empty_data' => '',
             'attr' => [
                 'maxlength' => 11,
                 'class' => '',
-                'title' => $this->__('Enter the recipient of the message.') . ' ' . $this->__('Only digits are allowed.')
+                'title' => $this->__('Enter the recipient of the message')
             ],
             'required' => true,
-            'scale' => 0
         ]);
         
         $builder->add('readByRecipient', DateTimeType::class, [
@@ -152,8 +149,8 @@ abstract class AbstractMessageType extends AbstractType
                 'class' => '',
                 'title' => $this->__('Enter the read by recipient of the message')
             ],
-            'required' => true,
-            'empty_data' => date('Y-m-d H:i:s'),
+            'required' => false,
+            'empty_data' => '0000-00-00 00:00:00',
             'with_seconds' => true,
             'date_widget' => 'single_text',
             'time_widget' => 'single_text'
@@ -161,7 +158,7 @@ abstract class AbstractMessageType extends AbstractType
         
         $builder->add('statusSender', IntegerType::class, [
             'label' => $this->__('Status sender') . ':',
-            'empty_data' => '0',
+            'empty_data' => '1',
             'attr' => [
                 'maxlength' => 11,
                 'class' => '',
@@ -173,7 +170,7 @@ abstract class AbstractMessageType extends AbstractType
         
         $builder->add('statusRecipient', IntegerType::class, [
             'label' => $this->__('Status recipient') . ':',
-            'empty_data' => '0',
+            'empty_data' => '1',
             'attr' => [
                 'maxlength' => 11,
                 'class' => '',
