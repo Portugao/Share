@@ -12,7 +12,7 @@
 
     {{ block('page_nav_links') }}
 
-    {{ include('@MUShareModule/Message/viewQuickNav.html.twig', {workflowStateFilter: false}) }}{# see template file for available options #}
+    {#{ include('@MUShareModule/Message/viewQuickNav.html.twig', {workflowStateFilter: false}) }}{# see template file for available options #}
 
     {% if routeArea == 'admin' %}
     <form action="{{ path('musharemodule_message_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="messagesViewForm" class="form-horizontal" role="form">
@@ -136,8 +136,8 @@
                     {{ message.subject }}
                 </td>
                 <td headers="hRecipient" class="text-left">
-                {% set profileLink = message.recipient|profileLinkByUserId() %}
-                <dd class="avatar">{{ userAvatar(message.recipient, {rating: 'g'}) }} {{ profileLink|raw }}</dd>
+                {% set profileLink = message.recipient.getUid()|profileLinkByUserId() %}
+                <dd class="avatar">{{ userAvatar(message.recipient.getUid(), {rating: 'g'}) }} {{ profileLink|raw }}</dd>
                 </td>
                 <td headers="hReadByRecipient" class="text-left">
                     {{ message.readByRecipient|localizeddate('medium', 'short') }}
