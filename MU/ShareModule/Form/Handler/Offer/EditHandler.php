@@ -47,19 +47,6 @@ class EditHandler extends AbstractEditHandler
         $serviceManager = \ServiceUtil::getManager();
         // we get entityManager
         $entityManager = $serviceManager->getService('doctrine.entitymanager');
-        
-        /*$where = 'tbl.latitude = ' . $entity['latitude'];
-        $where .= ' AND ';
-        $where .= 'tbl.longitude = ' . $entity['longitude'];
-        $where .= ' AND ';
-        $where .= 'tbl.createdBy != ' . $uid;
-        
-        $offer = $offerRespository->selectWhere($where);
-        // if a same location is there, we redirect
-        if (count($offer) >= 1) {
-        	$this->getErrorUrl;
-        	return new RedirectResponse($this->getErrorUrl(), 302);
-        }*/
     
         $action = $args['commandName'];
     
