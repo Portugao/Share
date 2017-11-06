@@ -56,9 +56,9 @@ function mUShareInitGeographicalView(parameters, isEditMode)
         attribution: parameters.tileLayerAttribution
     }).addTo(map);
     
-    circle = L.circle([parameters.latitude , parameters.longitude] , {radius:parameters.radius} , {
-    	color : '#81F79F',
-    	fillColor : '#9FF781',
+    circle = L.circle([parameters.latitude , parameters.longitude] , parameters.radius , {
+    	color : 'green',
+    	fillColor : 'red',
     	fillOpacity : 0.5
     	}).addTo(map);    
     

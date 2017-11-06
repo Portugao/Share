@@ -17,6 +17,7 @@ use MU\ShareModule\Helper\Base\AbstractWorkflowHelper;
 use Zikula\Core\Doctrine\EntityAccess;
 use MU\ShareModule\Entity\LocationEntity;
 use MU\ShareModule\Entity\MessageEntity;
+use MU\ShareModule\Entity\OfferEntity;
 
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Workflow\Registry;
@@ -152,8 +153,26 @@ class WorkflowHelper extends AbstractWorkflowHelper
     		$workflow->apply($entity, $actionId);
     
     		if ($actionId == 'delete') {
-    			// if item is a message
-    			if ($entity instanceof MesageEntity) {
+    			// if the entity is offer
+    			if ($entity instanceof OfferEntity) {
+    		        $offerPool = $entity['pool'];
+    		        if ($offerPool != NULL) {
+    		        	$poolRespository = $this->entityFactory->getRepository('pool');
+    		        	$thisPool = $poolRespository->find($offerPool['id']);
+    		        	if (count($thisPool['offers']) > 1) {
+    		        		$offerRespository = $this->entityFactory->getRepository('offer');
+    		        		foreach ($thisPool['offers'] as $offer) {
+    		        			$thisOffer = $offerRespository->find($offer['id']);
+    		        			$thisOffer->setPool(NULL);
+    		        			$entityManager->flush();
+    		        		}
+    		        		$entityManager->remove($entity);
+    		        		$entityManager->remove($thisPool);
+    		        		$entityManager->flush();
+    		        	}	        	
+    		        }
+    			// if the entity is message	
+    			} elseif ($entity instanceof MesageEntity) {
     				if ($entity['statusSender'] == 1 && $entity['statusRecipient'] == 1) {
     					if ($uid == $entity->getCreatedBy()->getUid()) {
     					$entity->setStatusSender(2);
@@ -229,5 +248,4 @@ class WorkflowHelper extends AbstractWorkflowHelper
     
     	return (false !== $result);
     }
-    
 }
