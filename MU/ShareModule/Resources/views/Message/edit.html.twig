@@ -21,11 +21,9 @@
             {{ form_row(form.subject) }}
             {{ form_row(form.textForMessage) }}
             {{ form_row(form.recipient) }}
-            {#<div class="hidden">#}
             {{ form_row(form.readByRecipient) }}
             {{ form_row(form.statusSender) }}
             {{ form_row(form.statusRecipient) }}
-            {#</div>#}
         </fieldset>
         
         {% if mode != 'create' %}
@@ -84,10 +82,12 @@
             ( function($) {
                 $(document).ready(function() {
                     // initialise auto completion for user fields
+                    initUserLiveSearch('musharemodule_message_recipient');
                     {% if form.moderationSpecificCreator is defined %}
                         initUserLiveSearch('musharemodule_message_moderationSpecificCreator');
                     {% endif %}
                     mUShareInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ message.id }}{% endif %}');
+                    mUShareInitDateField('musharemodule_message_readByRecipient');
                 });
             })(jQuery);
         /* ]]> */

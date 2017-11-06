@@ -14,10 +14,7 @@ namespace MU\ShareModule\Form\Type;
 
 use MU\ShareModule\Form\Type\Base\AbstractMessageType;
 
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 
@@ -27,93 +24,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 class MessageType extends AbstractMessageType
 {
     /**
-     * Adds basic entity fields.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
+     * @inheritDoc
      */
-    public function addEntityFields(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        
-        $builder->add('subject', TextType::class, [
-            'label' => $this->__('Subject') . ':',
-            'label_attr' => [
-                'class' => 'tooltips',
-                'title' => $this->__('Enter a subject for your message!')
-            ],
-            'help' => $this->__('Enter a subject for your message!'),
-            'empty_data' => '',
-            'attr' => [
-                'maxlength' => 255,
-                'class' => '',
-                'title' => $this->__('Enter the subject of the message')
-            ],
-            'required' => true,
-        ]);
-        
-        $builder->add('textForMessage', TextareaType::class, [
-            'label' => $this->__('Text for message') . ':',
-            'label_attr' => [
-                'class' => 'tooltips',
-                'title' => $this->__('Enter your text for your message.')
-            ],
-            'help' => [$this->__('Enter your text for your message.'), $this->__f('Note: this value must not exceed %amount% characters.', ['%amount%' => 4000])],
-            'empty_data' => '',
-            'attr' => [
-                'maxlength' => 4000,
-                'class' => '',
-                'title' => $this->__('Enter the text for message of the message')
-            ],
-            'required' => true,
-        ]);
-        
-        $builder->add('recipient', IntegerType::class, [
-            'label' => $this->__('Recipient') . ':',
-            'empty_data' => '0',
-            'attr' => [
-                'maxlength' => 11,
-                'class' => '',
-                'title' => $this->__('Enter the recipient of the message.') . ' ' . $this->__('Only digits are allowed.')
-            ],
-            'required' => true,
-            'scale' => 0
-        ]);
-        
-        $builder->add('readByRecipient', DateTimeType::class, [
-            'label' => $this->__('Read by recipient') . ':',
-            'attr' => [
-                'class' => '',
-                'title' => $this->__('Enter the read by recipient of the message')
-            ],
-            'required' => true,
-            'empty_data' => date('Y-m-d H:i:s'),
-            'with_seconds' => true,
-            'date_widget' => 'single_text',
-            'time_widget' => 'single_text'
-        ]);
-        
-        $builder->add('statusSender', IntegerType::class, [
-            'label' => $this->__('Status sender') . ':',
-            'empty_data' => '0',
-            'attr' => [
-                'maxlength' => 11,
-                'class' => '',
-                'title' => $this->__('Enter the status sender of the message.') . ' ' . $this->__('Only digits are allowed.')
-            ],
-            'required' => true,
-            'scale' => 0
-        ]);
-        
-        $builder->add('statusRecipient', IntegerType::class, [
-            'label' => $this->__('Status recipient') . ':',
-            'empty_data' => '0',
-            'attr' => [
-                'maxlength' => 11,
-                'class' => '',
-                'title' => $this->__('Enter the status recipient of the message.') . ' ' . $this->__('Only digits are allowed.')
-            ],
-            'required' => true,
-            'scale' => 0
-        ]);
+        parent::buildForm($builder, $options);
+        $builder->add('recipient', HiddenType::class);
     }
+	
 }

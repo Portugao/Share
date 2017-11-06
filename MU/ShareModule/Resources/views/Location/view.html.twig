@@ -36,8 +36,6 @@
                     <col id="cItemActions" />
                 {% endif %}
                 <col id="cProduct" />
-                {#<col id="cDescription" />
-                <col id="cIsOpen" />#}
                 <col id="cAbo" />
                 <col id="cPeriod" />
                 <col id="cTotalYear" />
@@ -46,7 +44,6 @@
                 <col id="cAtMe" />
                 <col id="cZipCode" />
                 <col id="cMeetingPlace" />
-                {#<col id="cLocationOfOffer" />#}
             </colgroup>
             <thead>
             <tr>
@@ -60,12 +57,6 @@
                 <th id="hProduct" scope="col" class="text-left">
                     {#<a href="{{ sort.product.url }}" title="{{ __f('Sort by %s', {'%s': 'product'}) }}" class="{{ sort.product.class }}">#}{{ __('Product') }}{#</a>#}
                 </th>
-                {#<th id="hDescription" scope="col" class="text-left">
-                    {<a href="{{ sort.description.url }}" title="{{ __f('Sort by %s', {'%s': 'description'}) }}" class="{{ sort.description.class }}">{{ __('Description') }}</a>
-                </th>
-                <th id="hIsOpen" scope="col" class="text-center">
-                    <a href="{{ sort.isOpen.url }}" title="{{ __f('Sort by %s', {'%s': 'is open'}) }}" class="{{ sort.isOpen.class }}">{{ __('Is open') }}</a>
-                </th>#}
                 <th id="hAbo" scope="col" class="text-center">
                     {#<a href="{{ sort.abo.url }}" title="{{ __f('Sort by %s', {'%s': 'abo'}) }}" class="{{ sort.abo.class }}">#}{{ __('Abo') }}{#</a>#}
                 </th>
@@ -116,16 +107,6 @@
                 <td headers="hProduct" class="text-left">
                     <a href="{{ path('musharemodule_offer_' ~ routeArea ~ 'display', {'id': offer.getId()}) }}">{{ offer.product }}</a>
                 </td>
-                {#<td headers="hDescription" class="text-left">
-                    {{ offer.description|striptags|truncate(50) }}
-                </td>
-                <td headers="hIsOpen" class="text-center">
-                    {% if offer.isOpen %}
-                        <i class="fa fa-check" title="{{ __('Yes') }}"></i>
-                    {% else %}
-                        <i class="fa fa-times" title="{{ __('No') }}"></i>
-                    {% endif %}
-                </td>#}
                 <td headers="hAbo" class="text-center">
                     {% if offer.abo %}
                         <i class="fa fa-check" title="{{ __('Yes') }}"></i>
@@ -170,15 +151,6 @@
                 <td headers="hMeetingPlace" class="text-left">
                     {{ offer.meetingPlace }}
                 </td>
-                {#<td headers="hLocationOfOffer" class="text-left">
-                    {% if offer.locationOfOffer|default %}
-                        <a href="{{ path('musharemodule_location_' ~ routeArea ~ 'display', {'id': offer.locationOfOffer.getId()}) }}">{% spaceless %}
-                          {{ offer.locationOfOffer|musharemodule_formattedTitle }}
-                        {% endspaceless %}</a>
-                        <a id="locationItem{{ offer.getKey() }}_rel_{{ offer.locationOfOffer.getKey() }}Display" href="{{ path('musharemodule_location_' ~ routeArea ~ 'display', {'id': offer.locationOfOffer.getId(), raw: 1}) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="mushare-inline-window hidden" data-modal-title="{{ offer.locationOfOffer|musharemodule_formattedTitle|e('html_attr') }}"><i class="fa fa-id-card-o"></i></a>
-                    {% else %}
-                        {{ __('Not set.') }}
-                    {% endif %#}
                 </td>}
             </tr>
         {% else %}

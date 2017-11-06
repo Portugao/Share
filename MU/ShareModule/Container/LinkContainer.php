@@ -194,7 +194,7 @@ class LinkContainer extends AbstractLinkContainer
         }
         
         if (in_array('offer', $allowedObjectTypes)
-            && $this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADD)) {
+            && $this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_EDIT)) {
             $links[] = [
                 'url' => $offerUrl,
                 'text' => $offerText,

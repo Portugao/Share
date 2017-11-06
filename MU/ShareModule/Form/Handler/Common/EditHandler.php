@@ -20,5 +20,19 @@ use MU\ShareModule\Form\Handler\Common\Base\AbstractEditHandler;
  */
 abstract class EditHandler extends AbstractEditHandler
 {
-    // feel free to extend the base handler class here
+    /**
+     * Initialise new entity for creation.
+     *
+     * @return EntityAccess|null Desired entity instance or null
+     */
+    protected function initEntityForCreation()
+    {
+        $entity = parent::initEntityForCreation();
+        $offererId = $this->request->query->get('offererId', 0);
+        if ($this->objectType == 'message' && $offererId > 0) {
+        	$entity['recipient'] = $offererId;
+        }
+    
+        return $entity;
+    }
 }
