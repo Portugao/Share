@@ -183,7 +183,7 @@ class LinkContainer extends AbstractLinkContainer
             ];
         }
         if ($routeArea != 'admin') {
-        	$offerText = $this->__('Your offers', 'musharemodule');
+        	$offerText = $this->__('My offers', 'musharemodule');
         	$offerTitle = $this->__('The list of your offers', 'musharemodule');
         	$offerUrl = $this->router->generate('musharemodule_offer_' . $routeArea . 'view', array('own' => 1));
         } else {
@@ -193,7 +193,7 @@ class LinkContainer extends AbstractLinkContainer
         }
         
         if (in_array('offer', $allowedObjectTypes)
-            && $this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_EDIT)) {
+            && $this->permissionApi->hasPermission($this->getBundleName() . ':Offer:', '::', ACCESS_EDIT)) {
             $links[] = [
                 'url' => $offerUrl,
                 'text' => $offerText,
@@ -228,18 +228,7 @@ class LinkContainer extends AbstractLinkContainer
         					'title' => $this->__('Send a message to the offerer', 'musharemodule')
         					];
         				}
-        }
-
-        if ($routeArea != 'admin' && $uid >= 2) {
-        	if ($this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_EDIT)) {
-        		$links[] = [
-        				'url' => $this->router->generate('zikulaprofilemodule_profile_edit', array('uid' => $uid)),
-        				'text' => $this->__('Edit profile', 'musharemodule'),
-        				'title' => $this->__('Edit radius or zip codes', 'musharemodule')
-        		];
-        	}
-        }
-        
+        }       
         if ($routeArea == 'admin' && in_array('pool', $allowedObjectTypes)
             && $this->permissionApi->hasPermission($this->getBundleName() . ':Pool:', '::', $permLevel)) {
             $links[] = [
