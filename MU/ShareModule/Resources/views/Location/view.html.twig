@@ -430,7 +430,7 @@
         {% set longitude = defaultLongitude %}
         {% set zoomLevel = 6 %}
     {% endif %}
-    <div id="geographicalInfo" class="hidden" data-radius={{ radius }} data-context="view" data-latitude="{{ latitude|musharemodule_geoData }}" data-longitude="{{ longitude|musharemodule_geoData }}" data-zoom-level="{{ zoomLevel }}" data-tile-layer-url="{{ getModVar('MUShareModule', 'tileLayerUrl') }}" data-tile-layer-attribution="{{ getModVar('MUShareModule', 'tileLayerAttribution') }}"></div>
+    <div id="geographicalInfo" class="hidden" data-logged={{ loggedIn }} data-radius={{ radius }} data-context="view" data-latitude="{{ latitude|musharemodule_geoData }}" data-longitude="{{ longitude|musharemodule_geoData }}" data-zoom-level="{{ zoomLevel }}" data-tile-layer-url="{{ getModVar('MUShareModule', 'tileLayerUrl') }}" data-tile-layer-attribution="{{ getModVar('MUShareModule', 'tileLayerAttribution') }}"></div>
     {% if singleOffers is defined %}
     {% for offer in singleOffers %}
     {% if offer.description != '' %}
