@@ -87,13 +87,15 @@ class EditHandler extends AbstractEditHandler
         	$where2 .= ' AND ';
         	$where2 .= 'tbl.id != ' . $this->idValue;
         	
+        	// we set the existing pool for that entity
         	$sameOffers = $offerRespository->selectWhere($where2);
         	if (count($sameOffers) > 0) {
         		if (count($sameOffers) > 1) {
         			$existingPool = $sameOffers[0]['pool'];
         			$entity->setPool($existingPool);
-        			$entityManager->flush();
-        			
+        			$entityManager->flush();        			
+        		// we create a new pool for all offers with the
+        		// same geo datas
         		} else {
         			$pool = $this->entityFactory->createPool();
         			$pool->setCollectionOfPool(date('d.F.Y - G:s'));

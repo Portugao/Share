@@ -148,21 +148,22 @@ class WorkflowHelper extends AbstractWorkflowHelper
     	$result = false;
     	
     	$uid = $this->currentUserApi->get('uid');
+    	
+    	$locationRepository = $this->entityFactory->getRepository('location');
+    	$offerRepository = $this->entityFactory->getRepository('offer');
+    	$poolRespository = $this->entityFactory->getRepository('pool');
     
     	try {
     		$workflow->apply($entity, $actionId);
-    
     		if ($actionId == 'delete') {
     			// if the entity is offer
     			if ($entity instanceof OfferEntity) {
     		        $offerPool = $entity['pool'];
-    		        if ($offerPool != NULL) {
-    		        	$poolRespository = $this->entityFactory->getRepository('pool');
+    		        if ($offerPool != NULL) {   		        	
     		        	$thisPool = $poolRespository->find($offerPool['id']);
     		        	if (count($thisPool['offers']) > 1) {
-    		        		$offerRespository = $this->entityFactory->getRepository('offer');
     		        		foreach ($thisPool['offers'] as $offer) {
-    		        			$thisOffer = $offerRespository->find($offer['id']);
+    		        			$thisOffer = $offerRepository->find($offer['id']);
     		        			$thisOffer->setPool(NULL);
     		        			$entityManager->flush();
     		        		}
@@ -190,7 +191,6 @@ class WorkflowHelper extends AbstractWorkflowHelper
     					}    					
     				}
     			} elseif ($entity instanceof LocationEntity) {
-    				$locationRepository = $this->entityFactory->getRepository('location');
     				$where = 'tbl.id != ' . $entity['id'];
     				$where .= ' AND ';
     				$where .= 'tbl.createdBy = ' . $entity->getCreatedBy()->getUid();
@@ -198,27 +198,58 @@ class WorkflowHelper extends AbstractWorkflowHelper
     				if (count($locations) == 0) {
     					die('T'); // TODO
     				} else {
-    					// get entity manager
-    					$entityManager = $this->entityFactory->getObjectManager();
     					$thisLocation = $locationRepository->find($locations[0]['id']);
     					$thisLocation->setForMap(1);
     					$entityManager->flush();
     				}
     				$entityManager->remove($entity);
+    				$entityManager->flush();
     			} else {
     				$entityManager->remove($entity);
     			}
-    		} else {
+    		} elseif ($actionId == 'submit') {
     			$entityManager->persist($entity);
-    			if ($actionId == 'submit' && $entity instanceof MessageEntity) {
+    			if ($entity instanceof LocationEntity) {
+    				
+    			} elseif ($entity instanceof MessageEntity) {
     				//$this->notificationHelper->process($args);
     				//$mailer = new \Swift_Mailer();
     				$message = Swift_Message::newInstance();
     				$message->setFrom('info@homepages-mit-zikula.de');
     				$message->setTo('ue.mi@gmx.de');
     				$message->setBody('Hallo Leute');
-    				$this->mailerApi->sendMessage($message, 'neue NAchricht', 'Alles Supi');
+    				$this->mailerApi->sendMessage($message, 'neue Nachricht', 'Alles Supi');
     			}
+    		} elseif ($actionId == 'updateapproved') {
+    	          if ($entity instanceof OfferEntity) {
+    				if ($entity['pool'] != NULL) {
+    					$thisPool = $poolRespository->find($entity['pool']['id']);
+    					// where clause for getting other offers in pool
+    					$where = 'tbl.pool = ' . $thisPool['id'];
+    					$where .= ' AND ';
+    					$where .= 'tbl.id != ' . $entity['id'];    			
+    					// we get other offers
+    					$poolOffers = $offerRepository->selectWhere($where);
+    					$poolLatitude = $poolOffers[0]['latitude'];
+    					$poolLongitude = $poolOffers[0]['longitude'];
+
+    					// if the geo datas are set to different
+    					// we set pool to null for this entry
+    				    if ($entity['latitude'] != $poolLatitude || $entity['longitude'] != $poolLongitude) {
+    				    	$entity->setPool(NULL);
+    				    	$entityManager->flush();
+    				    }
+    				    // if one other offer in pool we set aslo the pool to NULL
+    				    // and delete the pool
+     				    if (count($poolOffers) == 1) {
+     				    	$thisPoolOffer = $offerRepository->find($poolOffers[0]['id']);
+     				    	$thisPoolOffer->setPool(NULL);
+     				    	$entityManager->flush();
+     				    	$entityManager->remove($thisPool);
+     				    	$entityManager->flush();
+     				    }
+    				}
+    		}
     		}
     		$entityManager->flush();
     

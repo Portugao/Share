@@ -58,8 +58,8 @@ function mUShareInitGeographicalView(parameters, isEditMode)
     
     circle = L.circle([parameters.latitude , parameters.longitude] , parameters.radius , {
     	color : 'green',
-    	fillColor : 'red',
-    	fillOpacity : 0.5
+    	fillColor : 'grey',
+    	fillOpacity : 0.2
     	}).addTo(map);    
     
     jQuery('.marker-data').each(function (index) {

@@ -489,7 +489,7 @@ abstract class AbstractEditHandler
             }
             $entity = clone $entityT;
         }
-    
+ 
         if (null === $entity) {
             $createMethod = 'create' . ucfirst($this->objectType);
             $entity = $this->entityFactory->$createMethod();
