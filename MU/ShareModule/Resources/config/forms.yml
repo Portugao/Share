@@ -73,6 +73,7 @@ services:
             - "@mu_share_module.entity_display_helper"
             - "@mu_share_module.listentries_helper"
             - "@mu_share_module.feature_activation_helper"
+            - "@zikula_extensions_module.api.variable"
         tags:
             - { name: form.type }
     
