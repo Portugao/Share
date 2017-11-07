@@ -296,4 +296,31 @@ class LocationController extends AbstractLocationController
     }
 
     // feel free to add your own controller methods here
+    
+    /**
+     * This method includes the common implementation code for adminEdit() and edit().
+     */
+    /*protected function editInternal(Request $request, $isAdmin = false)
+    {
+    	$varHelper = $this->get('zikula_extensions_module.api.variable');
+    	$repository = $this->get('mu_share_module.entity_factory')->getRepository('location');
+    	$userApi = $this->get('zikula_users_module.current_user');
+    	$uid = $userApi->get('uid');
+
+    	die($uid);
+    	$maxLocations = $varHelper->get('MUShareModule', 'maxLocations');
+
+    	$where = 'tbl.createdBy = ' . $uid;
+    	$locations = $repository->selectWhere($where);
+    	$countLocations = count($locations);
+
+    	if ($countLocations >= $maxLocations) {
+    		// redirect to the list of locations
+    		$redirectRoute = 'musharemodule_location_' . ($isAdmin ? 'admin' : '') . 'view';
+    		$this->addFlash('error', $this->__('Sorry. You cannot create more locations'));
+    		return $this->redirectToRoute($redirectRoute);
+    	}
+    	
+    	return parent:: editInternal($request);
+    }*/
 }
