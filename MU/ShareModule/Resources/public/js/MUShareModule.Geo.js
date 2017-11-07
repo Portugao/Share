@@ -56,18 +56,25 @@ function mUShareInitGeographicalView(parameters, isEditMode)
         attribution: parameters.tileLayerAttribution
     }).addTo(map);
     
-    if (parameter.logged == 1) {
+    if (parameters.logged == 1) {
     circle = L.circle([parameters.latitude , parameters.longitude] , parameters.radius , {
     	color : 'green',
     	fillColor : 'grey',
     	fillOpacity : 0.2
     	}).addTo(map); 
+    
+    // create custom icon
+    var paperIcon = L.icon({
+        iconUrl: '/modules/MU/ShareModule/Resources/public/images/icon1.png',
+        iconSize: [50, 50], // size of the icon
+        });
     }
     
     jQuery('.marker-data').each(function (index) {
         
     // add a marker
     marker = new L.marker([jQuery(this).attr('data-latitude'), jQuery(this).attr('data-longitude')], {
+    	icon: paperIcon,
         draggable: isEditMode
     });
     marker.addTo(map);
