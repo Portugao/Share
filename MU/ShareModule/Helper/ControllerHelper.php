@@ -229,7 +229,7 @@ class ControllerHelper extends AbstractControllerHelper
 					$where2 .= ' OR ';
 					$where2 .= 'tblLocationOfOffer.zipCode LIKE \'%' . $myLocation[0]['zipCode'] . '%\'';
 					$where2 .= ' OR ';
-					$where2 .= 'tblLocationOfOffer.zipCode IN (' . $zipCodes . ')';
+					$where2 .= 'tblLocationOfOffer.zipCode IN (' . $zipCodes . '))';
 				} elseif ($searchOption == 'city') {
 					$where2 .= '(tblLocationOfOffer.city LIKE \'%' . $myLocation[0]['city'] . '%\')';
 				} elseif ($searchOption == 'zipcodes' && $zipCodes != '') {
