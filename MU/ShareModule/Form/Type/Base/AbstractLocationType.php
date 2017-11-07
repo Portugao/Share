@@ -226,7 +226,7 @@ abstract class AbstractLocationType extends AbstractType
                 'class' => '',
                 'title' => $this->__('Enter the zip codes of the location')
             ],
-            'required' => true,
+            'required' => false,
         ]);
         
         $listEntries = $this->listHelper->getEntries('location', 'searchOptions');

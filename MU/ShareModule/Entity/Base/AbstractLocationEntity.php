@@ -129,7 +129,6 @@ abstract class AbstractLocationEntity extends EntityAccess
      * Here you can enter additional zip codes. If you choose the relevant search option, papershare will also use them, to find offers.
      Enter them comaseperated like (28203,28205,28207) without space.
      * @ORM\Column(length=255)
-     * @Assert\NotBlank()
      * @Assert\Length(min="0", max="255")
      * @var string $zipCodes
      */

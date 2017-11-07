@@ -188,7 +188,7 @@ class ControllerHelper extends AbstractControllerHelper
 			$radius = 1000;
 			 
 			if ($myLocation) {
-				$templateParameters['myLocation'] = $myLocation[0];
+				$templateParameters['myLocation'] = $myLocation[0];			
 				 
 				$thisLocation = $repository->find($myLocation[0]['id']);
 				$thisUser = $thisLocation->getCreatedBy();
@@ -207,6 +207,13 @@ class ControllerHelper extends AbstractControllerHelper
 				} else {
 					$userZipCodesValue = '';
 				}
+				
+				$radius = $myLocation[0]['radius'];
+				
+				$searchOption = $myLocation[0]['searchOptions'];
+				$zipCodes = $myLocation[0]['zipCodes'];
+				
+				$templateParameters['searchOption'] = $searchOption;
 				 
 				// the single offers, that have no other offers entity with
 				// the same lat and longitude
@@ -217,12 +224,18 @@ class ControllerHelper extends AbstractControllerHelper
 				$where2 .= 'tbl.pool is NULL';
 				$where2 .= ' AND ';
 				//$where2 .= '(tblLocationOfOffer.city = ' . $myLocation[0]['city'] . ')';
-				if($userZipCodesValue != '') {
+				if($searchOption == 'standard' && $zipCodes != '') {
 					$where2 .= '(tblLocationOfOffer.city LIKE \'%' . $myLocation[0]['city'] . '%\'';
 					$where2 .= ' OR ';
 					$where2 .= 'tblLocationOfOffer.zipCode LIKE \'%' . $myLocation[0]['zipCode'] . '%\'';
 					$where2 .= ' OR ';
-					$where2 .= 'tblLocationOfOffer.zipCode IN (' . $userZipCodesValue . '))';
+					$where2 .= 'tblLocationOfOffer.zipCode IN (' . $zipCodes . ')';
+				} elseif ($searchOption == 'city') {
+					$where2 .= '(tblLocationOfOffer.city LIKE \'%' . $myLocation[0]['city'] . '%\')';
+				} elseif ($searchOption == 'zipcodes' && $zipCodes != '') {
+					$where2 .= 'tblLocationOfOffer.zipCode LIKE \'%' . $myLocation[0]['zipCode'] . '%\'';
+					$where2 .= ' OR ';
+					$where2 .= 'tblLocationOfOffer.zipCode IN (' . $zipCodes . ')';					
 				} else {
 					$where2 .= '(tblLocationOfOffer.city LIKE \'%' . $myLocation[0]['city'] . '%\'';
 					$where2 .= ' OR ';

@@ -15,6 +15,7 @@
     
     <h3 class="musharemodule-map">{{ __('Map of your location set for the map and offers') }}</h3>
     {% if myLocation is defined %}
+    <div class="alert alert-success">{{ __('You use the search option') }} {{ searchOption }} {{ __('and a radius of') }} {{ radius }} {{ __('meters') }} {{ __(' for your location') }}.</div>
         {#% if status == 0 %}
             <div class="alert alert-warning">{{ __('Sorry. We could not find any locations within the radius for your location, you set in your profile settings.') }}</div> 
         {% endif %#}
