@@ -13,11 +13,8 @@
 namespace MU\ShareModule\Form\Type;
 
 use MU\ShareModule\Form\Type\Base\AbstractMessageType;
-
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
-
-
 /**
  * Message editing form type implementation class.
  */
@@ -31,5 +28,4 @@ class MessageType extends AbstractMessageType
         parent::buildForm($builder, $options);
         $builder->add('recipient', HiddenType::class);
     }
-	
 }
