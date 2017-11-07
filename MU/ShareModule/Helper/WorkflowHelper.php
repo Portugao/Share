@@ -13,7 +13,6 @@
 namespace MU\ShareModule\Helper;
 
 use MU\ShareModule\Helper\Base\AbstractWorkflowHelper;
-
 use Zikula\Core\Doctrine\EntityAccess;
 use MU\ShareModule\Entity\LocationEntity;
 use MU\ShareModule\Entity\MessageEntity;
@@ -35,7 +34,7 @@ use Swift_Message;
  * Helper implementation class for workflow methods.
  */
 class WorkflowHelper extends AbstractWorkflowHelper
-{	
+{
 	/**
 	 * @var MailerApiInterface
 	 */
