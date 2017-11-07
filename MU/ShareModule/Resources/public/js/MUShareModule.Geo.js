@@ -56,11 +56,13 @@ function mUShareInitGeographicalView(parameters, isEditMode)
         attribution: parameters.tileLayerAttribution
     }).addTo(map);
     
+    if (parameter.logged == 1) {
     circle = L.circle([parameters.latitude , parameters.longitude] , parameters.radius , {
     	color : 'green',
     	fillColor : 'grey',
     	fillOpacity : 0.2
-    	}).addTo(map);    
+    	}).addTo(map); 
+    }
     
     jQuery('.marker-data').each(function (index) {
         
@@ -176,6 +178,7 @@ jQuery(document).ready(function() {
         longitude: infoElem.data('longitude'),
         zoomLevel: infoElem.data('zoom-level'),
         radius: infoElem.data('radius'),
+        logged: infoElem.data('logged'),
         tileLayerUrl: infoElem.data('tile-layer-url'),
         tileLayerAttribution: infoElem.data('tile-layer-attribution'),
         useGeoLocation: false
