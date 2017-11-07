@@ -17,8 +17,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Zikula\CategoriesModule\Form\Type\CategoriesType;
 use Zikula\Common\Translator\TranslatorInterface;
@@ -65,14 +63,6 @@ abstract class AbstractItemListBlockType extends AbstractType
         $this->addAmountField($builder, $options);
         $this->addTemplateFields($builder, $options);
         $this->addFilterField($builder, $options);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function buildView(FormView $view, FormInterface $form, array $options)
-    {
-        $view->vars['isCategorisable'] = $options['is_categorisable'];
     }
 
     /**

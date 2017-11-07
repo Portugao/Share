@@ -31,6 +31,10 @@
                 <col id="cNumberOfStreet" />
                 <col id="cZipCode" />
                 <col id="cCity" />
+                <col id="cForMap" />
+                <col id="cRadius" />
+                <col id="cZipCodes" />
+                <col id="cSearchOptions" />
                 <col id="cPrivate" />
                 <col id="cName" />
                 <col id="cDescription" />
@@ -38,7 +42,6 @@
                 <col id="cWebsite" />
                 <col id="cPhone" />
                 <col id="cMobile" />
-                <col id="cForMap" />
             </colgroup>
             <thead>
             <tr>
@@ -68,6 +71,18 @@
                 <th id="hCity" scope="col" class="text-left">
                     <a href="{{ sort.city.url }}" title="{{ __f('Sort by %s', {'%s': 'city'}) }}" class="{{ sort.city.class }}">{{ __('City') }}</a>
                 </th>
+                <th id="hForMap" scope="col" class="text-center">
+                    <a href="{{ sort.forMap.url }}" title="{{ __f('Sort by %s', {'%s': 'for map'}) }}" class="{{ sort.forMap.class }}">{{ __('For map') }}</a>
+                </th>
+                <th id="hRadius" scope="col" class="text-right">
+                    <a href="{{ sort.radius.url }}" title="{{ __f('Sort by %s', {'%s': 'radius'}) }}" class="{{ sort.radius.class }}">{{ __('Radius') }}</a>
+                </th>
+                <th id="hZipCodes" scope="col" class="text-left">
+                    <a href="{{ sort.zipCodes.url }}" title="{{ __f('Sort by %s', {'%s': 'zip codes'}) }}" class="{{ sort.zipCodes.class }}">{{ __('Zip codes') }}</a>
+                </th>
+                <th id="hSearchOptions" scope="col" class="text-left">
+                    <a href="{{ sort.searchOptions.url }}" title="{{ __f('Sort by %s', {'%s': 'search options'}) }}" class="{{ sort.searchOptions.class }}">{{ __('Search options') }}</a>
+                </th>
                 <th id="hPrivate" scope="col" class="text-center">
                     <a href="{{ sort.private.url }}" title="{{ __f('Sort by %s', {'%s': 'private'}) }}" class="{{ sort.private.class }}">{{ __('Private') }}</a>
                 </th>
@@ -88,9 +103,6 @@
                 </th>
                 <th id="hMobile" scope="col" class="text-left">
                     <a href="{{ sort.mobile.url }}" title="{{ __f('Sort by %s', {'%s': 'mobile'}) }}" class="{{ sort.mobile.class }}">{{ __('Mobile') }}</a>
-                </th>
-                <th id="hForMap" scope="col" class="text-center">
-                    <a href="{{ sort.forMap.url }}" title="{{ __f('Sort by %s', {'%s': 'for map'}) }}" class="{{ sort.forMap.class }}">{{ __('For map') }}</a>
                 </th>
             </tr>
             </thead>
@@ -128,6 +140,22 @@
                 <td headers="hCity" class="text-left">
                     {{ location.city }}
                 </td>
+                <td headers="hForMap" class="text-center">
+                    {% if location.forMap %}
+                        <i class="fa fa-check" title="{{ __('Yes') }}"></i>
+                    {% else %}
+                        <i class="fa fa-times" title="{{ __('No') }}"></i>
+                    {% endif %}
+                </td>
+                <td headers="hRadius" class="text-right">
+                    {{ location.radius }}
+                </td>
+                <td headers="hZipCodes" class="text-left">
+                    {{ location.zipCodes }}
+                </td>
+                <td headers="hSearchOptions" class="text-left">
+                    {{ location.searchOptions|musharemodule_listEntry('location', 'searchOptions') }}
+                </td>
                 <td headers="hPrivate" class="text-center">
                     {% if location.private %}
                         <i class="fa fa-check" title="{{ __('Yes') }}"></i>
@@ -157,17 +185,10 @@
                 <td headers="hMobile" class="text-left">
                     {{ location.mobile }}
                 </td>
-                <td headers="hForMap" class="text-center">
-                    {% if location.forMap %}
-                        <i class="fa fa-check" title="{{ __('Yes') }}"></i>
-                    {% else %}
-                        <i class="fa fa-times" title="{{ __('No') }}"></i>
-                    {% endif %}
-                </td>
             </tr>
         {% else %}
             <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
-                <td class="text-left" colspan="{% if routeArea == 'admin' %}16{% else %}15{% endif %}">
+                <td class="text-left" colspan="{% if routeArea == 'admin' %}19{% else %}18{% endif %}">
             {{ __('No locations found.') }}
               </td>
             </tr>
@@ -212,10 +233,12 @@
         {% endif %}
         {% if all == 1 %}
             {% set linkTitle = __('Back to paginated view') %}
-            <a href="{{ path('musharemodule_location_' ~ routeArea ~ 'view') }}" title="{{ linkTitle|e('html_attr') }}"><i class="fa fa-table"></i> {{ linkTitle }}</a>
+            {% set routeArgs = own ? {own: 1} : {} %}
+            <a href="{{ path('musharemodule_location_' ~ routeArea ~ 'view', routeArgs) }}" title="{{ linkTitle|e('html_attr') }}"><i class="fa fa-table"></i> {{ linkTitle }}</a>
         {% else %}
             {% set linkTitle = __('Show all entries') %}
-            <a href="{{ path('musharemodule_location_' ~ routeArea ~ 'view', {all: 1}) }}" title="{{ linkTitle|e('html_attr') }}"><i class="fa fa-table"></i> {{ linkTitle }}</a>
+            {% set routeArgs = own ? {all: 1, own: 1} : {all: 1} %}
+            <a href="{{ path('musharemodule_location_' ~ routeArea ~ 'view', routeArgs) }}" title="{{ linkTitle|e('html_attr') }}"><i class="fa fa-table"></i> {{ linkTitle }}</a>
         {% endif %}
     </p>
 {% endblock %}
@@ -226,7 +249,7 @@
         {% set hooks = notifyDisplayHooks(eventName='musharemodule.ui_hooks.locations.display_view', urlObject=currentUrlObject, outputAsArray=true) %}
         {% if hooks is iterable and hooks|length > 0 %}
             {% for area, hook in hooks %}
-                <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook }}</div>
+                <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook|raw }}</div>
             {% endfor %}
         {% endif %}
     {% endif % #}

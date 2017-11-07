@@ -1,3 +1,3 @@
 # CHANGELOG
 
-Changes in MUShareModule 0.1.0
+Changes in MUShareModule 0.1.1

@@ -489,7 +489,7 @@ abstract class AbstractEditHandler
             }
             $entity = clone $entityT;
         }
- 
+    
         if (null === $entity) {
             $createMethod = 'create' . ucfirst($this->objectType);
             $entity = $this->entityFactory->$createMethod();
@@ -670,10 +670,6 @@ abstract class AbstractEditHandler
             if (isset($this->form['moderationSpecificCreationDate']) && $this->form['moderationSpecificCreationDate']->getData() != '') {
                 $this->entityRef->setCreatedDate($this->form['moderationSpecificCreationDate']->getData());
             }
-        }
-    
-        if (isset($this->form['additionalNotificationRemarks']) && $this->form['additionalNotificationRemarks']->getData() != '') {
-            $this->request->getSession()->set('MUShareModuleAdditionalNotificationRemarks', $this->form['additionalNotificationRemarks']->getData());
         }
     
         // return remaining form data

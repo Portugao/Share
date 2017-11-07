@@ -183,8 +183,92 @@ abstract class AbstractLocationType extends AbstractType
             'required' => true,
         ]);
         
+        $builder->add('forMap', CheckboxType::class, [
+            'label' => $this->__('For map') . ':',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('for map ?')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('radius', IntegerType::class, [
+            'label' => $this->__('Radius') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Enter the radius for displaying offers.
+                Standard value is 1000.')
+            ],
+            'help' => [$this->__('Enter the radius for displaying offers.
+            Standard value is 1000.'), $this->__f('Note: this value must be less than %maxValue%.', ['%maxValue%' => 5000])],
+            'empty_data' => '1000',
+            'attr' => [
+                'maxlength' => 5,
+                'class' => '',
+                'title' => $this->__('Enter the radius of the location.') . ' ' . $this->__('Only digits are allowed.')
+            ],
+            'required' => true,
+            'scale' => 0
+        ]);
+        
+        $builder->add('zipCodes', TextType::class, [
+            'label' => $this->__('Zip codes') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Here you can enter additional zip codes. If you choose the relevant search option, papershare will also use them, to find offers.
+                Enter them comaseperated like (28203,28205,28207) without space.')
+            ],
+            'help' => $this->__('Here you can enter additional zip codes. If you choose the relevant search option, papershare will also use them, to find offers.
+            Enter them comaseperated like (28203,28205,28207) without space.'),
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => $this->__('Enter the zip codes of the location')
+            ],
+            'required' => true,
+        ]);
+        
+        $listEntries = $this->listHelper->getEntries('location', 'searchOptions');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('searchOptions', ChoiceType::class, [
+            'label' => $this->__('Search options') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Possoible options:
+                - Standard: Papershare is looking for offers with the same city name or the same zip code of your location or zipcode is in additional zip codes.
+                - City name: only looking for offers with the same city name like your location.
+                - Zip codes: Papershare is looking for offers with the same zip code like your location and additional zip codes')
+            ],
+            'help' => $this->__('Possoible options:
+            - Standard: Papershare is looking for offers with the same city name or the same zip code of your location or zipcode is in additional zip codes.
+            - City name: only looking for offers with the same city name like your location.
+            - Zip codes: Papershare is looking for offers with the same zip code like your location and additional zip codes'),
+            'empty_data' => '',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('Choose the search options')
+            ],
+            'required' => true,
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => false,
+            'expanded' => false
+        ]);
+        
         $builder->add('private', CheckboxType::class, [
             'label' => $this->__('Private') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('If you set private to active, you say, that it is not a location, you are the owner from; for example a restaurant.')
+            ],
+            'help' => $this->__('If you set private to active, you say, that it is not a location, you are the owner from; for example a restaurant.'),
             'attr' => [
                 'class' => '',
                 'title' => $this->__('private ?')
@@ -274,15 +358,6 @@ abstract class AbstractLocationType extends AbstractType
                 'maxlength' => 255,
                 'class' => '',
                 'title' => $this->__('Enter the mobile of the location')
-            ],
-            'required' => false,
-        ]);
-        
-        $builder->add('forMap', CheckboxType::class, [
-            'label' => $this->__('For map') . ':',
-            'attr' => [
-                'class' => '',
-                'title' => $this->__('for map ?')
             ],
             'required' => false,
         ]);

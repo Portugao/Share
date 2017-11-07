@@ -3,7 +3,7 @@ application "Share" {
 	author "Michael Ueberschaer"
 	email "info@homepages-mit-zikula.de"
 	url "https://homepages-mit-zikula.de"
-	version "0.1.0"
+	version "0.1.1"
 	prefix "share"
 
 	generatorSettings {
@@ -13,7 +13,7 @@ application "Share" {
         separateAdminTemplates true
         generatePoweredByBacklinksIntoFooterTemplates false
         generateTests false
-    markFiles "composer.json,\r\nContainer/LinkContainer.php,\r\nController/OfferController.php,\r\nEntity/Factory/EntityInitialiser.php,\r\nForm/Handler/Location/EditHandler.php,\r\nForm/Handler/Offer/EditHandler.php,\r\nHelper/ControllerHelper.php,\r\nHelper/WorkflowHelper,\r\nMenu/ItemActionsMenu.php,\r\nResources/config/entityFactory.yml,\r\nResources/config/helper.yml,\r\nResources/config/linkContainer.yml,\r\nResources/public/js/MUShareModule.Geo.js,\r\nResources/views/Location/display.html.twig,\r\nResources/views/Location/view.html.twig,\r\nResources/views/Message/display.html.twig,\r\nResources/views/Message/edit.html.twig,\r\nResources/views/Offer/display.html.twig,\r\nResources/views/Offer/edit.html.twig,\r\nResources/views/Offer/view.html.twig"
+    markFiles "composer.json,\r\nContainer/LinkContainer.php,\r\nController/OfferController.php,\r\nEntity/Factory/EntityInitialiser.php,\r\nForm/Handler/Location/EditHandler.php,\r\nForm/Handler/Offer/EditHandler.php,\r\nHelper/ControllerHelper.php,\r\nHelper/WorkflowHelper,\r\nMenu/ItemActionsMenu.php,\r\nResources/config/entityFactory.yml,\r\nResources/config/helpers.yml,\r\nResources/config/linkContainer.yml,\r\nResources/public/js/MUShareModule.Geo.js,\r\nResources/views/Location/display.html.twig,\r\nResources/views/Location/view.html.twig,\r\nResources/views/Message/display.html.twig,\r\nResources/views/Message/edit.html.twig,\r\nResources/views/Offer/display.html.twig,\r\nResources/views/Offer/edit.html.twig,\r\nResources/views/Offer/view.html.twig,\r\nShareModuleInstaller.php"
     }
 
 			entities {
@@ -30,8 +30,31 @@ application "Share" {
 						string "numberOfStreet",
 						string "zipCode",
 						string "city",
-						boolean "private" {
-							defaultValue "1"
+						boolean "forMap" {
+							defaultValue "true"
+							mandatory false
+						}
+					,
+                integer "radius" {
+                    documentation "Enter the radius for displaying offers.\r\nStandard value is 1000."
+                    defaultValue "1000"
+                    length 5
+                    maxValue 5000
+                },
+                string "zipCodes" {
+                    documentation "Here you can enter additional zip codes. If you choose the relevant search option, papershare will also use them, to find offers.\r\nEnter them comaseperated like (28203,28205,28207) without space."
+                },
+                list "searchOptions" {
+                    documentation "Possoible options:\r\n- Standard: Papershare is looking for offers with the same city name or the same zip code of your location or zipcode is in additional zip codes.\r\n- City name: only looking for offers with the same city name like your location.\r\n- Zip codes: Papershare is looking for offers with the same zip code like your location and additional zip codes"
+                    items {
+                        listItem "standard" ( "standard" ),
+                        listItem "cityName" ( "city" ),
+                        listItem "zipCodes" ( "zipcodes" )
+                    }
+                },
+                boolean "private" {
+							documentation "If you set private to active, you say, that it is not a location, you are the owner from; for example a restaurant."
+                    defaultValue "1"
 							mandatory false
 						},
                 string "name" {
@@ -58,13 +81,9 @@ application "Share" {
                 string "mobile" {
 							defaultValue ""
 							mandatory false
-						},
-						boolean "forMap" {
-							defaultValue "true"
-							mandatory false
 						}
-					}
-					            actions {
+            }
+            actions {
                 mainAction "Index",
                 viewAction "View",
                 displayAction "Display",

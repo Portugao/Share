@@ -6,6 +6,10 @@
     <numberOfStreet><![CDATA[{{ location.numberOfStreet }}]]></numberOfStreet>
     <zipCode><![CDATA[{{ location.zipCode }}]]></zipCode>
     <city><![CDATA[{{ location.city }}]]></city>
+    <forMap>{% if not location.forMap %}0{% else %}1{% endif %}</forMap>
+    <radius>{{ location.radius }}</radius>
+    <zipCodes><![CDATA[{{ location.zipCodes }}]]></zipCodes>
+    <searchOptions>{{ location.searchOptions|musharemodule_listEntry('location', 'searchOptions') }}</searchOptions>
     <private>{% if not location.private %}0{% else %}1{% endif %}</private>
     <name><![CDATA[{{ location.name }}]]></name>
     <description><![CDATA[{{ location.description|safeHtml }}]]></description>
@@ -13,7 +17,6 @@
     <website>{{ location.website }}</website>
     <phone><![CDATA[{{ location.phone }}]]></phone>
     <mobile><![CDATA[{{ location.mobile }}]]></mobile>
-    <forMap>{% if not location.forMap %}0{% else %}1{% endif %}</forMap>
     <latitude>{{ location.latitude|musharemodule_geoData }}</latitude>
     <longitude>{{ location.longitude|musharemodule_geoData }}</longitude>
     <workflowState>{{ location.workflowState|musharemodule_objectState(false)|lower }}</workflowState>

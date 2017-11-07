@@ -168,9 +168,10 @@ abstract class AbstractCollectionFilterHelper
         }
     
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
+        $parameters['searchOptions'] = $this->request->query->get('searchOptions', '');
         $parameters['q'] = $this->request->query->get('q', '');
-        $parameters['private'] = $this->request->query->get('private', '');
         $parameters['forMap'] = $this->request->query->get('forMap', '');
+        $parameters['private'] = $this->request->query->get('private', '');
     
         return $parameters;
     }
@@ -274,7 +275,7 @@ abstract class AbstractCollectionFilterHelper
                 if (!empty($v)) {
                     $qb = $this->addSearchFilter('location', $qb, $v);
                 }
-            } elseif (in_array($k, ['private', 'forMap'])) {
+            } elseif (in_array($k, ['forMap', 'private'])) {
                 // boolean filter
                 if ($v == 'no') {
                     $qb->andWhere('tbl.' . $k . ' = 0');
@@ -617,6 +618,12 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchZipCode'] = '%' . $fragment . '%';
             $filters[] = 'tbl.city LIKE :searchCity';
             $parameters['searchCity'] = '%' . $fragment . '%';
+            $filters[] = 'tbl.radius = :searchRadius';
+            $parameters['searchRadius'] = $fragment;
+            $filters[] = 'tbl.zipCodes LIKE :searchZipCodes';
+            $parameters['searchZipCodes'] = '%' . $fragment . '%';
+            $filters[] = 'tbl.searchOptions = :searchSearchOptions';
+            $parameters['searchSearchOptions'] = $fragment;
             $filters[] = 'tbl.name LIKE :searchName';
             $parameters['searchName'] = '%' . $fragment . '%';
             $filters[] = 'tbl.description LIKE :searchDescription';

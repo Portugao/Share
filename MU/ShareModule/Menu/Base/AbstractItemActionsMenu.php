@@ -75,41 +75,46 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
         
             if ($routeArea == 'admin') {
-                $menu->addChild($this->__('Preview'), [
+                $title = $this->__('Preview', 'musharemodule');
+                $menu->addChild($title, [
                     'route' => $routePrefix . 'display',
                     'routeParameters' => $entity->createUrlArgs()
                 ])->setAttribute('icon', 'fa fa-search-plus');
-                $menu[$this->__('Preview')]->setLinkAttribute('target', '_blank');
-                $menu[$this->__('Preview')]->setLinkAttribute('title', $this->__('Open preview page'));
+                $menu[$title]->setLinkAttribute('target', '_blank');
+                $menu[$title]->setLinkAttribute('title', $this->__('Open preview page', 'musharemodule'));
             }
             if ($context != 'display') {
-                $menu->addChild($this->__('Details'), [
+                $title = $this->__('Details', 'musharemodule');
+                $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'display',
                     'routeParameters' => $entity->createUrlArgs()
                 ])->setAttribute('icon', 'fa fa-eye');
-                $menu[$this->__('Details')]->setLinkAttribute('title', str_replace('"', '', $entityDisplayHelper->getFormattedTitle($entity)));
+                $menu[$title]->setLinkAttribute('title', str_replace('"', '', $entityDisplayHelper->getFormattedTitle($entity)));
             }
             if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
-                $menu->addChild($this->__('Edit'), [
+                $title = $this->__('Edit', 'musharemodule');
+                $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
                 ])->setAttribute('icon', 'fa fa-pencil-square-o');
-                $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this location'));
-                $menu->addChild($this->__('Reuse'), [
+                $menu[$title]->setLinkAttribute('title', $this->__('Edit this location', 'musharemodule'));
+                $title = $this->__('Reuse', 'musharemodule');
+                $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => ['astemplate' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-files-o');
-                $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new location'));
+                $menu[$title]->setLinkAttribute('title', $this->__('Reuse for new location', 'musharemodule'));
             }
             if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
-                $menu->addChild($this->__('Delete'), [
+                $title = $this->__('Delete', 'musharemodule');
+                $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'delete',
                     'routeParameters' => $entity->createUrlArgs()
                 ])->setAttribute('icon', 'fa fa-trash-o');
-                $menu[$this->__('Delete')]->setLinkAttribute('title', $this->__('Delete this location'));
+                $menu[$title]->setLinkAttribute('title', $this->__('Delete this location', 'musharemodule'));
             }
             if ($context == 'display') {
-                $title = $this->__('Back to overview');
+                $title = $this->__('Back to overview', 'musharemodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'view'
                 ])->setAttribute('icon', 'fa fa-reply');
@@ -121,10 +126,10 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             $relatedComponent = 'MUShareModule:Offer:';
             $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
-                $title = $this->__('Create offer of location');
+                $title = $this->__('Create offer of location', 'musharemodule');
                 $menu->addChild($title, [
                     'route' => 'musharemodule_offer_' . $routeArea . 'edit',
-                    'routeParameters' => ['locationofoffer' => $entity->getKey()]
+                    'routeParameters' => ['locationOfOffer' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-plus');
                 $menu[$title]->setLinkAttribute('title', $title);
             }
@@ -136,41 +141,46 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
         
             if ($routeArea == 'admin') {
-                $menu->addChild($this->__('Preview'), [
+                $title = $this->__('Preview', 'musharemodule');
+                $menu->addChild($title, [
                     'route' => $routePrefix . 'display',
                     'routeParameters' => $entity->createUrlArgs()
                 ])->setAttribute('icon', 'fa fa-search-plus');
-                $menu[$this->__('Preview')]->setLinkAttribute('target', '_blank');
-                $menu[$this->__('Preview')]->setLinkAttribute('title', $this->__('Open preview page'));
+                $menu[$title]->setLinkAttribute('target', '_blank');
+                $menu[$title]->setLinkAttribute('title', $this->__('Open preview page', 'musharemodule'));
             }
             if ($context != 'display') {
-                $menu->addChild($this->__('Details'), [
+                $title = $this->__('Details', 'musharemodule');
+                $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'display',
                     'routeParameters' => $entity->createUrlArgs()
                 ])->setAttribute('icon', 'fa fa-eye');
-                $menu[$this->__('Details')]->setLinkAttribute('title', str_replace('"', '', $entityDisplayHelper->getFormattedTitle($entity)));
+                $menu[$title]->setLinkAttribute('title', str_replace('"', '', $entityDisplayHelper->getFormattedTitle($entity)));
             }
             if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
-                $menu->addChild($this->__('Edit'), [
+                $title = $this->__('Edit', 'musharemodule');
+                $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
                 ])->setAttribute('icon', 'fa fa-pencil-square-o');
-                $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this offer'));
-                $menu->addChild($this->__('Reuse'), [
+                $menu[$title]->setLinkAttribute('title', $this->__('Edit this offer', 'musharemodule'));
+                $title = $this->__('Reuse', 'musharemodule');
+                $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => ['astemplate' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-files-o');
-                $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new offer'));
+                $menu[$title]->setLinkAttribute('title', $this->__('Reuse for new offer', 'musharemodule'));
             }
             if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
-                $menu->addChild($this->__('Delete'), [
+                $title = $this->__('Delete', 'musharemodule');
+                $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'delete',
                     'routeParameters' => $entity->createUrlArgs()
                 ])->setAttribute('icon', 'fa fa-trash-o');
-                $menu[$this->__('Delete')]->setLinkAttribute('title', $this->__('Delete this offer'));
+                $menu[$title]->setLinkAttribute('title', $this->__('Delete this offer', 'musharemodule'));
             }
             if ($context == 'display') {
-                $title = $this->__('Back to overview');
+                $title = $this->__('Back to overview', 'musharemodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'view'
                 ])->setAttribute('icon', 'fa fa-reply');
@@ -184,41 +194,46 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
         
             if ($routeArea == 'admin') {
-                $menu->addChild($this->__('Preview'), [
+                $title = $this->__('Preview', 'musharemodule');
+                $menu->addChild($title, [
                     'route' => $routePrefix . 'display',
                     'routeParameters' => $entity->createUrlArgs()
                 ])->setAttribute('icon', 'fa fa-search-plus');
-                $menu[$this->__('Preview')]->setLinkAttribute('target', '_blank');
-                $menu[$this->__('Preview')]->setLinkAttribute('title', $this->__('Open preview page'));
+                $menu[$title]->setLinkAttribute('target', '_blank');
+                $menu[$title]->setLinkAttribute('title', $this->__('Open preview page', 'musharemodule'));
             }
             if ($context != 'display') {
-                $menu->addChild($this->__('Details'), [
+                $title = $this->__('Details', 'musharemodule');
+                $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'display',
                     'routeParameters' => $entity->createUrlArgs()
                 ])->setAttribute('icon', 'fa fa-eye');
-                $menu[$this->__('Details')]->setLinkAttribute('title', str_replace('"', '', $entityDisplayHelper->getFormattedTitle($entity)));
+                $menu[$title]->setLinkAttribute('title', str_replace('"', '', $entityDisplayHelper->getFormattedTitle($entity)));
             }
             if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
-                $menu->addChild($this->__('Edit'), [
+                $title = $this->__('Edit', 'musharemodule');
+                $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
                 ])->setAttribute('icon', 'fa fa-pencil-square-o');
-                $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this pool'));
-                $menu->addChild($this->__('Reuse'), [
+                $menu[$title]->setLinkAttribute('title', $this->__('Edit this pool', 'musharemodule'));
+                $title = $this->__('Reuse', 'musharemodule');
+                $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => ['astemplate' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-files-o');
-                $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new pool'));
+                $menu[$title]->setLinkAttribute('title', $this->__('Reuse for new pool', 'musharemodule'));
             }
             if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
-                $menu->addChild($this->__('Delete'), [
+                $title = $this->__('Delete', 'musharemodule');
+                $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'delete',
                     'routeParameters' => $entity->createUrlArgs()
                 ])->setAttribute('icon', 'fa fa-trash-o');
-                $menu[$this->__('Delete')]->setLinkAttribute('title', $this->__('Delete this pool'));
+                $menu[$title]->setLinkAttribute('title', $this->__('Delete this pool', 'musharemodule'));
             }
             if ($context == 'display') {
-                $title = $this->__('Back to overview');
+                $title = $this->__('Back to overview', 'musharemodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'view'
                 ])->setAttribute('icon', 'fa fa-reply');
@@ -230,7 +245,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             $relatedComponent = 'MUShareModule:Offer:';
             $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_EDIT)) {
-                $title = $this->__('Create offers');
+                $title = $this->__('Create offers', 'musharemodule');
                 $menu->addChild($title, [
                     'route' => 'musharemodule_offer_' . $routeArea . 'edit',
                     'routeParameters' => ['pool' => $entity->getKey()]
@@ -245,41 +260,46 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
         
             if ($routeArea == 'admin') {
-                $menu->addChild($this->__('Preview'), [
+                $title = $this->__('Preview', 'musharemodule');
+                $menu->addChild($title, [
                     'route' => $routePrefix . 'display',
                     'routeParameters' => $entity->createUrlArgs()
                 ])->setAttribute('icon', 'fa fa-search-plus');
-                $menu[$this->__('Preview')]->setLinkAttribute('target', '_blank');
-                $menu[$this->__('Preview')]->setLinkAttribute('title', $this->__('Open preview page'));
+                $menu[$title]->setLinkAttribute('target', '_blank');
+                $menu[$title]->setLinkAttribute('title', $this->__('Open preview page', 'musharemodule'));
             }
             if ($context != 'display') {
-                $menu->addChild($this->__('Details'), [
+                $title = $this->__('Details', 'musharemodule');
+                $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'display',
                     'routeParameters' => $entity->createUrlArgs()
                 ])->setAttribute('icon', 'fa fa-eye');
-                $menu[$this->__('Details')]->setLinkAttribute('title', str_replace('"', '', $entityDisplayHelper->getFormattedTitle($entity)));
+                $menu[$title]->setLinkAttribute('title', str_replace('"', '', $entityDisplayHelper->getFormattedTitle($entity)));
             }
             if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
-                $menu->addChild($this->__('Edit'), [
+                $title = $this->__('Edit', 'musharemodule');
+                $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => $entity->createUrlArgs()
                 ])->setAttribute('icon', 'fa fa-pencil-square-o');
-                $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this message'));
-                $menu->addChild($this->__('Reuse'), [
+                $menu[$title]->setLinkAttribute('title', $this->__('Edit this message', 'musharemodule'));
+                $title = $this->__('Reuse', 'musharemodule');
+                $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'edit',
                     'routeParameters' => ['astemplate' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-files-o');
-                $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new message'));
+                $menu[$title]->setLinkAttribute('title', $this->__('Reuse for new message', 'musharemodule'));
             }
             if ($permissionApi->hasPermission($component, $instance, ACCESS_DELETE)) {
-                $menu->addChild($this->__('Delete'), [
+                $title = $this->__('Delete', 'musharemodule');
+                $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'delete',
                     'routeParameters' => $entity->createUrlArgs()
                 ])->setAttribute('icon', 'fa fa-trash-o');
-                $menu[$this->__('Delete')]->setLinkAttribute('title', $this->__('Delete this message'));
+                $menu[$title]->setLinkAttribute('title', $this->__('Delete this message', 'musharemodule'));
             }
             if ($context == 'display') {
-                $title = $this->__('Back to overview');
+                $title = $this->__('Back to overview', 'musharemodule');
                 $menu->addChild($title, [
                     'route' => $routePrefix . $routeArea . 'view'
                 ])->setAttribute('icon', 'fa fa-reply');

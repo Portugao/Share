@@ -120,6 +120,26 @@ abstract class AbstractLocationQuickNavType extends AbstractType
             'multiple' => false,
             'expanded' => false
         ]);
+        $listEntries = $this->listHelper->getEntries('location', 'searchOptions');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('searchOptions', ChoiceType::class, [
+            'label' => $this->__('Search options'),
+            'attr' => [
+                'class' => 'input-sm'
+            ],
+            'required' => false,
+            'placeholder' => $this->__('All'),
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => false,
+            'expanded' => false
+        ]);
     }
 
     /**
@@ -161,6 +181,10 @@ abstract class AbstractLocationQuickNavType extends AbstractType
                     $this->__('Number of street') => 'numberOfStreet',
                     $this->__('Zip code') => 'zipCode',
                     $this->__('City') => 'city',
+                    $this->__('For map') => 'forMap',
+                    $this->__('Radius') => 'radius',
+                    $this->__('Zip codes') => 'zipCodes',
+                    $this->__('Search options') => 'searchOptions',
                     $this->__('Private') => 'private',
                     $this->__('Name') => 'name',
                     $this->__('Description') => 'description',
@@ -168,7 +192,6 @@ abstract class AbstractLocationQuickNavType extends AbstractType
                     $this->__('Website') => 'website',
                     $this->__('Phone') => 'phone',
                     $this->__('Mobile') => 'mobile',
-                    $this->__('For map') => 'forMap',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',
                     $this->__('Update date') => 'updatedDate',
@@ -232,8 +255,8 @@ abstract class AbstractLocationQuickNavType extends AbstractType
      */
     public function addBooleanFields(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('private', ChoiceType::class, [
-            'label' => $this->__('Private'),
+        $builder->add('forMap', ChoiceType::class, [
+            'label' => $this->__('For map'),
             'attr' => [
                 'class' => 'input-sm'
             ],
@@ -245,8 +268,8 @@ abstract class AbstractLocationQuickNavType extends AbstractType
             ],
             'choices_as_values' => true
         ]);
-        $builder->add('forMap', ChoiceType::class, [
-            'label' => $this->__('For map'),
+        $builder->add('private', ChoiceType::class, [
+            'label' => $this->__('Private'),
             'attr' => [
                 'class' => 'input-sm'
             ],

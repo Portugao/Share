@@ -25,6 +25,10 @@
                     <option value="numberOfStreet"{if $sort eq 'numberOfStreet'} selected="selected"{/if}>{gt text='Number of street'}</option>
                     <option value="zipCode"{if $sort eq 'zipCode'} selected="selected"{/if}>{gt text='Zip code'}</option>
                     <option value="city"{if $sort eq 'city'} selected="selected"{/if}>{gt text='City'}</option>
+                    <option value="forMap"{if $sort eq 'forMap'} selected="selected"{/if}>{gt text='For map'}</option>
+                    <option value="radius"{if $sort eq 'radius'} selected="selected"{/if}>{gt text='Radius'}</option>
+                    <option value="zipCodes"{if $sort eq 'zipCodes'} selected="selected"{/if}>{gt text='Zip codes'}</option>
+                    <option value="searchOptions"{if $sort eq 'searchOptions'} selected="selected"{/if}>{gt text='Search options'}</option>
                     <option value="private"{if $sort eq 'private'} selected="selected"{/if}>{gt text='Private'}</option>
                     <option value="name"{if $sort eq 'name'} selected="selected"{/if}>{gt text='Name'}</option>
                     <option value="description"{if $sort eq 'description'} selected="selected"{/if}>{gt text='Description'}</option>
@@ -32,7 +36,6 @@
                     <option value="website"{if $sort eq 'website'} selected="selected"{/if}>{gt text='Website'}</option>
                     <option value="phone"{if $sort eq 'phone'} selected="selected"{/if}>{gt text='Phone'}</option>
                     <option value="mobile"{if $sort eq 'mobile'} selected="selected"{/if}>{gt text='Mobile'}</option>
-                    <option value="forMap"{if $sort eq 'forMap'} selected="selected"{/if}>{gt text='For map'}</option>
                     <option value="createdDate"{if $sort eq 'createdDate'} selected="selected"{/if}>{gt text='Creation date'}</option>
                     <option value="createdBy"{if $sort eq 'createdBy'} selected="selected"{/if}>{gt text='Creator'}</option>
                     <option value="updatedDate"{if $sort eq 'updatedDate'} selected="selected"{/if}>{gt text='Update date'}</option>

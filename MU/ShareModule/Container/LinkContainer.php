@@ -231,7 +231,7 @@ class LinkContainer extends AbstractLinkContainer
         }
 
         if ($routeArea != 'admin' && $uid >= 2) {
-        	if ($this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADD)) {
+        	if ($this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_EDIT)) {
         		$links[] = [
         				'url' => $this->router->generate('zikulaprofilemodule_profile_edit', array('uid' => $uid)),
         				'text' => $this->__('Edit profile', 'musharemodule'),

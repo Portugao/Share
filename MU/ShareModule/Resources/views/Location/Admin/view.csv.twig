@@ -1,10 +1,10 @@
 {# purpose of this template: locations view csv view #}
-{% spaceless %}"{{ __('Title') }}";"{{ __('Street') }}";"{{ __('Number of street') }}";"{{ __('Zip code') }}";"{{ __('City') }}";"{{ __('Private') }}";"{{ __('Name') }}";"{{ __('Description') }}";"{{ __('Mail') }}";"{{ __('Website') }}";"{{ __('Phone') }}";"{{ __('Mobile') }}";"{{ __('For map') }}";"{{ __('Latitude') }}";"{{ __('Longitude') }}";"{{ __('Workflow state') }}"
+{% spaceless %}"{{ __('Title') }}";"{{ __('Street') }}";"{{ __('Number of street') }}";"{{ __('Zip code') }}";"{{ __('City') }}";"{{ __('For map') }}";"{{ __('Radius') }}";"{{ __('Zip codes') }}";"{{ __('Search options') }}";"{{ __('Private') }}";"{{ __('Name') }}";"{{ __('Description') }}";"{{ __('Mail') }}";"{{ __('Website') }}";"{{ __('Phone') }}";"{{ __('Mobile') }}";"{{ __('Latitude') }}";"{{ __('Longitude') }}";"{{ __('Workflow state') }}"
 ;"{{ __('Offer of location') }}"
 {% endspaceless %}
 {% for location in items %}
 {% spaceless %}
-    "{{ location.title }}";"{{ location.street }}";"{{ location.numberOfStreet }}";"{{ location.zipCode }}";"{{ location.city }}";"{% if not location.private %}0{% else %}1{% endif %}";"{{ location.name }}";"{{ location.description|safeHtml }}";"{{ location.mail }}";"{{ location.website }}";"{{ location.phone }}";"{{ location.mobile }}";"{% if not location.forMap %}0{% else %}1{% endif %}";"{{ location.latitude|musharemodule_geoData }}";"{{ location.longitude|musharemodule_geoData }}";"{{ location.workflowState|musharemodule_objectState(false)|lower }}"
+    "{{ location.title }}";"{{ location.street }}";"{{ location.numberOfStreet }}";"{{ location.zipCode }}";"{{ location.city }}";"{% if not location.forMap %}0{% else %}1{% endif %}";"{{ location.radius }}";"{{ location.zipCodes }}";"{{ location.searchOptions|musharemodule_listEntry('location', 'searchOptions') }}";"{% if not location.private %}0{% else %}1{% endif %}";"{{ location.name }}";"{{ location.description|safeHtml }}";"{{ location.mail }}";"{{ location.website }}";"{{ location.phone }}";"{{ location.mobile }}";"{{ location.latitude|musharemodule_geoData }}";"{{ location.longitude|musharemodule_geoData }}";"{{ location.workflowState|musharemodule_objectState(false)|lower }}"
     ;"
     {% if location.offerOfLocation|default %}
         {% for relatedItem in location.offerOfLocation %}

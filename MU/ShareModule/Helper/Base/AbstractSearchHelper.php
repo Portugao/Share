@@ -188,6 +188,8 @@ abstract class AbstractSearchHelper implements SearchableInterface
                     $whereArray[] = 'tbl.numberOfStreet';
                     $whereArray[] = 'tbl.zipCode';
                     $whereArray[] = 'tbl.city';
+                    $whereArray[] = 'tbl.zipCodes';
+                    $whereArray[] = 'tbl.searchOptions';
                     $whereArray[] = 'tbl.name';
                     $whereArray[] = 'tbl.description';
                     $whereArray[] = 'tbl.mail';

@@ -109,6 +109,49 @@ abstract class AbstractLocationEntity extends EntityAccess
      * @ORM\Column(type="boolean")
      * @Assert\NotNull()
      * @Assert\Type(type="bool")
+     * @var boolean $forMap
+     */
+    protected $forMap = true;
+    
+    /**
+     * Enter the radius for displaying offers.
+     Standard value is 1000.
+     * @ORM\Column(type="integer")
+     * @Assert\Type(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\NotEqualTo(value=0)
+     * @Assert\LessThanOrEqual(value=5000)
+     * @var integer $radius
+     */
+    protected $radius = 1000;
+    
+    /**
+     * Here you can enter additional zip codes. If you choose the relevant search option, papershare will also use them, to find offers.
+     Enter them comaseperated like (28203,28205,28207) without space.
+     * @ORM\Column(length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(min="0", max="255")
+     * @var string $zipCodes
+     */
+    protected $zipCodes = '';
+    
+    /**
+     * Possoible options:
+     - Standard: Papershare is looking for offers with the same city name or the same zip code of your location or zipcode is in additional zip codes.
+     - City name: only looking for offers with the same city name like your location.
+     - Zip codes: Papershare is looking for offers with the same zip code like your location and additional zip codes
+     * @ORM\Column(length=255)
+     * @Assert\NotBlank()
+     * @ShareAssert\ListEntry(entityName="location", propertyName="searchOptions", multiple=false)
+     * @var string $searchOptions
+     */
+    protected $searchOptions = '';
+    
+    /**
+     * If you set private to active, you say, that it is not a location, you are the owner from; for example a restaurant.
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     * @Assert\Type(type="bool")
      * @var boolean $private
      */
     protected $private = false;
@@ -165,14 +208,6 @@ abstract class AbstractLocationEntity extends EntityAccess
      * @var string $mobile
      */
     protected $mobile = '';
-    
-    /**
-     * @ORM\Column(type="boolean")
-     * @Assert\NotNull()
-     * @Assert\Type(type="bool")
-     * @var boolean $forMap
-     */
-    protected $forMap = true;
     
     
     /**
@@ -395,6 +430,102 @@ abstract class AbstractLocationEntity extends EntityAccess
     }
     
     /**
+     * Returns the for map.
+     *
+     * @return boolean
+     */
+    public function getForMap()
+    {
+        return $this->forMap;
+    }
+    
+    /**
+     * Sets the for map.
+     *
+     * @param boolean $forMap
+     *
+     * @return void
+     */
+    public function setForMap($forMap)
+    {
+        if (boolval($this->forMap) !== boolval($forMap)) {
+            $this->forMap = boolval($forMap);
+        }
+    }
+    
+    /**
+     * Returns the radius.
+     *
+     * @return integer
+     */
+    public function getRadius()
+    {
+        return $this->radius;
+    }
+    
+    /**
+     * Sets the radius.
+     *
+     * @param integer $radius
+     *
+     * @return void
+     */
+    public function setRadius($radius)
+    {
+        if (intval($this->radius) !== intval($radius)) {
+            $this->radius = intval($radius);
+        }
+    }
+    
+    /**
+     * Returns the zip codes.
+     *
+     * @return string
+     */
+    public function getZipCodes()
+    {
+        return $this->zipCodes;
+    }
+    
+    /**
+     * Sets the zip codes.
+     *
+     * @param string $zipCodes
+     *
+     * @return void
+     */
+    public function setZipCodes($zipCodes)
+    {
+        if ($this->zipCodes !== $zipCodes) {
+            $this->zipCodes = isset($zipCodes) ? $zipCodes : '';
+        }
+    }
+    
+    /**
+     * Returns the search options.
+     *
+     * @return string
+     */
+    public function getSearchOptions()
+    {
+        return $this->searchOptions;
+    }
+    
+    /**
+     * Sets the search options.
+     *
+     * @param string $searchOptions
+     *
+     * @return void
+     */
+    public function setSearchOptions($searchOptions)
+    {
+        if ($this->searchOptions !== $searchOptions) {
+            $this->searchOptions = isset($searchOptions) ? $searchOptions : '';
+        }
+    }
+    
+    /**
      * Returns the private.
      *
      * @return boolean
@@ -559,30 +690,6 @@ abstract class AbstractLocationEntity extends EntityAccess
     {
         if ($this->mobile !== $mobile) {
             $this->mobile = isset($mobile) ? $mobile : '';
-        }
-    }
-    
-    /**
-     * Returns the for map.
-     *
-     * @return boolean
-     */
-    public function getForMap()
-    {
-        return $this->forMap;
-    }
-    
-    /**
-     * Sets the for map.
-     *
-     * @param boolean $forMap
-     *
-     * @return void
-     */
-    public function setForMap($forMap)
-    {
-        if (boolval($this->forMap) !== boolval($forMap)) {
-            $this->forMap = boolval($forMap);
         }
     }
     

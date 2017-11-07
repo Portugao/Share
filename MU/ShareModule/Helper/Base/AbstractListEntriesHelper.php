@@ -135,6 +135,9 @@ abstract class AbstractListEntriesHelper
                     case 'workflowState':
                         $result = false;
                         break;
+                    case 'searchOptions':
+                        $result = false;
+                        break;
                 }
                 break;
             case 'offer':
@@ -187,6 +190,9 @@ abstract class AbstractListEntriesHelper
                 switch ($fieldName) {
                     case 'workflowState':
                         $entries = $this->getWorkflowStateEntriesForLocation();
+                        break;
+                    case 'searchOptions':
+                        $entries = $this->getSearchOptionsEntriesForLocation();
                         break;
                 }
                 break;
@@ -261,6 +267,39 @@ abstract class AbstractListEntriesHelper
     }
     
     /**
+     * Get 'search options' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getSearchOptionsEntriesForLocation()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => 'standard',
+            'text'    => $this->__('Standard'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => 'city',
+            'text'    => $this->__('CityName'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => 'zipcodes',
+            'text'    => $this->__('ZipCodes'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
      * Get 'workflow state' list entries.
      *
      * @return array Array with desired list entries
@@ -296,7 +335,7 @@ abstract class AbstractListEntriesHelper
         $states = [];
         $states[] = [
             'value'   => 'notset',
-            'text'    => $this->__('Notset'),
+            'text'    => $this->__('Not set'),
             'title'   => '',
             'image'   => '',
             'default' => true

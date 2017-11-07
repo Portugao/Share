@@ -18,6 +18,13 @@
             {% if workflowStateFilter is defined and workflowStateFilter != true %}
                 </div>
             {% endif %}
+            {% if searchOptionsFilter is defined and searchOptionsFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.searchOptions) }}
+            {% if searchOptionsFilter is defined and searchOptionsFilter != true %}
+                </div>
+            {% endif %}
             {% if searchFilter is defined and searchFilter != true %}
                 <div class="hidden">
             {% endif %}
@@ -40,18 +47,18 @@
             {% if pageSizeSelector is defined and pageSizeSelector != true %}
                 </div>
             {% endif %}
-            {% if privateFilter is defined and privateFilter != true %}
-                <div class="hidden">
-            {% endif %}
-                {{ form_row(quickNavForm.private) }}
-            {% if privateFilter is defined and privateFilter != true %}
-                </div>
-            {% endif %}
             {% if forMapFilter is defined and forMapFilter != true %}
                 <div class="hidden">
             {% endif %}
                 {{ form_row(quickNavForm.forMap) }}
             {% if forMapFilter is defined and forMapFilter != true %}
+                </div>
+            {% endif %}
+            {% if privateFilter is defined and privateFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.private) }}
+            {% if privateFilter is defined and privateFilter != true %}
                 </div>
             {% endif %}
             {{ form_widget(quickNavForm.updateview) }}
