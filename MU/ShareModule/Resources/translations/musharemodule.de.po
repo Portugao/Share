@@ -1,0 +1,1553 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"X-Generator: Poedit 2.0.3\n"
+
+msgid " for your location"
+msgstr "für deinen Standort"
+
+msgid "%collectionOfPool%"
+msgstr "%collectionOfPool%"
+
+msgid "%product%"
+msgstr "%Produkt%"
+
+msgid "%subject%"
+msgstr "%subject%"
+
+msgid "%title%"
+msgstr "%title%"
+
+msgid "10"
+msgstr "10"
+
+msgid "100"
+msgstr "100"
+
+msgid "15"
+msgstr "15"
+
+msgid "20"
+msgstr "20"
+
+msgid "30"
+msgstr "30"
+
+msgid "5"
+msgstr "5"
+
+msgid "50"
+msgstr "50"
+
+msgid "A direct feed showing the list of locations"
+msgstr "Ein Feed der die Standorte anzeigt"
+
+#, fuzzy
+msgid "A direct feed showing the list of messages"
+msgstr "Ein Feed, der eine Liste von Abstimmungen zeigt"
+
+#, fuzzy
+msgid "A direct feed showing the list of offers"
+msgstr "Ein Feed, der eine Liste von Abstimmungen zeigt"
+
+#, fuzzy
+msgid "A direct feed showing the list of pools"
+msgstr "Ein Feed, der eine Liste von Abstimmungen zeigt"
+
+msgid "Abo"
+msgstr "Abo"
+
+#, fuzzy
+msgid "Absolute url to the location"
+msgstr "Bild mit absoluten Link zur Location"
+
+#, fuzzy
+msgid "Absolute url to the message"
+msgstr "Absolute Url zum Special einer Location"
+
+#, fuzzy
+msgid "Absolute url to the offer"
+msgstr "Absolute Url zum Special einer Location"
+
+#, fuzzy
+msgid "Absolute url to the pool"
+msgstr "Absolute Url zum Special einer Location"
+
+msgid "Actions"
+msgstr "Aktionen"
+
+msgid "All"
+msgstr "Alle"
+
+msgid "All except approved"
+msgstr "Alle ausgenommen freigegebene"
+
+msgid "All except suspended"
+msgstr "Alle ausgenommen abgelehnte"
+
+msgid "Amount"
+msgstr "Anzahl"
+
+msgid "Approved"
+msgstr "Freigegeben"
+
+msgid "Ascending"
+msgstr "Aufsteigend"
+
+msgid "At me"
+msgstr "Bei mir"
+
+msgid "Attribution for tile layer to use."
+msgstr ""
+
+msgid "Back"
+msgstr "Zurück"
+
+msgid "Back to overview"
+msgstr "Zur Übersicht"
+
+msgid "Back to paginated view"
+msgstr "Zurück zur Seitenansicht"
+
+msgid "Backend"
+msgstr "Backend"
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgid "Categories"
+msgstr "Kategorien"
+
+msgid "Category"
+msgstr "Kategorie"
+
+msgid "Change selection"
+msgstr "Auswahl ändern"
+
+msgid "Choose action"
+msgstr "Auswahlaktion"
+
+msgid "Choose an option"
+msgstr "Wähle eine Option"
+
+msgid "Choose the enabled finder types."
+msgstr "Wähle die aktivierten Finder Typen."
+
+msgid "Choose the location of offer"
+msgstr "Wähle den Standort des Angebots"
+
+#, fuzzy
+msgid "Choose the period"
+msgstr "Periode"
+
+#, fuzzy
+msgid "Choose the pool"
+msgstr "Ungültiger Datenpool für dieses Bild"
+
+#, fuzzy
+msgid "Choose the search options"
+msgstr "Suche"
+
+#, fuzzy
+msgid "Choose your location of offer"
+msgstr "Wählen Sie Ihre Location"
+
+msgid "City"
+msgstr "Stadt"
+
+msgid "CityName"
+msgstr ""
+
+msgid "Collection of pool"
+msgstr "Kollektion von Pools"
+
+msgid "Companies"
+msgstr ""
+
+msgid "Company"
+msgstr "Firma"
+
+msgid "Configuration"
+msgstr "Einstellungen"
+
+msgid "Confirmation prompt"
+msgstr "Sicherheitsabfrage"
+
+msgid "Content"
+msgstr "Inhalt"
+
+msgid "Content has been approved and is available online."
+msgstr "Inhalt wurde freigegeben und ist nun online verfügbar."
+
+msgid "Content has been approved, but is temporarily offline."
+msgstr "Inhalt wurde freigegeben, aber ist zwischenzeitlich offline."
+
+msgid "Content has been deleted"
+msgstr "Inhalt wurde gelöscht"
+
+msgid "Content has been updated"
+msgstr "Inhalt wurde aktualisiert"
+
+msgid "Could not inform other persons about your amendments, because the Mailer module is not available - please contact an administrator about that!"
+msgstr "Konnte andere Personen nicht informieren, weil das Mailer Module nicht erreichbar ist - bitte kontakte den Administrator!"
+
+msgid "Create location"
+msgstr "Standort erstellen"
+
+msgid "Create message"
+msgstr "Nachricht rstellen"
+
+msgid "Create offer"
+msgstr "Angebot erstellen"
+
+msgid "Create offer of location"
+msgstr "Angebot der Location erstellen"
+
+msgid "Create offers"
+msgstr "Angebot erstellen"
+
+#, fuzzy
+msgid "Create pool"
+msgstr "Ungültiger Datenpool für dieses Bild"
+
+msgid "Created by %user"
+msgstr "Erstellt von %user"
+
+msgid "Created by %user on %date"
+msgstr "Erstellt von %user am %date"
+
+msgid "Created on %date"
+msgstr "Erstellt am %date"
+
+msgid "Creation"
+msgstr "Erstellung"
+
+msgid "Creation and update"
+msgstr "Erstellung und Aktualisierung"
+
+msgid "Creation date"
+msgstr "Erstelldatum"
+
+msgid "Creator"
+msgstr "Ersteller"
+
+msgid "Custom template"
+msgstr "Benutzer Template"
+
+msgid "Daily"
+msgstr "Täglich"
+
+msgid "Default"
+msgstr "Standard"
+
+msgid "Default latitude"
+msgstr "Standard Breitengrad"
+
+msgid "Default longitude"
+msgstr "Standard Längengrad"
+
+msgid "Default zoom level"
+msgstr "Standard Zoom Level"
+
+msgid "Delete"
+msgstr "Löschen"
+
+msgid "Delete content permanently."
+msgstr "Iihalt dauerhaft löschen."
+
+msgid "Delete location"
+msgstr "Standort löschen"
+
+msgid "Delete message"
+msgstr "Nachricht löschen"
+
+msgid "Delete offer"
+msgstr "Dieses Angebot löschen"
+
+msgid "Delete pool"
+msgstr "Pool löschen"
+
+msgid "Delete this location"
+msgstr "Location löschen"
+
+msgid "Delete this message"
+msgstr "Diese Nachricht löschen"
+
+msgid "Delete this offer"
+msgstr "Dieses Angebot löschen"
+
+msgid "Delete this pool"
+msgstr "Diesen Pool löschen"
+
+msgid "Deleted"
+msgstr "Gelöscht"
+
+msgid "Descending"
+msgstr "Absteigend"
+
+msgid "Description"
+msgstr "Beschreibung"
+
+msgid "Details"
+msgstr "Details"
+
+#, fuzzy
+msgid "Display list of MUShareModule objects."
+msgstr "Liste von MUBloggingModule Objekten anzeigen."
+
+#, fuzzy
+msgid "Display or link a single MUShareModule object."
+msgstr "Zeige oder verweise auf ein einzelnes MUPolls Objekt."
+
+msgid "Do you have an abonnement of your offer?"
+msgstr ""
+
+msgid "Do you really want to delete this location: \"%name%\" ?"
+msgstr "Willst Du den Standort \"%name%\" wirklich löschen ?"
+
+msgid "Do you really want to delete this message: \"%name%\" ?"
+msgstr "Willst Du die Nachricht \"%name%\" wirklich löschen ?"
+
+msgid "Do you really want to delete this offer: \"%name%\" ?"
+msgstr "Möchtest Du das Angebot\"%name%\" wirklich löschen?"
+
+msgid "Do you really want to delete this pool: \"%name%\" ?"
+msgstr "Willst Du den Pool \"%name%\" wirklich löschen ?"
+
+msgid "Do you want back your offer after sharing?"
+msgstr ""
+
+msgid ""
+"Do you wish to get a small part of your costs?\r\n"
+"                Maximal 15% of the price are allowed for new magazines, books and so on."
+msgstr ""
+
+msgid ""
+"Do you wish to get a small part of your costs?\r\n"
+"            Maximal 15% of the price are allowed for new magazines, books and so on."
+msgstr ""
+
+msgid "Doctrine Exception"
+msgstr "Doctrine Ausnahme"
+
+msgid "Done! Item created."
+msgstr "Erledigt! Element erstellt."
+
+msgid "Done! Item deleted."
+msgstr "Erledigt! Element gelöscht."
+
+msgid "Done! Item updated."
+msgstr "Erledigt! Element aktualisiert."
+
+msgid "Done! Location created."
+msgstr "Erledigt! Standort erstellt."
+
+msgid "Done! Location deleted."
+msgstr "Erledigt! Standort gelöscht."
+
+msgid "Done! Location updated."
+msgstr "Erledigt! Standort aktualisiert."
+
+#, fuzzy
+msgid "Done! Message created."
+msgstr "Erledigt! Die Nachricht wurde verschickt."
+
+#, fuzzy
+msgid "Done! Message deleted."
+msgstr "Erledigt! Erfolgreich gelöscht."
+
+#, fuzzy
+msgid "Done! Message updated."
+msgstr "Erledigt! Konfiguration aktualisiert."
+
+#, fuzzy
+msgid "Done! Module configuration updated."
+msgstr "Erledigt. Konfiguration aktualisiert."
+
+msgid "Done! Offer created."
+msgstr "Erledigt! Angebot erstellt."
+
+msgid "Done! Offer deleted."
+msgstr "Erledigt! Angebot gelöscht."
+
+msgid "Done! Offer updated."
+msgstr "Erledigt! Angebot aktualisiert."
+
+msgid "Done! Pool created."
+msgstr "Done! Item created."
+
+msgid "Done! Pool deleted."
+msgstr "Erledigt! Pool gelöscht."
+
+msgid "Done! Pool updated."
+msgstr "Erledigt! Pool aktualisiert."
+
+msgid "Edit"
+msgstr "Bearbeiten"
+
+msgid "Edit location"
+msgstr "Standort bearbeiten"
+
+msgid "Edit locations workflow"
+msgstr "Standort Workflow bearbeiten"
+
+msgid "Edit message"
+msgstr "Nachricht bearbeiten"
+
+msgid "Edit messages workflow"
+msgstr "Nachrichten Workflow bearbeiten"
+
+msgid "Edit offer"
+msgstr "Dieses Angebot bearbeiten"
+
+msgid "Edit offers workflow"
+msgstr "Angebote Workflow bearbeiten"
+
+msgid "Edit pool"
+msgstr "Pool bearbeiten"
+
+#, fuzzy
+msgid "Edit pools workflow"
+msgstr "Workflow für Beiträge bearbeiten"
+
+#, fuzzy
+msgid "Edit this location"
+msgstr "Location bearbeiten"
+
+#, fuzzy
+msgid "Edit this message"
+msgstr "Bearbeiten"
+
+#, fuzzy
+msgid "Edit this offer"
+msgstr "Dieses Angebot bearbeiten"
+
+#, fuzzy
+msgid "Edit this pool"
+msgstr "Ungültiger Datenpool für dieses Bild"
+
+#, fuzzy
+msgid "Edit workflow for locations"
+msgstr "Workflow für Playlisten bearbeiten"
+
+#, fuzzy
+msgid "Edit workflow for messages"
+msgstr "Workflow für Playlisten bearbeiten"
+
+#, fuzzy
+msgid "Edit workflow for offers"
+msgstr "Workflow für Filme bearbeiten"
+
+#, fuzzy
+msgid "Edit workflow for pools"
+msgstr "Playlisten Workflow bearbeiten"
+
+#, fuzzy
+msgid "Enable location geo location"
+msgstr "Geo Location für Locations aktivieren"
+
+#, fuzzy
+msgid "Enable offer geo location"
+msgstr "Geo Location für Veranstaltungen aktivieren"
+
+#, fuzzy
+msgid "Enabled finder types"
+msgstr "Aktive Finder Typen"
+
+msgid "Enter a description of your offer if it could be helpful!"
+msgstr ""
+
+msgid "Enter a subject for your message!"
+msgstr "Gib einen Betreff für Deine Nachricht ein!"
+
+msgid "Enter a title for better management of your locations."
+msgstr ""
+
+msgid "Enter the city of the location"
+msgstr "Gib die Stadt ein"
+
+#, fuzzy
+msgid "Enter the collection of pool of the pool"
+msgstr "Ungültiger Datenpool für dieses Bild"
+
+msgid "Enter the default latitude."
+msgstr "Gib den Standard für den Breitengrad ein."
+
+msgid "Enter the default longitude."
+msgstr "Gib den Standard für den Längengrad ein."
+
+msgid "Enter the default zoom level."
+msgstr "Den Standard Zoom Level eingeben."
+
+msgid "Enter the description of the location"
+msgstr "Gib eine Beschreibung Ihres Standorts ein"
+
+msgid "Enter the description of the offer"
+msgstr "Gib die Beschreibung für das Angebot ein"
+
+msgid "Enter the location entries per page."
+msgstr "Gib die Anzahl der Standorte pro Seite ein."
+
+msgid "Enter the mail of the location"
+msgstr "E-Mail-Adresse eingeben"
+
+msgid "Enter the max locations."
+msgstr "Gib die maximale Anzahl an Standorten ein."
+
+msgid "Enter the max radius."
+msgstr "Gib den maximalen Radius ein"
+
+msgid "Enter the meeting place of the offer"
+msgstr "Gib den Treffpunkt für das Angebot ein"
+
+msgid "Enter the message entries per page."
+msgstr "Wähle die Anzahl der Nachrichten pro Seite."
+
+msgid "Enter the mobile of the location"
+msgstr "Gib die Mobilnummer ein"
+
+msgid "Enter the name of the location"
+msgstr "Gib den Namen des Standortes ein"
+
+msgid "Enter the name of your company."
+msgstr "Gib den Namen der Firma ein."
+
+msgid "Enter the number of street of the location"
+msgstr "Gib die Hausnummer ein"
+
+msgid "Enter the offer entries per page."
+msgstr "Gib die Anzahl der Angebote pro Seite ein."
+
+msgid "Enter the phone of the location"
+msgstr "Gib die Telefonnummer ein"
+
+msgid "Enter the pool entries per page."
+msgstr "Wähle die Anzahl der Einträge pro Seite."
+
+msgid "Enter the product of the offer"
+msgstr "Gib das Produkt des Angebots ein"
+
+msgid ""
+"Enter the radius for displaying offers.\r\n"
+"                Standard value is 1000."
+msgstr ""
+"Gib den Radius zur Anzeige von Angeboten ein.\n"
+"Standard ist 1000 für 1 Kilometer."
+
+msgid ""
+"Enter the radius for displaying offers.\r\n"
+"            Standard value is 1000."
+msgstr ""
+
+msgid "Enter the radius of the location."
+msgstr "Gib den Radius für den Standort ein."
+
+msgid "Enter the read by recipient of the message"
+msgstr ""
+
+msgid "Enter the recipient of the message"
+msgstr "Gib den Empfänger der Nachricht ein"
+
+msgid "Enter the status recipient of the message."
+msgstr ""
+
+msgid "Enter the status sender of the message."
+msgstr ""
+
+msgid "Enter the street (and number) for the meeting place!"
+msgstr "Gib die Staraße (und die Hausnummer) für den Treffpunkt ein!"
+
+msgid "Enter the street of the location"
+msgstr "Gib die Straße für den Standort ein"
+
+msgid "Enter the subject of the message"
+msgstr "Gib den Betreff ein"
+
+msgid "Enter the text for message of the message"
+msgstr "Gib den Text ein"
+
+msgid "Enter the tile layer attribution."
+msgstr ""
+
+#, fuzzy
+msgid "Enter the tile layer url."
+msgstr "Bitte gib eine gültige URL ein."
+
+msgid "Enter the title of the location"
+msgstr "Gib den Titel des Standortes ein"
+
+msgid "Enter the website of the location"
+msgstr "Gib die Webseite ein"
+
+msgid "Enter the zip code for the meeting place!"
+msgstr "Gib die Postleitzahl für den Treffpunkt ein!"
+
+msgid "Enter the zip code of the location"
+msgstr "Gib die Postleitzahl ein"
+
+msgid "Enter the zip code of the offer"
+msgstr "Geben Sie die Postleitzahl ein"
+
+msgid "Enter the zip codes of the location"
+msgstr "Gib die Postleitzahl ein"
+
+#, fuzzy
+msgid "Enter your text for your message."
+msgstr "Bitte geben Sie Ihren Namen ein"
+
+msgid "Entry to display"
+msgstr "Anzuzeigender Eintrag"
+
+msgid "Error! Could not create a category registry for the %entity% entity."
+msgstr "Fehler! Konnte die Kategoriezuweisung für die %entity% Entität nicht erstellen."
+
+msgid "Error! Could not determine workflow actions."
+msgstr "Fehler! Konnte die Workflow Aktion nicht beenden."
+
+msgid "Error! Creation attempt failed."
+msgstr "Fehler! Versuch der Erstellung gescheitert."
+
+msgid "Error! Deletion attempt failed."
+msgstr "Fehler! Versuch der Löschung gescheitert."
+
+msgid "Error! Invalid object type received."
+msgstr "Fehler! Ungültiger Objekttyp angefordert."
+
+msgid "Error! It is not allowed to delete this location."
+msgstr "Fehler! Es ist nicht erlaubt diesen Standort zu löschen."
+
+msgid "Error! It is not allowed to delete this message."
+msgstr "Fehler! Es ist nicht erlaubt diese Nachricht zu löschen."
+
+msgid "Error! It is not allowed to delete this offer."
+msgstr "Fehler! Es ist nicht erlaubt dieses Angebot zu löschen."
+
+msgid "Error! It is not allowed to delete this pool."
+msgstr "Fehler! Es ist nicht erlaubt, den Pool zu löschen."
+
+msgid "Error! Update attempt failed."
+msgstr "Fehler! Versuch der Aktualisierung gescheitert."
+
+msgid "Error: Invalid editor context given for external controller action."
+msgstr "Fehler! Ungültiger Editor-Kontext für einen externen Controller."
+
+msgid "Example"
+msgstr "Beispiel"
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Filter (expert option)"
+msgstr "Filter (Optionen für Experten)"
+
+msgid "For map"
+msgstr "Für die Karte"
+
+msgid "Frontend"
+msgstr "Frontend"
+
+msgid "General"
+msgstr "Allgemein"
+
+msgid "Geo"
+msgstr "Geo"
+
+msgid "Here you can choose a custom creation date"
+msgstr "Hier kannst Du ein eigenes Erstelldatum auswählen"
+
+msgid "Here you can choose a user which will be set as creator"
+msgstr "Hier kannst Du einen Benutzer als Ersteller festlegen"
+
+msgid "Here you can configure parameters for list views."
+msgstr "Hier kannst Du Parameter für die Listenansicht einstellen."
+
+msgid "Here you can define settings related to geographical features."
+msgstr ""
+
+msgid ""
+"Here you can enter additional zip codes. If you choose the relevant search option, papershare will also use them, to find offers.\r\n"
+"                Enter them comaseperated like (28203,28205,28207) without space."
+msgstr ""
+
+msgid ""
+"Here you can enter additional zip codes. If you choose the relevant search option, papershare will also use them, to find offers.\r\n"
+"            Enter them comaseperated like (28203,28205,28207) without space."
+msgstr ""
+
+msgid "Here you can enter more informations about the company."
+msgstr ""
+
+msgid "Here you can inspect and amend the existing workflows."
+msgstr "Hier kannst Du den existierenden Workflow betrachten und abändern."
+
+msgid "Here you can manage all basic settings for this application."
+msgstr "Hier kannst Du die Grundeinstellungen für dieses Modul verwalten."
+
+msgid "Hide content temporarily."
+msgstr "Verstecke Inhalt zwischenzeitlich."
+
+#, fuzzy
+msgid "Homepage of your company."
+msgstr "Klicken Sie hier, um Ihre Homepage zu besuchen"
+
+msgid "ID of location"
+msgstr "ID des Standortes"
+
+msgid "ID of message"
+msgstr "ID der Nachricht"
+
+msgid "ID of offer"
+msgstr "ID des Angebots"
+
+msgid "ID of pool"
+msgstr "ID des Pools"
+
+msgid ""
+"If enabled the latitude and longitude get set like the location from where or for what you create the offer.\r\n"
+"                It does not work, what you set by clicking into the map."
+msgstr ""
+
+msgid ""
+"If enabled the latitude and longitude get set like the location from where or for what you create the offer.\r\n"
+"            It does not work, what you set by clicking into the map."
+msgstr ""
+
+msgid "If you change this please save the block once to reload the parameters below."
+msgstr "Wenn Du dies änderst, speichere den Block erneut, um die Parameter neu zu laden."
+
+msgid "If you have magazines or something else and a complete year, you can set this option."
+msgstr ""
+
+msgid "If you set private to active, you say, that it is not a location, you are the owner from; for example a restaurant."
+msgstr ""
+
+msgid "Inbox"
+msgstr "Posteingang"
+
+msgid "Inbox - Messages list"
+msgstr "Posteingang - Liste der Nachrichten"
+
+msgid "Initial"
+msgstr "Initial"
+
+msgid "Integration"
+msgstr "Integration"
+
+msgid "Invalid object type received."
+msgstr "Ungültiger Objekttyp erkannt."
+
+msgid "Invalid user field name received."
+msgstr "Ungültiger Benutzerfeld-Name aufgerufen."
+
+msgid "Invalid user identifier received."
+msgstr "Ungültige Benutzerkennung erkannt."
+
+msgid "Is open"
+msgstr "Geöffnet"
+
+msgid ""
+"Is your offer active?\r\n"
+"                Is it available at the moment?\r\n"
+"                If you disable, it will not appear in the map."
+msgstr ""
+
+msgid ""
+"Is your offer active?\r\n"
+"            Is it available at the moment?\r\n"
+"            If you disable, it will not appear in the map."
+msgstr ""
+
+msgid "Last update"
+msgstr "Letzte Aktualisierung"
+
+msgid "Latest locations"
+msgstr "Neuste Standorte"
+
+msgid "Latest messages"
+msgstr "Neuste Nachrichten"
+
+msgid "Latest offers"
+msgstr "Neuste Angebote"
+
+msgid "Latest pools"
+msgstr "Neuste Pools"
+
+msgid "Latitude"
+msgstr "Breitengrad"
+
+#, fuzzy
+msgid "Link own locations on account page"
+msgstr "Locations Link im Account anzeigen"
+
+#, fuzzy
+msgid "Link own messages on account page"
+msgstr "Branchen Link im Account anzeigen"
+
+#, fuzzy
+msgid "Link own offers on account page"
+msgstr "Angebote Link im Account anzeigen"
+
+#, fuzzy
+msgid "Link own pools on account page"
+msgstr "Eigene Kollektionen im Benutzerbereich verlinken"
+
+msgid "List of locations"
+msgstr "Liste der Standorte"
+
+msgid "List of offers"
+msgstr "Liste der Angebote"
+
+msgid "List views"
+msgstr "Listensicht"
+
+msgid "Location"
+msgstr "Standort"
+
+msgid "Location entries per page"
+msgstr "Einträge pro Seite für Standorte"
+
+#, fuzzy
+msgid "Location filter hooks subscriber"
+msgstr "beitrag filter hooks subscriber"
+
+#, fuzzy
+msgid "Location form aware subscriber"
+msgstr "Kollektion form aware subscriber"
+
+msgid "Location of offer"
+msgstr "Standort des Angebots"
+
+#, fuzzy
+msgid "Location ui hooks subscriber"
+msgstr "Beitrag ui hooks subscriber"
+
+msgid "Locations"
+msgstr "Standorte"
+
+msgid "Locations list"
+msgstr "Liste der Standorte"
+
+msgid "Longitude"
+msgstr "Längengrad"
+
+msgid "MUShareModule detail view"
+msgstr "MUShareModule Detail Ansicht"
+
+msgid "MUShareModule items"
+msgstr "MUShareModule Elemente"
+
+msgid "MUShareModule list view"
+msgstr "MUShareModule Übersicht"
+
+msgid "Mail"
+msgstr "E-Mail"
+
+msgid "Mail of the company."
+msgstr "Mailadresse der Firma."
+
+msgid "Make content available again."
+msgstr "Inhalt erneut verfügbar machen."
+
+msgid "Manage settings for this application"
+msgstr "Einstellungen für Share vornehmen"
+
+msgid "Map"
+msgstr "Karte"
+
+msgid "Map for sharing and finding paper"
+msgstr "Karte für das Teilen und Finden von Papier"
+
+msgid "Map of your location set for the map and offers"
+msgstr "Karte Deines von Dir für die Karte aktivierten Standortes und Angebote"
+
+msgid "Max locations"
+msgstr "Maximale Anzahl Standorte"
+
+msgid "Max radius"
+msgstr "Maximaler Radius"
+
+msgid "Meeting place"
+msgstr ""
+
+msgid "Message"
+msgstr "Nachricht"
+
+msgid "Message entries per page"
+msgstr "Anzahl der Nachrichten pro Seite"
+
+#, fuzzy
+msgid "Message filter hooks subscriber"
+msgstr "Playliste filter hooks subscriber"
+
+#, fuzzy
+msgid "Message form aware subscriber"
+msgstr "Playliste form aware subscriber"
+
+#, fuzzy
+msgid "Message ui hooks subscriber"
+msgstr "Playliste ui hooks subscriber"
+
+msgid "Messages"
+msgstr "Nachrichten"
+
+msgid "Messages list"
+msgstr "Nachrichtenliste"
+
+msgid "Mobile"
+msgstr "Mobil"
+
+msgid "Moderation"
+msgstr "Moderation"
+
+msgid "Monthly"
+msgstr "Monatlich"
+
+msgid "My locations"
+msgstr "Meine Standorte"
+
+msgid "My messages"
+msgstr "Meine Nachrichten"
+
+msgid "My offers"
+msgstr "Meine Angebote"
+
+msgid "My pools"
+msgstr "Mein Pool"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Needs to be located in the \"External/YourEntity/\" directory."
+msgstr "Muss sich im \"External/YourEntity/\" Ordner befinden."
+
+msgid "New content has been submitted"
+msgstr "Neuer Inhalt wurde eingereicht"
+
+msgid "Newest"
+msgstr "Aktuellste"
+
+msgid "No"
+msgstr ""
+
+msgid "No companies found."
+msgstr "Keine Firmen gefunden."
+
+msgid "No description"
+msgstr "Keine Beschreibung"
+
+msgid "No entries found."
+msgstr "Keine Einträge gefunden."
+
+msgid "No item selected."
+msgstr "Kein Element ausgewählt."
+
+msgid "No locations found."
+msgstr "Keine Standorte gefunden."
+
+msgid "No messages found."
+msgstr "Keine Nachrichten gefunden"
+
+msgid "No offers found."
+msgstr "Keine Angebote gefunden"
+
+msgid "No offers with the same location found."
+msgstr ""
+
+msgid "No pools found."
+msgstr "Keine Pools gefunden"
+
+msgid "No such item found."
+msgstr "Kein solches Element gefunden."
+
+msgid "No such item."
+msgstr "Kein solches Element."
+
+msgid "Not set"
+msgstr "Nicht gesetzt"
+
+msgid "Not set."
+msgstr "Nicht gesetzt."
+
+msgid "Note: this value must be less than %maxValue%."
+msgstr ""
+
+msgid "Note: this value must not exceed %amount% characters."
+msgstr "Beachte: Dieser Wert darf nicht mehr als %amount% Zeichen beinhalten."
+
+msgid "Number of street"
+msgstr "Straßennummer"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Object type"
+msgstr "Objekttyp"
+
+msgid "Offer"
+msgstr "Angebot"
+
+msgid "Offer entries per page"
+msgstr "Angebots Einträge pro Seite"
+
+#, fuzzy
+msgid "Offer filter hooks subscriber"
+msgstr "Film filter hooks subscriber"
+
+#, fuzzy
+msgid "Offer form aware subscriber"
+msgstr "Film form aware subscriber"
+
+msgid "Offer of location"
+msgstr "Angebot des Standortes"
+
+#, fuzzy
+msgid "Offer ui hooks subscriber"
+msgstr "Film ui hooks subscriber"
+
+msgid "Offers"
+msgstr "Angebote"
+
+msgid "Offers in the radius you set for your location"
+msgstr ""
+
+msgid "Offers list"
+msgstr "Liste der Angebote"
+
+msgid "Only digits are allowed."
+msgstr "Nur Ziffern sind erlaubt."
+
+msgid "Only item titles"
+msgstr "Nur Elementtitel"
+
+msgid "Open preview page"
+msgstr "Vorschau öffnen"
+
+msgid "Open quick view window"
+msgstr "Schnellansicht öffnen"
+
+msgid "Operation cancelled."
+msgstr "Aktion abgebrochen."
+
+msgid "Page size"
+msgstr "Seitengröße"
+
+msgid "Paste as"
+msgstr "Einfügen als"
+
+msgid "Period"
+msgstr "Periode"
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "Please choose an option"
+msgstr "Bitte wähle eine Option"
+
+msgid "Pool"
+msgstr "Pool"
+
+msgid "Pool entries per page"
+msgstr "Anzahl der Pools pro Seite"
+
+#, fuzzy
+msgid "Pool filter hooks subscriber"
+msgstr "Beitrag filter hooks subscriber"
+
+#, fuzzy
+msgid "Pool form aware subscriber"
+msgstr "Beitrag form aware subscriber"
+
+#, fuzzy
+msgid "Pool ui hooks subscriber"
+msgstr "Beitrag ui hooks subscriber"
+
+msgid "Pools"
+msgstr ""
+
+msgid "Pools list"
+msgstr "Poolliste"
+
+msgid ""
+"Possoible options:\r\n"
+"                - Standard: Papershare is looking for offers with the same city name or the same zip code of your location or zipcode is in additional zip codes.\r\n"
+"                - City name: only looking for offers with the same city name like your location.\r\n"
+"                - Zip codes: Papershare is looking for offers with the same zip code like your location and additional zip codes"
+msgstr ""
+
+msgid ""
+"Possoible options:\r\n"
+"            - Standard: Papershare is looking for offers with the same city name or the same zip code of your location or zipcode is in additional zip codes.\r\n"
+"            - City name: only looking for offers with the same city name like your location.\r\n"
+"            - Zip codes: Papershare is looking for offers with the same zip code like your location and additional zip codes"
+msgstr ""
+
+msgid "Preview"
+msgstr "Vorschau"
+
+msgid "Private"
+msgstr "Privat"
+
+msgid "Product"
+msgstr "Produkt"
+
+msgid "Publish"
+msgstr "Veröffentlichen"
+
+msgid "Quarterly"
+msgstr ""
+
+msgid "Quick navigation"
+msgstr "Schnellnavigation"
+
+msgid "Radius"
+msgstr ""
+
+msgid "Random"
+msgstr "Zufall"
+
+msgid "Read by recipient"
+msgstr "Vom Empfänger gelesen"
+
+msgid "Read more"
+msgstr "Mehr lesen"
+
+msgid "Recipient"
+msgstr "Empfänger"
+
+msgid "Relative link to the location"
+msgstr "Relativer Link zum Standort"
+
+msgid "Relative link to the message"
+msgstr "Relativer Link zur Nachricht"
+
+msgid "Relative link to the offer"
+msgstr "Relativer Link zum Angebot"
+
+msgid "Relative link to the pool"
+msgstr "Relativer Link zum Pool"
+
+msgid "Reset"
+msgstr "Zurücksetzen"
+
+msgid "Reset to empty value"
+msgstr "Wert leeren"
+
+msgid "Reuse"
+msgstr "Wiederverwenden"
+
+msgid "Reuse for new location"
+msgstr "Für neuen Standort wiederverwenden"
+
+msgid "Reuse for new message"
+msgstr "Für neue Nachricht wiederverwenden"
+
+msgid "Reuse for new offer"
+msgstr "Für neues Angebot wiederverwenden"
+
+msgid "Reuse for new pool"
+msgstr "Für neuen Pool wiederverwenden"
+
+msgid "Search"
+msgstr "Suche"
+
+msgid "Search and select company"
+msgstr "Suche und wähle eine Firma"
+
+msgid "Search and select location"
+msgstr "Suche und wähle einen Standort"
+
+msgid "Search and select message"
+msgstr "Suche und wähle eine Nachricht"
+
+msgid "Search and select offer"
+msgstr "Suche und wähle ein Angebot"
+
+msgid "Search and select pool"
+msgstr "Suche und wähle einen Pool"
+
+msgid "Search for"
+msgstr "Suche nach"
+
+msgid "Search options"
+msgstr "Suchoptionen"
+
+msgid "Send a message to the offerer"
+msgstr "Sende Nachricht an den Anbieter"
+
+msgid "Send an email"
+msgstr "Email senden"
+
+msgid "Send message"
+msgstr "Nachricht senden"
+
+msgid "Send private message to %userName%"
+msgstr "Private Nachricht an %userName% senden"
+
+msgid "Sender"
+msgstr "Sender"
+
+msgid "Sent by %user on %date"
+msgstr "Gesendet von %user am %date"
+
+msgid "Sent by and sent on"
+msgstr "Gesendet von und gesendet am"
+
+msgid "Sent on"
+msgstr "Gesendet am"
+
+msgid "Sentbox"
+msgstr "Postausgang"
+
+msgid "Sentbox - Messages list"
+msgstr "Postausgang - Liste der Nachrichten"
+
+msgid "Settings"
+msgstr "Einstellungen"
+
+msgid "Share Backend"
+msgstr "Backend"
+
+msgid "Share paper"
+msgstr "Papier teilen"
+
+msgid "Show all entries"
+msgstr "Zeige alle Einträge"
+
+msgid "Shows all items except these which are approved"
+msgstr "Alle Elemente zeigen außer die, die freigegeben sind"
+
+msgid "Shows all items except these which are suspended"
+msgstr "Alle Elemente zeigen außer die, die abgelehnt sind"
+
+msgid "Sorry, but an error occured during the %action% action."
+msgstr "Entschuldigung, aber ein Fehler ist während der Aktion %action% entstanden."
+
+msgid "Sorry, but an error occured during the %action% action. Please apply the changes again!"
+msgstr "Entschuldigung, aber ein Fehler ist während der %action% Aktion aufgetreten. Bitte stimme den Änderungen erneut zu!"
+
+msgid "Sorry, but you can not create the location yet as other items are required which must be created before!"
+msgstr "Entschuldigung; aber Sie können eine Location erst erstellen, wenn andere notwendige Elemente erstellt wurden!"
+
+msgid "Sorry, but you can not create the message yet as other items are required which must be created before!"
+msgstr "Entschuldigung, aber Du kannst keine Kollektion erstellen bevor andere erforderliche Elemente nicht erstellt sind!"
+
+msgid "Sorry, but you can not create the offer yet as other items are required which must be created before!"
+msgstr "Entschuldigung, aber Sie können erst ein Angebot erstellen, wenn andere erforderliche Elemente erstellt wurden!"
+
+msgid "Sorry, but you can not create the pool yet as other items are required which must be created before!"
+msgstr "Entschuldigung, aber Du kannst einen Beitrag erst erstellen, wenn andere notwendige Elemente vorhanden sind!"
+
+msgid "Sort by"
+msgstr "Sortierung nach"
+
+msgid "Sort by %s"
+msgstr "Sortierung anhand von %s"
+
+msgid "Sort direction"
+msgstr "Richtung der Sortierung"
+
+msgid "Sorting"
+msgstr "Sortierung"
+
+msgid "Split costs"
+msgstr "Kosten teilen"
+
+msgid "Standard"
+msgstr "Standard"
+
+msgid "State"
+msgstr "Status"
+
+msgid "Status recipient"
+msgstr "Status Empfänger"
+
+msgid "Status sender"
+msgstr "Status des Senders"
+
+msgid "Street"
+msgstr "Straße"
+
+msgid "Subject"
+msgstr "Betreff"
+
+msgid "Submit"
+msgstr "Abschicken"
+
+msgid "Submit and repeat"
+msgstr "Abschicken und wiederholen"
+
+msgid "Suspended"
+msgstr "Abgelehnt"
+
+msgid "Switch to administration area."
+msgstr "Zum Backend wechseln."
+
+msgid "Switch to user area."
+msgstr "Zum Frontend wechseln."
+
+msgid "Template"
+msgstr "Template"
+
+msgid "Text for message"
+msgstr "Text für Nachricht"
+
+msgid "The amount of locations shown per page"
+msgstr "Die Anzahl der Standorte pro Seite"
+
+msgid "The amount of messages shown per page"
+msgstr "Die Anzahl der Nachrichten per Seite"
+
+msgid "The amount of offers shown per page"
+msgstr "Die Anzahl der Angebote per Seite"
+
+msgid "The amount of pools shown per page"
+msgstr "Die Anzahl der Pools pro Seite"
+
+msgid "The default latitude."
+msgstr "Der Standardbreitengrad."
+
+msgid "The default longitude."
+msgstr "Der Standardlängengrad."
+
+msgid "The default zoom level."
+msgstr "Standard Zoom Level."
+
+#, fuzzy
+msgid "The enable location geo location option."
+msgstr "Geo Location für Veranstaltungen aktivieren"
+
+#, fuzzy
+msgid "The enable offer geo location option."
+msgstr "Geo Location für Veranstaltungen aktivieren"
+
+#, fuzzy
+msgid "The link own locations on account page option."
+msgstr "Die Option zur Verlinkung eigener Locations im Benutzerkonto."
+
+msgid "The link own messages on account page option."
+msgstr "Option zur Verlinkung eigener Nachrichten im Benutzerbereich."
+
+#, fuzzy
+msgid "The link own offers on account page option."
+msgstr "Angebote Link im Account anzeigen."
+
+#, fuzzy
+msgid "The link own pools on account page option."
+msgstr "Option zur Verlinkung eigener Beiträge im Benutzerbereich."
+
+msgid "The list of your offers"
+msgstr "Lister Deiner Angebote"
+
+msgid "The maximum amount of items to be shown."
+msgstr "Maximale Anzahl anzuzeigender Elemente."
+
+msgid "The value \"%value%\" is not allowed for the \"%property%\" property."
+msgstr "Der Wert \"%value%\" ist nicht erlaubt für die \"%property%\" Eigenschaft."
+
+msgid "These options allow you to configure integration aspects."
+msgstr "Diese Option erlaubt es Integrationsaspekte zu konfigurieren."
+
+msgid "This is an optional filter."
+msgstr "Dies ist ein optionaler Filter."
+
+msgid "Tile layer attribution"
+msgstr ""
+
+#, fuzzy
+msgid "Tile layer url"
+msgstr "Url von youtube"
+
+msgid "Title"
+msgstr "Titel"
+
+msgid "Total year"
+msgstr "Komplettes Jahr"
+
+msgid "URL of tile layer to use. See http://leaflet-extras.github.io/leaflet-providers/preview/ for examples."
+msgstr ""
+
+msgid "Unpublish"
+msgstr "Unveröffentlichen"
+
+msgid "Update"
+msgstr "Aktualisieren"
+
+msgid "Update configuration"
+msgstr "Einstellungen aktualisieren"
+
+msgid "Update date"
+msgstr "Aktualisierungsdatum"
+
+msgid "Updated by %user"
+msgstr "Aktualisiert von %user"
+
+msgid "Updated by %user on %date"
+msgstr "Aktualisiert von %user am %date"
+
+msgid "Updated on %date"
+msgstr "Aktualisiert am %date"
+
+msgid "Updater"
+msgstr "Aktualisierer"
+
+msgid "View detail page"
+msgstr "Detail Ansicht ansehen"
+
+msgid "Visit this page"
+msgstr "Seite besuchen"
+
+msgid "Website"
+msgstr "Webseite"
+
+msgid "Weekly"
+msgstr "Wöchentlich"
+
+msgid "Welcome to the location section of the Share application."
+msgstr "Willkommen zum Bereich der Standorte im Share Module."
+
+msgid "Welcome to the message section of the Share application."
+msgstr "Willkommen zum Nachrichtenbereich des Moduls Share."
+
+msgid "Welcome to the offer section of the Share application."
+msgstr "Willkommen zum Bereich der Angebote im Share Modul."
+
+#, fuzzy
+msgid "Welcome to the pool section of the Share application."
+msgstr "Willkommen zum Bereich der Videos im Video Module."
+
+#, fuzzy
+msgid "Whether to add a link to locations of the current user on his account page"
+msgstr "Ob ein Link zu eigenen Locations im Benutzerkonto angezeigt werden soll"
+
+#, fuzzy
+msgid "Whether to add a link to messages of the current user on his account page"
+msgstr "Ob ein Link zu Filmen im Benutzerbereich angezeigt werden soll"
+
+#, fuzzy
+msgid "Whether to add a link to offers of the current user on his account page"
+msgstr "Ob ein Link zu eigenen Angeboten im Benutzerkonto angezeigt werden soll"
+
+#, fuzzy
+msgid "Whether to add a link to pools of the current user on his account page"
+msgstr "Ob ein Link zu Beiträgen im Benutzerbereich angezeigt werden soll"
+
+msgid "Whether to enable geo location functionality for locations or not."
+msgstr ""
+
+msgid "Whether to enable geo location functionality for offers or not."
+msgstr ""
+
+#, fuzzy
+msgid "Which sections are supported in the Finder component (used by Scribite plug-ins)."
+msgstr "Welche Bereiche im Finder (genutzt vom Scribite Plugin) unterstützt werden sollen."
+
+msgid "With description"
+msgstr "Mit Beschreibung"
+
+#, fuzzy
+msgid "With selected locations"
+msgstr "Locations"
+
+#, fuzzy
+msgid "With selected messages"
+msgstr "HTML-formatierte Nachricht"
+
+#, fuzzy
+msgid "With selected offers"
+msgstr "Angebote"
+
+#, fuzzy
+msgid "With selected pools"
+msgstr "With selected posts"
+
+#, fuzzy
+msgid "Workflow state"
+msgstr "Workflow Status"
+
+msgid "Workflows"
+msgstr "Workflows"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid ""
+"You can create several locations.\n"
+"    Create locations, if they are possible places, to share stuff."
+msgstr ""
+
+msgid "You get a default view, because you have not yet created your first location. Register to papershare and then use the link Create Location for that."
+msgstr "Du bekommst eine Standard-Ansicht, weil Du noch keinen Standort erstellt hast. Registriere Dich bei Papershare und nutze dafür den Link Standort erstellen."
+
+msgid "You get a default view, because you have not yet created your first location. Use the link Create Location for that."
+msgstr ""
+
+msgid "You use the search option"
+msgstr "Du nutzt die Suchoption"
+
+msgid "Your locations"
+msgstr "Deine Standorte"
+
+msgid "Your submission has been deleted"
+msgstr "Deine Einreichung wurde gelöscht"
+
+msgid "Your submission has been updated"
+msgstr "Deine Einreichung wurde aktualisiert"
+
+msgid "Zip code"
+msgstr "Postleitzahl"
+
+msgid "Zip codes"
+msgstr "Postleitzahlen"
+
+msgid "ZipCodes"
+msgstr ""
+
+msgid "abo ?"
+msgstr "Abo?"
+
+msgid "and a radius of"
+msgstr "und einen Radius von"
+
+msgid "at me ?"
+msgstr "Bei mir?"
+
+msgid "back ?"
+msgstr "Zurück?"
+
+msgid "for map ?"
+msgstr "Für die Karte?"
+
+msgid "is open ?"
+msgstr "Geöffnet?"
+
+msgid "locations"
+msgstr "Standorte"
+
+msgid "messages"
+msgstr "Nachrichten"
+
+msgid "meters"
+msgstr ""
+
+msgid "offers"
+msgstr "Angebote"
+
+msgid "pools"
+msgstr ""
+
+msgid "private ?"
+msgstr "Privat?"
+
+msgid "split costs ?"
+msgstr ""
+
+msgid "total year ?"
+msgstr ""

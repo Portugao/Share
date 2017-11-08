@@ -1,0 +1,205 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"X-Generator: Poedit 2.0.3\n"
+
+msgid "doc"
+msgstr "/installdoc/{name}"
+
+msgid "fos_js_routing_js"
+msgstr "/js/routing.{_format}"
+
+msgid "home"
+msgstr "/"
+
+msgid "install"
+msgstr "/installieren/{stage}"
+
+msgid "legacy_short_url"
+msgstr "/{path}"
+
+msgid "liip_imagine_filter"
+msgstr "/medien/speicher/resolve/{filter}/{path}"
+
+#, fuzzy
+msgid "liip_imagine_filter_runtime"
+msgstr "/medien/speicher/resolve/{filter}/rc/{hash}/{path}"
+
+msgid "musharemodule_ajax_getitemlistfinder"
+msgstr "/ajax/elementefinden"
+
+msgid "musharemodule_config_config"
+msgstr "/einstellungen/bearbeiten"
+
+msgid "musharemodule_external_display"
+msgstr "/extern/ansicht/{objectType}/{id}/{source}/{displayMode}"
+
+msgid "musharemodule_external_finder"
+msgstr "/extern/finden/{objectType}/{editor}/{sort}/{sortdir}/{pos}/{num}"
+
+msgid "musharemodule_location_admindelete"
+msgstr "/admin/standort/delete/{id}.{_format}"
+
+msgid "musharemodule_location_admindisplay"
+msgstr "/admin/standort/{id}.{_format}"
+
+msgid "musharemodule_location_adminedit"
+msgstr "/admin/standort/bearbeiten/{id}.{_format}"
+
+msgid "musharemodule_location_adminhandleselectedentries"
+msgstr "/admin/standorte/gewaehlteeintraegehandhaben"
+
+msgid "musharemodule_location_adminindex"
+msgstr "/admin/standorte"
+
+msgid "musharemodule_location_adminview"
+msgstr "/admin/standorte/uebersicht/{sort}/{sortdir}/{pos}/{num}.{_format}"
+
+msgid "musharemodule_location_delete"
+msgstr "/standort/loeschen/{id}.{_format}"
+
+msgid "musharemodule_location_display"
+msgstr "/standort/{id}.{_format}"
+
+msgid "musharemodule_location_edit"
+msgstr "/standort/bearbeiten/{id}.{_format}"
+
+msgid "musharemodule_location_handleselectedentries"
+msgstr "/standorte/gewaehlteeintraegehandhaben"
+
+msgid "musharemodule_location_index"
+msgstr "/standorte"
+
+msgid "musharemodule_location_view"
+msgstr "/standorte/uebersicht/{sort}/{sortdir}/{pos}/{num}.{_format}"
+
+msgid "musharemodule_message_admindelete"
+msgstr "/admin/nachricht/loeschen/{id}.{_format}"
+
+msgid "musharemodule_message_admindisplay"
+msgstr "/admin/nachricht/{id}.{_format}"
+
+msgid "musharemodule_message_adminedit"
+msgstr "/admin/nachricht/bearbeiten/{id}.{_format}"
+
+msgid "musharemodule_message_adminhandleselectedentries"
+msgstr "/admin/nachrichten/gewaehlteeintraegehandhaben"
+
+msgid "musharemodule_message_adminindex"
+msgstr "/admin/nachrichten"
+
+msgid "musharemodule_message_adminview"
+msgstr "/admin/nachrichten/uebersicht/{sort}/{sortdir}/{pos}/{num}.{_format}"
+
+msgid "musharemodule_message_delete"
+msgstr "/nachricht/löschen/{id}.{_format}"
+
+msgid "musharemodule_message_display"
+msgstr "/nachricht/{id}.{_format}"
+
+msgid "musharemodule_message_edit"
+msgstr "/nachricht/bearbeiten/{id}.{_format}"
+
+msgid "musharemodule_message_handleselectedentries"
+msgstr "/nachrichten/gewaehlteeintraegehandhaben"
+
+msgid "musharemodule_message_index"
+msgstr "/nachrichten"
+
+msgid "musharemodule_message_view"
+msgstr "/nachrichten/uebersicht/{sort}/{sortdir}/{pos}/{num}.{_format}"
+
+msgid "musharemodule_offer_admindelete"
+msgstr "/admin/angebot/loeschen/{id}.{_format}"
+
+msgid "musharemodule_offer_admindisplay"
+msgstr "/admin/angebot/{id}.{_format}"
+
+msgid "musharemodule_offer_adminedit"
+msgstr "/admin/angebot/bearbeiten/{id}.{_format}"
+
+msgid "musharemodule_offer_adminhandleselectedentries"
+msgstr "/admin/angebote/gewaehlteeintraegehandhaben"
+
+msgid "musharemodule_offer_adminindex"
+msgstr "/admin/angebote"
+
+msgid "musharemodule_offer_adminview"
+msgstr "/admin/angebote/uebersicht/{sort}/{sortdir}/{pos}/{num}.{_format}"
+
+msgid "musharemodule_offer_delete"
+msgstr "/angebot/loeschen/{id}.{_format}"
+
+msgid "musharemodule_offer_display"
+msgstr "/angebot/{id}.{_format}"
+
+msgid "musharemodule_offer_edit"
+msgstr "/angebot/bearbeiten/{id}.{_format}"
+
+msgid "musharemodule_offer_handleselectedentries"
+msgstr "/angebotes/gewaehlteeintraegehandhaben"
+
+msgid "musharemodule_offer_index"
+msgstr "/angebote"
+
+msgid "musharemodule_offer_view"
+msgstr "/angebote/uebersicht/{sort}/{sortdir}/{pos}/{num}.{_format}"
+
+msgid "musharemodule_pool_admindelete"
+msgstr "/admin/pool/delete/{id}.{_format}"
+
+msgid "musharemodule_pool_admindisplay"
+msgstr "/admin/pool/{id}.{_format}"
+
+msgid "musharemodule_pool_adminedit"
+msgstr "/admin/pool/edit/{id}.{_format}"
+
+msgid "musharemodule_pool_adminhandleselectedentries"
+msgstr "/admin/pools/handleSelectedEntries"
+
+msgid "musharemodule_pool_adminindex"
+msgstr "/admin/pools"
+
+msgid "musharemodule_pool_adminview"
+msgstr "/admin/pools/view/{sort}/{sortdir}/{pos}/{num}.{_format}"
+
+msgid "musharemodule_pool_delete"
+msgstr "/pool/delete/{id}.{_format}"
+
+msgid "musharemodule_pool_display"
+msgstr "/pool/{id}.{_format}"
+
+msgid "musharemodule_pool_edit"
+msgstr "/pool/edit/{id}.{_format}"
+
+msgid "musharemodule_pool_handleselectedentries"
+msgstr "/pools/handleSelectedEntries"
+
+msgid "musharemodule_pool_index"
+msgstr "/pools"
+
+msgid "musharemodule_pool_view"
+msgstr "/pools/view/{sort}/{sortdir}/{pos}/{num}.{_format}"
+
+msgid "upgrade"
+msgstr "/aktualisieren/{stage}"
+
+msgid "zikula_hook_hook_changeproviderareaorder"
+msgstr "/hooks/changeorder"
+
+msgid "zikula_hook_hook_edit"
+msgstr "/hooks/{moduleName}"
+
+msgid "zikula_hook_hook_togglesubscribeareastatus"
+msgstr "/hooks/togglestatus"
+
+msgid "zikula_workflow_editor_index"
+msgstr "/editor/index"

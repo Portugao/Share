@@ -1,0 +1,12 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+
+msgid "Choosing a location of offer is required."
+msgstr "Choosing a location of offer is required."
+msgid "Choosing at least one of the offer of location is required."
+msgstr "Choosing at least one of the offer of location is required."
+msgid "This value must be a valid user id."
+msgstr "This value must be a valid user id."
