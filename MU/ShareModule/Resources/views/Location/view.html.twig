@@ -12,8 +12,9 @@
     <form action="{{ path('musharemodule_location_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="locationsViewForm" class="form-horizontal" role="form">
         <div>
     {% endif %}
-    
+    {% if loggedIn == 1 %}
     <h3 class="musharemodule-map">{{ __('Map of your location set for the map and offers') }}</h3>
+    {% endif %}
     {% if myLocation is defined %}
     <div class="alert alert-success">{{ __('You use the search option') }} {{ searchOption }} {{ __('and a radius of') }} {{ radius }} {{ __('meters') }} {{ __(' for your location') }}.</div>
         {#% if status == 0 %}
