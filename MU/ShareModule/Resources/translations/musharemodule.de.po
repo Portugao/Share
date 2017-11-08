@@ -203,7 +203,7 @@ msgid "Create location"
 msgstr "Standort erstellen"
 
 msgid "Create message"
-msgstr "Nachricht rstellen"
+msgstr "Nachricht erstellen"
 
 msgid "Create offer"
 msgstr "Angebot erstellen"
@@ -214,9 +214,8 @@ msgstr "Angebot der Location erstellen"
 msgid "Create offers"
 msgstr "Angebot erstellen"
 
-#, fuzzy
 msgid "Create pool"
-msgstr "Ungültiger Datenpool für dieses Bild"
+msgstr "Pool erstellen"
 
 msgid "Created by %user"
 msgstr "Erstellt von %user"
