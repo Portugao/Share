@@ -190,12 +190,14 @@ class WorkflowHelper extends AbstractWorkflowHelper
     					}    					
     				}
     			} elseif ($entity instanceof LocationEntity) {
+    				// we set another loction for the map
     				$where = 'tbl.id != ' . $entity['id'];
     				$where .= ' AND ';
     				$where .= 'tbl.createdBy = ' . $entity->getCreatedBy()->getUid();
     				$locations = $locationRepository->selectWhere($where);
     				if (count($locations) == 0) {
     					die('T'); // TODO
+    					
     				} else {
     					$thisLocation = $locationRepository->find($locations[0]['id']);
     					$thisLocation->setForMap(1);
@@ -203,6 +205,7 @@ class WorkflowHelper extends AbstractWorkflowHelper
     				}
     				$entityManager->remove($entity);
     				$entityManager->flush();
+    				//
     			} else {
     				$entityManager->remove($entity);
     			}
