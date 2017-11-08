@@ -340,7 +340,7 @@ class ControllerHelper extends AbstractControllerHelper
     		$templateParameters['currentUrlObject'] = new RouteUrl('musharemodule_' . strtolower($objectType) . '_display', $urlParameters);
     	}
     	
-    	if (($objectType == 'location' || $objectType == 'offer' || $objectType == 'company') && $templateParameters['routeArea'] != 'admin') {
+    	if (($objectType == 'location' || $objectType == 'offer') && $templateParameters['routeArea'] != 'admin') {
     		$uid = $this->currentUserApi->get('uid');
     		if ($entity->getCreatedBy()->getUid() != $uid) {
     			$url = new RouteUrl('musharemodule_location_view');
