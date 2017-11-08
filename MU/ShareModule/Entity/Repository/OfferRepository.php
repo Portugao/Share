@@ -14,12 +14,62 @@ namespace MU\ShareModule\Entity\Repository;
 
 use MU\ShareModule\Entity\Repository\Base\AbstractOfferRepository;
 
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 /**
  * Repository class used to implement own convenience methods for performing certain DQL queries.
  *
  * This is the concrete repository class for offer entities.
  */
 class OfferRepository extends AbstractOfferRepository
-{
-    // feel free to add your own methods here, like for example reusable DQL queries
+{	
+    /**
+     * Builds a generic Doctrine query supporting WHERE and ORDER BY.
+     *
+     * @param string  $where    The where clause to use when retrieving the collection (optional) (default='')
+     * @param string  $orderBy  The order-by clause to use when retrieving the collection (optional) (default='')
+     * @param boolean $useJoins Whether to include joining related objects (optional) (default=true)
+     * @param boolean $slimMode If activated only some basic fields are selected without using any joins (optional) (default=false)
+     *
+     * @return QueryBuilder Query builder instance to be further processed
+     */
+    public function getOwnLocationsBuilder($where = '', $orderBy = '', $useJoins = true, $slimMode = false)
+    {
+        // normally we select the whole table
+        $selection = 'tbl';
+    
+        if (true === $slimMode) {
+            // but for the slim version we select only the basic fields, and no joins
+    
+            $selection = 'tbl.id';
+            $selection .= ', tbl.product';
+            $useJoins = false;
+        }
+    
+        if (true === $useJoins) {
+            $selection .= $this->addJoinsToSelection();
+        }
+    
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select($selection)
+           ->from($this->mainEntityClass, 'tbl');
+    
+        if (true === $useJoins) {
+            $this->addJoinsToFrom($qb);
+        }
+        $uid = $currentUserApi->get('uid');
+        if ($where != '') {
+        	$where .= ' AND ';
+            $where .= 'tbl.createdBy = ' . $uid;
+        } else {
+        	$where = 'tbl.createdBy = ' . $uid;
+        }
+        if (!empty($where)) {
+            $qb->andWhere($where);
+        }
+    
+        $this->genericBaseQueryAddOrderBy($qb, $orderBy);
+    
+        return $qb;
+    }
 }
