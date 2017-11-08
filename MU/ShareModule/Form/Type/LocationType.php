@@ -13,11 +13,82 @@
 namespace MU\ShareModule\Form\Type;
 
 use MU\ShareModule\Form\Type\Base\AbstractLocationType;
+use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
+
+use Symfony\Component\Form\FormBuilderInterface;
+use MU\ShareModule\Entity\Factory\EntityFactory;
+use MU\ShareModule\Helper\CollectionFilterHelper;
+use MU\ShareModule\Helper\EntityDisplayHelper;
+use MU\ShareModule\Helper\FeatureActivationHelper;
+use MU\ShareModule\Helper\ListEntriesHelper;
+use Zikula\Common\Translator\TranslatorInterface;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 /**
  * Location editing form type implementation class.
  */
 class LocationType extends AbstractLocationType
 {
-    // feel free to extend the location editing form type class here
+	/**
+	 * @var VariableApiInterface
+	 */
+	protected $variableApi;
+	
+	/**
+	 * LocationType constructor.
+	 *
+	 * @param TranslatorInterface $translator    Translator service instance
+	 * @param EntityFactory $entityFactory EntityFactory service instance
+	 * @param CollectionFilterHelper $collectionFilterHelper CollectionFilterHelper service instance
+	 * @param EntityDisplayHelper $entityDisplayHelper EntityDisplayHelper service instance
+	 * @param ListEntriesHelper $listHelper ListEntriesHelper service instance
+	 * @param FeatureActivationHelper $featureActivationHelper FeatureActivationHelper service instance
+	 * @param VariableApiInterface $variableApi     VariableApi service instance
+	 */
+	public function __construct(
+			TranslatorInterface $translator,
+			EntityFactory $entityFactory,
+			CollectionFilterHelper $collectionFilterHelper,
+			EntityDisplayHelper $entityDisplayHelper,
+			ListEntriesHelper $listHelper,
+			FeatureActivationHelper $featureActivationHelper,
+			VariableApiInterface $variableApi
+			) {
+				$this->setTranslator($translator);
+				$this->entityFactory = $entityFactory;
+				$this->collectionFilterHelper = $collectionFilterHelper;
+				$this->entityDisplayHelper = $entityDisplayHelper;
+				$this->listHelper = $listHelper;
+				$this->featureActivationHelper = $featureActivationHelper;
+				$this->variableApi = $variableApi;				
+	}
+	
+    /**
+     * @inheritDoc
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+    	
+        parent::buildForm($builder, $options);
+        
+        $maxRadius = $this->variableApi->get('MUShareModule', 'maxRadius');
+        $builder->add('radius', IntegerType::class, [
+        		'label' => $this->__('Radius') . ':',
+        		'label_attr' => [
+        				'class' => 'tooltips',
+        				'title' => $this->__('Enter the radius for displaying offers.
+                Standard value is 1000.')
+        		],
+        		'help' => [$this->__('Enter the radius for displaying offers.
+            Standard value is 1000.'), $this->__f('Note: this value must be less than %maxValue%.', ['%maxValue%' => $maxRadius])],
+        		'empty_data' => '1000',
+        		'attr' => [
+        				'maxlength' => 5,
+        				'class' => '',
+        				'title' => $this->__('Enter the radius of the location.') . ' ' . $this->__('Only digits are allowed.')
+        		],
+        		'required' => true,
+        		'scale' => 0
+        ]);
+    }
 }
