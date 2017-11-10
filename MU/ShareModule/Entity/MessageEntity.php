@@ -28,5 +28,5 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class MessageEntity extends BaseEntity
 {
-    // feel free to add your own methods here
+
 }

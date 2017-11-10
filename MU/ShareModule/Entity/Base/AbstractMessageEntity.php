@@ -88,8 +88,7 @@ abstract class AbstractMessageEntity extends EntityAccess
     protected $recipient = null;
     
     /**
-     * @ORM\Column(type="datetime")
-     * @Assert\NotNull()
+     * @ORM\Column(type="datetime", nullable=true)
      * @Assert\DateTime()
      * @var DateTime $readByRecipient
      */
