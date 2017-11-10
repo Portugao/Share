@@ -147,6 +147,7 @@ abstract class AbstractMessageType extends AbstractType
         
         $builder->add('readByRecipient', DateTimeType::class, [
             'label' => $this->__('Read by recipient') . ':',
+        	'by_reference' => true,
             'attr' => [
                 'class' => '',
                 'title' => $this->__('Enter the read by recipient of the message')
