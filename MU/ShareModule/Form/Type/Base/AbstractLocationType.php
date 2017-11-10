@@ -240,12 +240,12 @@ abstract class AbstractLocationType extends AbstractType
             'label' => $this->__('Search options') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
-                'title' => $this->__('Possoible options:
+                'title' => $this->__('Possible options:
                 - Standard: Papershare is looking for offers with the same city name or the same zip code of your location or zipcode is in additional zip codes.
                 - City name: only looking for offers with the same city name like your location.
                 - Zip codes: Papershare is looking for offers with the same zip code like your location and additional zip codes')
             ],
-            'help' => $this->__('Possoible options:
+            'help' => $this->__('Possible options:
             - Standard: Papershare is looking for offers with the same city name or the same zip code of your location or zipcode is in additional zip codes.
             - City name: only looking for offers with the same city name like your location.
             - Zip codes: Papershare is looking for offers with the same zip code like your location and additional zip codes'),
@@ -273,6 +273,7 @@ abstract class AbstractLocationType extends AbstractType
                 'class' => '',
                 'title' => $this->__('private ?')
             ],
+        	'data' => true,
             'required' => false,
         ]);
         

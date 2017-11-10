@@ -282,7 +282,7 @@ abstract class AbstractOfferType extends AbstractType
                 'class' => '',
                 'title' => $this->__('Enter the zip code of the offer')
             ],
-            'required' => true,
+            'required' => false,
         ]);
         
         $builder->add('meetingPlace', TextType::class, [
