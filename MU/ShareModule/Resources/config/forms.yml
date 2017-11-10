@@ -38,6 +38,11 @@ services:
             - "@mu_share_module.feature_activation_helper"
         tags:
             - { name: form.type }
+            
+    mu_share_module.form_datatransformer:
+        class: MU\ShareModule\Form\DataTransformer\StringObjectTransformer
+        arguments:
+            - "@zikula_users_module.user_repository"
     
     mu_share_module.form.handler.common:
         abstract: true
@@ -56,6 +61,7 @@ services:
             - "@mu_share_module.workflow_helper"
             - "@mu_share_module.hook_helper"
             - "@mu_share_module.feature_activation_helper"
+            - "@zikula_users_module.user_repository"
         calls:
             - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
     
@@ -121,6 +127,7 @@ services:
             - "@mu_share_module.entity_factory"
             - "@mu_share_module.listentries_helper"
             - "@mu_share_module.feature_activation_helper"
+            - "@mu_share_module.form_datatransformer"
         tags:
             - { name: form.type }
     
