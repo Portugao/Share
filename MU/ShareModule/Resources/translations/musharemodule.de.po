@@ -12,7 +12,7 @@ msgstr ""
 "X-Generator: Poedit 2.0.3\n"
 
 msgid " for your location"
-msgstr "für deinen Standort"
+msgstr " für Deinen Standort"
 
 msgid "%collectionOfPool%"
 msgstr "%collectionOfPool%"
@@ -50,36 +50,29 @@ msgstr "50"
 msgid "A direct feed showing the list of locations"
 msgstr "Ein Feed der die Standorte anzeigt"
 
-#, fuzzy
 msgid "A direct feed showing the list of messages"
-msgstr "Ein Feed, der eine Liste von Abstimmungen zeigt"
+msgstr "Ein Feed, der eine Liste von Nachrichten zeigt"
 
-#, fuzzy
 msgid "A direct feed showing the list of offers"
-msgstr "Ein Feed, der eine Liste von Abstimmungen zeigt"
+msgstr "Ein Feed, der eine Liste von Angeboten zeigt"
 
-#, fuzzy
 msgid "A direct feed showing the list of pools"
-msgstr "Ein Feed, der eine Liste von Abstimmungen zeigt"
+msgstr "Ein Feed, der eine Liste von Pools zeigt"
 
 msgid "Abo"
 msgstr "Abo"
 
-#, fuzzy
 msgid "Absolute url to the location"
-msgstr "Bild mit absoluten Link zur Location"
+msgstr "Absoluter Link zum Standort"
 
-#, fuzzy
 msgid "Absolute url to the message"
-msgstr "Absolute Url zum Special einer Location"
+msgstr "Absolute Url zur Nachricht"
 
-#, fuzzy
 msgid "Absolute url to the offer"
-msgstr "Absolute Url zum Special einer Location"
+msgstr "Absolute Url zum Angebot"
 
-#, fuzzy
 msgid "Absolute url to the pool"
-msgstr "Absolute Url zum Special einer Location"
+msgstr "Absolute Url zum Pool"
 
 msgid "Actions"
 msgstr "Aktionen"
@@ -95,6 +88,9 @@ msgstr "Alle ausgenommen abgelehnte"
 
 msgid "Amount"
 msgstr "Anzahl"
+
+msgid "answer"
+msgstr "antworten"
 
 msgid "Approved"
 msgstr "Freigegeben"
@@ -144,33 +140,29 @@ msgstr "Wähle die aktivierten Finder Typen."
 msgid "Choose the location of offer"
 msgstr "Wähle den Standort des Angebots"
 
-#, fuzzy
 msgid "Choose the period"
-msgstr "Periode"
+msgstr "Wähle die Periode"
 
-#, fuzzy
 msgid "Choose the pool"
-msgstr "Ungültiger Datenpool für dieses Bild"
+msgstr "Wähle den Pool"
 
-#, fuzzy
 msgid "Choose the search options"
-msgstr "Suche"
+msgstr "Wähle die Suchoption"
 
-#, fuzzy
 msgid "Choose your location of offer"
-msgstr "Wählen Sie Ihre Location"
+msgstr "Wähle den Standort des Angebots"
 
 msgid "City"
 msgstr "Stadt"
 
 msgid "CityName"
-msgstr ""
+msgstr "Stadtname"
 
 msgid "Collection of pool"
 msgstr "Kollektion von Pools"
 
 msgid "Companies"
-msgstr ""
+msgstr "Firmen"
 
 msgid "Company"
 msgstr "Firma"
@@ -316,23 +308,23 @@ msgid "Do you really want to delete this message: \"%name%\" ?"
 msgstr "Willst Du die Nachricht \"%name%\" wirklich löschen ?"
 
 msgid "Do you really want to delete this offer: \"%name%\" ?"
-msgstr "Möchtest Du das Angebot\"%name%\" wirklich löschen?"
+msgstr "Möchtest Du den Pool \"%name%\" wirklich löschen?"
 
 msgid "Do you really want to delete this pool: \"%name%\" ?"
 msgstr "Willst Du den Pool \"%name%\" wirklich löschen ?"
 
 msgid "Do you want back your offer after sharing?"
-msgstr ""
+msgstr "Möchtest Du Dein Angebot nach dem Teilen auch zurück bekommen?"
 
 msgid ""
 "Do you wish to get a small part of your costs?\r\n"
 "                Maximal 15% of the price are allowed for new magazines, books and so on."
-msgstr ""
+msgstr "Möchtest Du eine Kostenbeteiligung?\vMaximal 15 % des Kaufpreises sind erlaubt."
 
 msgid ""
 "Do you wish to get a small part of your costs?\r\n"
 "            Maximal 15% of the price are allowed for new magazines, books and so on."
-msgstr ""
+msgstr "Möchtest Du eine Kostenbeteiligung?\vMaximal 15 % des Kaufpreises sind erlaubt."
 
 msgid "Doctrine Exception"
 msgstr "Doctrine Ausnahme"
@@ -355,19 +347,15 @@ msgstr "Erledigt! Standort gelöscht."
 msgid "Done! Location updated."
 msgstr "Erledigt! Standort aktualisiert."
 
-#, fuzzy
 msgid "Done! Message created."
 msgstr "Erledigt! Die Nachricht wurde verschickt."
 
-#, fuzzy
 msgid "Done! Message deleted."
 msgstr "Erledigt! Erfolgreich gelöscht."
 
-#, fuzzy
 msgid "Done! Message updated."
-msgstr "Erledigt! Konfiguration aktualisiert."
+msgstr "Erledigt! Nachricht aktualisiert."
 
-#, fuzzy
 msgid "Done! Module configuration updated."
 msgstr "Erledigt. Konfiguration aktualisiert."
 
@@ -417,21 +405,17 @@ msgstr "Pool bearbeiten"
 msgid "Edit pools workflow"
 msgstr "Workflow für Beiträge bearbeiten"
 
-#, fuzzy
 msgid "Edit this location"
-msgstr "Location bearbeiten"
+msgstr "Standort bearbeiten"
 
-#, fuzzy
 msgid "Edit this message"
-msgstr "Bearbeiten"
+msgstr "Nachricht bearbeiten"
 
-#, fuzzy
 msgid "Edit this offer"
 msgstr "Dieses Angebot bearbeiten"
 
-#, fuzzy
 msgid "Edit this pool"
-msgstr "Ungültiger Datenpool für dieses Bild"
+msgstr "Pool bearbeiten"
 
 #, fuzzy
 msgid "Edit workflow for locations"
@@ -457,18 +441,17 @@ msgstr "Geo Location für Locations aktivieren"
 msgid "Enable offer geo location"
 msgstr "Geo Location für Veranstaltungen aktivieren"
 
-#, fuzzy
 msgid "Enabled finder types"
-msgstr "Aktive Finder Typen"
+msgstr "Finder Typen aktivieren"
 
 msgid "Enter a description of your offer if it could be helpful!"
-msgstr ""
+msgstr "Gib eine Beschreibung ein, wenn sie hilfreich sein kann!"
 
 msgid "Enter a subject for your message!"
 msgstr "Gib einen Betreff für Deine Nachricht ein!"
 
 msgid "Enter a title for better management of your locations."
-msgstr ""
+msgstr "Gib einen Titel zur besseren Organisation Deiner Standorte ein."
 
 msgid "Enter the city of the location"
 msgstr "Gib die Stadt ein"
@@ -502,7 +485,7 @@ msgid "Enter the max locations."
 msgstr "Gib die maximale Anzahl an Standorten ein."
 
 msgid "Enter the max radius."
-msgstr "Gib den maximalen Radius ein"
+msgstr "Gib den maximalen Radius ein."
 
 msgid "Enter the meeting place of the offer"
 msgstr "Gib den Treffpunkt für das Angebot ein"
@@ -544,7 +527,7 @@ msgstr ""
 msgid ""
 "Enter the radius for displaying offers.\r\n"
 "            Standard value is 1000."
-msgstr ""
+msgstr "Gib den Radius zur Angebotsanzeige ein.\vStandard ist 1000 (1km)."
 
 msgid "Enter the radius of the location."
 msgstr "Gib den Radius für den Standort ein."
@@ -562,7 +545,7 @@ msgid "Enter the status sender of the message."
 msgstr ""
 
 msgid "Enter the street (and number) for the meeting place!"
-msgstr "Gib die Staraße (und die Hausnummer) für den Treffpunkt ein!"
+msgstr "Gib die Straße (und die Hausnummer) für den Treffpunkt ein!"
 
 msgid "Enter the street of the location"
 msgstr "Gib die Straße für den Standort ein"
@@ -598,9 +581,8 @@ msgstr "Geben Sie die Postleitzahl ein"
 msgid "Enter the zip codes of the location"
 msgstr "Gib die Postleitzahl ein"
 
-#, fuzzy
 msgid "Enter your text for your message."
-msgstr "Bitte geben Sie Ihren Namen ein"
+msgstr "Bitte gib den Text für Deine Nachricht ein."
 
 msgid "Entry to display"
 msgstr "Anzuzeigender Eintrag"
@@ -669,20 +651,20 @@ msgid "Here you can configure parameters for list views."
 msgstr "Hier kannst Du Parameter für die Listenansicht einstellen."
 
 msgid "Here you can define settings related to geographical features."
-msgstr ""
+msgstr "Hier kannst Du Einstellungen zu geografischen Aspekten einstellen."
 
 msgid ""
 "Here you can enter additional zip codes. If you choose the relevant search option, papershare will also use them, to find offers.\r\n"
 "                Enter them comaseperated like (28203,28205,28207) without space."
-msgstr ""
+msgstr "Hier kannst Du zusätzliche Postleitzahlen eingeben. Wenn Du die entsprechende Suchoption einstellst, werden sie genutzt, um Angebote zu finden.\vGib sie kommasepariert wie (28203,28205,28207) ohne Leerzeichen ein."
 
 msgid ""
 "Here you can enter additional zip codes. If you choose the relevant search option, papershare will also use them, to find offers.\r\n"
 "            Enter them comaseperated like (28203,28205,28207) without space."
-msgstr ""
+msgstr "Hier kannst Du zusätzliche Postleitzahlen eingeben. Wenn Du die entsprechende Suchoption einstellst, werden sie genutzt, um Angebote zu finden.\vGib sie kommasepariert wie (28203,28205,28207) ohne Leerzeichen ein."
 
 msgid "Here you can enter more informations about the company."
-msgstr ""
+msgstr "Gib mehr Informationen zur Firma ein."
 
 msgid "Here you can inspect and amend the existing workflows."
 msgstr "Hier kannst Du den existierenden Workflow betrachten und abändern."
@@ -693,9 +675,8 @@ msgstr "Hier kannst Du die Grundeinstellungen für dieses Modul verwalten."
 msgid "Hide content temporarily."
 msgstr "Verstecke Inhalt zwischenzeitlich."
 
-#, fuzzy
 msgid "Homepage of your company."
-msgstr "Klicken Sie hier, um Ihre Homepage zu besuchen"
+msgstr "Homepage Deiner Firma."
 
 msgid "ID of location"
 msgstr "ID des Standortes"
@@ -712,21 +693,24 @@ msgstr "ID des Pools"
 msgid ""
 "If enabled the latitude and longitude get set like the location from where or for what you create the offer.\r\n"
 "                It does not work, what you set by clicking into the map."
-msgstr ""
+msgstr "Wenn aktiviert werden Breitengrad und Längengrad Deines Standortes gesetzt, egal ob Du in die Karte klickst."
 
 msgid ""
 "If enabled the latitude and longitude get set like the location from where or for what you create the offer.\r\n"
 "            It does not work, what you set by clicking into the map."
-msgstr ""
+msgstr "Wenn aktiviert werden Breitengrad und Längengrad Deines Standortes gesetzt, egal ob Du in die Karte klickst."
+
+msgid "If you are interested in the offer, you can send a message to the offerer."
+msgstr "Wenn Du Dich für das Angebot interessierst, kannst Du dem Anbieter eine Nachricht zukommen lassen."
 
 msgid "If you change this please save the block once to reload the parameters below."
 msgstr "Wenn Du dies änderst, speichere den Block erneut, um die Parameter neu zu laden."
 
 msgid "If you have magazines or something else and a complete year, you can set this option."
-msgstr ""
+msgstr "Wenn Du Magazine oder anderes hast und davon ein komplettes Jahr, dann setze hier den Haken."
 
 msgid "If you set private to active, you say, that it is not a location, you are the owner from; for example a restaurant."
-msgstr ""
+msgstr "Wenn Du privat aktivierst, sagt Du damit, dass es sich bei diesem Standort nicht um eine Firma handelt, deren Eigentümer Du bist, zum Beispiel ein Restaurant."
 
 msgid "Inbox"
 msgstr "Posteingang"
@@ -739,6 +723,9 @@ msgstr "Initial"
 
 msgid "Integration"
 msgstr "Integration"
+
+msgid "Interested?"
+msgstr "Interessiert?"
 
 msgid "Invalid object type received."
 msgstr "Ungültiger Objekttyp erkannt."
@@ -756,13 +743,13 @@ msgid ""
 "Is your offer active?\r\n"
 "                Is it available at the moment?\r\n"
 "                If you disable, it will not appear in the map."
-msgstr ""
+msgstr "Ist Dein Angebot aktiv?\vIst es derzeit verfügbar?\vWenn deaktiviert, wird Dein Angebot nicht in der Karte angezeigt."
 
 msgid ""
 "Is your offer active?\r\n"
 "            Is it available at the moment?\r\n"
 "            If you disable, it will not appear in the map."
-msgstr ""
+msgstr "Ist Dein Angebot aktiv?\vIst es derzeit verfügbar?\vWenn deaktiviert, wird Dein Angebot nicht in der Karte angezeigt."
 
 msgid "Last update"
 msgstr "Letzte Aktualisierung"
@@ -813,20 +800,17 @@ msgstr "Standort"
 msgid "Location entries per page"
 msgstr "Einträge pro Seite für Standorte"
 
-#, fuzzy
 msgid "Location filter hooks subscriber"
-msgstr "beitrag filter hooks subscriber"
+msgstr "Standort filter hooks subscriber"
 
-#, fuzzy
 msgid "Location form aware subscriber"
-msgstr "Kollektion form aware subscriber"
+msgstr "Standort form aware subscriber"
 
 msgid "Location of offer"
 msgstr "Standort des Angebots"
 
-#, fuzzy
 msgid "Location ui hooks subscriber"
-msgstr "Beitrag ui hooks subscriber"
+msgstr "Standort ui hooks subscriber"
 
 msgid "Locations"
 msgstr "Standorte"
@@ -874,7 +858,7 @@ msgid "Max radius"
 msgstr "Maximaler Radius"
 
 msgid "Meeting place"
-msgstr ""
+msgstr "Treffpunkt"
 
 msgid "Message"
 msgstr "Nachricht"
@@ -882,17 +866,14 @@ msgstr "Nachricht"
 msgid "Message entries per page"
 msgstr "Anzahl der Nachrichten pro Seite"
 
-#, fuzzy
 msgid "Message filter hooks subscriber"
-msgstr "Playliste filter hooks subscriber"
+msgstr "Nachricht filter hooks subscriber"
 
-#, fuzzy
 msgid "Message form aware subscriber"
-msgstr "Playliste form aware subscriber"
+msgstr "Nachricht form aware subscriber"
 
-#, fuzzy
 msgid "Message ui hooks subscriber"
-msgstr "Playliste ui hooks subscriber"
+msgstr "Nachricht ui hooks subscriber"
 
 msgid "Messages"
 msgstr "Nachrichten"
@@ -934,7 +915,7 @@ msgid "Newest"
 msgstr "Aktuellste"
 
 msgid "No"
-msgstr ""
+msgstr "Nein"
 
 msgid "No companies found."
 msgstr "Keine Firmen gefunden."
@@ -952,16 +933,19 @@ msgid "No locations found."
 msgstr "Keine Standorte gefunden."
 
 msgid "No messages found."
-msgstr "Keine Nachrichten gefunden"
+msgstr "Keine Nachrichten gefunden."
 
 msgid "No offers found."
-msgstr "Keine Angebote gefunden"
+msgstr "Keine Angebote gefunden."
 
 msgid "No offers with the same location found."
-msgstr ""
+msgstr "Kein Angebote mit dem selben Standort gefunden."
 
 msgid "No pools found."
-msgstr "Keine Pools gefunden"
+msgstr "Keine Pools gefunden."
+
+msgid "Not read yet
+msgstr "Noch nicht gelesen"
 
 msgid "No such item found."
 msgstr "Kein solches Element gefunden."
@@ -976,7 +960,7 @@ msgid "Not set."
 msgstr "Nicht gesetzt."
 
 msgid "Note: this value must be less than %maxValue%."
-msgstr ""
+msgstr "Beachte: Dieser Wert muss geringer als %maxValue% sein."
 
 msgid "Note: this value must not exceed %amount% characters."
 msgstr "Beachte: Dieser Wert darf nicht mehr als %amount% Zeichen beinhalten."
@@ -1015,7 +999,7 @@ msgid "Offers"
 msgstr "Angebote"
 
 msgid "Offers in the radius you set for your location"
-msgstr ""
+msgstr "Angebote innerhalb des von Dir gesetzten Radius"
 
 msgid "Offers list"
 msgstr "Liste der Angebote"
@@ -1069,24 +1053,32 @@ msgid "Pool ui hooks subscriber"
 msgstr "Beitrag ui hooks subscriber"
 
 msgid "Pools"
-msgstr ""
+msgstr "Pools"
 
 msgid "Pools list"
 msgstr "Poolliste"
 
 msgid ""
-"Possoible options:\r\n"
+"Possible options:\r\n"
 "                - Standard: Papershare is looking for offers with the same city name or the same zip code of your location or zipcode is in additional zip codes.\r\n"
 "                - City name: only looking for offers with the same city name like your location.\r\n"
 "                - Zip codes: Papershare is looking for offers with the same zip code like your location and additional zip codes"
 msgstr ""
+"Mögliche Optionen:\n"
+"- Standard: Papershare sucht nach Angeboten mit der selben Stadt oder der selben Postleitzahl und prüft, ob die Postleitzahl in den zusätzlichen Postleitzahlen enthalten ist.\n"
+"- Stadtname: Suche nur nach Angeboten mit der selben Stadt\n"
+"- Postleitzahlen: Papershare sucht nach Angeboten mit derselben Postleizahl oder deren Postleitzahl in den zusätzlichen Postleitzahlen enthalten ist"
 
 msgid ""
-"Possoible options:\r\n"
+"Possible options:\r\n"
 "            - Standard: Papershare is looking for offers with the same city name or the same zip code of your location or zipcode is in additional zip codes.\r\n"
 "            - City name: only looking for offers with the same city name like your location.\r\n"
 "            - Zip codes: Papershare is looking for offers with the same zip code like your location and additional zip codes"
 msgstr ""
+"Mögliche Optionen:\n"
+"- Standard: Papershare sucht nach Angeboten mit der selben Stadt oder der selben Postleitzahl und prüft, ob die Postleitzahl in den zusätzlichen Postleitzahlen enthalten ist.\n"
+"- Stadtname: Suche nur nach Angeboten mit der selben Stadt\n"
+"- Postleitzahlen: Papershare sucht nach Angeboten mit derselben Postleizahl oder deren Postleitzahl in den zusätzlichen Postleitzahlen enthalten ist"
 
 msgid "Preview"
 msgstr "Vorschau"
@@ -1101,13 +1093,13 @@ msgid "Publish"
 msgstr "Veröffentlichen"
 
 msgid "Quarterly"
-msgstr ""
+msgstr "Vierteljährlich"
 
 msgid "Quick navigation"
 msgstr "Schnellnavigation"
 
 msgid "Radius"
-msgstr ""
+msgstr "Radius"
 
 msgid "Random"
 msgstr "Zufall"
@@ -1181,6 +1173,9 @@ msgstr "Suchoptionen"
 msgid "Send a message to the offerer"
 msgstr "Sende Nachricht an den Anbieter"
 
+msgid "Send a message now?"
+msgstr "Jetzt eine Nachricht schreiben?"
+
 msgid "Send an email"
 msgstr "Email senden"
 
@@ -1188,7 +1183,7 @@ msgid "Send message"
 msgstr "Nachricht senden"
 
 msgid "Send private message to %userName%"
-msgstr "Private Nachricht an %userName% senden"
+msgstr "Private Nachricht an %userName% senden."
 
 msgid "Sender"
 msgstr "Sender"
@@ -1319,28 +1314,23 @@ msgstr "Der Standardlängengrad."
 msgid "The default zoom level."
 msgstr "Standard Zoom Level."
 
-#, fuzzy
 msgid "The enable location geo location option."
-msgstr "Geo Location für Veranstaltungen aktivieren"
+msgstr "Geo Location für Veranstaltungen aktivieren."
 
-#, fuzzy
 msgid "The enable offer geo location option."
-msgstr "Geo Location für Veranstaltungen aktivieren"
+msgstr "Geo Location für Veranstaltungen aktivieren."
 
-#, fuzzy
 msgid "The link own locations on account page option."
-msgstr "Die Option zur Verlinkung eigener Locations im Benutzerkonto."
+msgstr "Die Option zur Verlinkung eigener Standorte im Benutzerkonto."
 
 msgid "The link own messages on account page option."
 msgstr "Option zur Verlinkung eigener Nachrichten im Benutzerbereich."
 
-#, fuzzy
 msgid "The link own offers on account page option."
 msgstr "Angebote Link im Account anzeigen."
 
-#, fuzzy
 msgid "The link own pools on account page option."
-msgstr "Option zur Verlinkung eigener Beiträge im Benutzerbereich."
+msgstr "Option zur Verlinkung eigener Pools im Benutzerbereich."
 
 msgid "The list of your offers"
 msgstr "Lister Deiner Angebote"
@@ -1358,11 +1348,10 @@ msgid "This is an optional filter."
 msgstr "Dies ist ein optionaler Filter."
 
 msgid "Tile layer attribution"
-msgstr ""
+msgstr "Tile Layer Attribute"
 
-#, fuzzy
 msgid "Tile layer url"
-msgstr "Url von youtube"
+msgstr "Tile Layer Url"
 
 msgid "Title"
 msgstr "Titel"
@@ -1371,7 +1360,7 @@ msgid "Total year"
 msgstr "Komplettes Jahr"
 
 msgid "URL of tile layer to use. See http://leaflet-extras.github.io/leaflet-providers/preview/ for examples."
-msgstr ""
+msgstr "URL des genutzten Tile Layers. Siehe auch: http://leaflet-extras.github.io/leaflet-providers/preview/ ."
 
 msgid "Unpublish"
 msgstr "Unveröffentlichen"
@@ -1418,56 +1407,45 @@ msgstr "Willkommen zum Nachrichtenbereich des Moduls Share."
 msgid "Welcome to the offer section of the Share application."
 msgstr "Willkommen zum Bereich der Angebote im Share Modul."
 
-#, fuzzy
 msgid "Welcome to the pool section of the Share application."
-msgstr "Willkommen zum Bereich der Videos im Video Module."
+msgstr "Willkommen zum Bereich der Pools im Share Module."
 
-#, fuzzy
 msgid "Whether to add a link to locations of the current user on his account page"
-msgstr "Ob ein Link zu eigenen Locations im Benutzerkonto angezeigt werden soll"
+msgstr "Ob ein Link zu eigenen Standorten im Benutzerkonto angezeigt werden soll"
 
-#, fuzzy
 msgid "Whether to add a link to messages of the current user on his account page"
-msgstr "Ob ein Link zu Filmen im Benutzerbereich angezeigt werden soll"
+msgstr "Ob ein Link zu Nachrichten im Benutzerbereich angezeigt werden soll"
 
-#, fuzzy
 msgid "Whether to add a link to offers of the current user on his account page"
 msgstr "Ob ein Link zu eigenen Angeboten im Benutzerkonto angezeigt werden soll"
 
-#, fuzzy
 msgid "Whether to add a link to pools of the current user on his account page"
-msgstr "Ob ein Link zu Beiträgen im Benutzerbereich angezeigt werden soll"
+msgstr "Ob ein Link zu Pools im Benutzerbereich angezeigt werden soll"
 
 msgid "Whether to enable geo location functionality for locations or not."
-msgstr ""
+msgstr "Ob die Geo-Funktionen für Standorte aktiviert sein soll."
 
 msgid "Whether to enable geo location functionality for offers or not."
-msgstr ""
+msgstr "Ob die Geo-Funktionen für Angebote aktiviert sein soll."
 
-#, fuzzy
 msgid "Which sections are supported in the Finder component (used by Scribite plug-ins)."
 msgstr "Welche Bereiche im Finder (genutzt vom Scribite Plugin) unterstützt werden sollen."
 
 msgid "With description"
 msgstr "Mit Beschreibung"
 
-#, fuzzy
 msgid "With selected locations"
-msgstr "Locations"
+msgstr "Gewählte Standorte"
 
-#, fuzzy
 msgid "With selected messages"
-msgstr "HTML-formatierte Nachricht"
+msgstr "Gewählte Nachrichten"
 
-#, fuzzy
 msgid "With selected offers"
-msgstr "Angebote"
+msgstr "Gewählte Angebote"
 
-#, fuzzy
 msgid "With selected pools"
-msgstr "With selected posts"
+msgstr "Gewählte Pools"
 
-#, fuzzy
 msgid "Workflow state"
 msgstr "Workflow Status"
 
@@ -1480,13 +1458,13 @@ msgstr "Ja"
 msgid ""
 "You can create several locations.\n"
 "    Create locations, if they are possible places, to share stuff."
-msgstr ""
+msgstr "Du kannst mehrere Standorte erstellen.\vErstelle Standorte, wenn sie für Dich geeignet sind, Sachen zu teilen."
 
 msgid "You get a default view, because you have not yet created your first location. Register to papershare and then use the link Create Location for that."
-msgstr "Du bekommst eine Standard-Ansicht, weil Du noch keinen Standort erstellt hast. Registriere Dich bei Papershare und nutze dafür den Link Standort erstellen."
+msgstr "Du bekommst eine Standard-Ansicht, weil Du noch keinen Standort erstellt hast. Registriere Dich bei Papershare und nutze dafür anschließend den Link Standort erstellen."
 
 msgid "You get a default view, because you have not yet created your first location. Use the link Create Location for that."
-msgstr ""
+msgstr "Du bekommst eine Standard-Ansicht, weil Du noch keinen Standort erstellt hast. Nnutze dafür den Link Standort erstellen."
 
 msgid "You use the search option"
 msgstr "Du nutzt die Suchoption"
@@ -1507,7 +1485,7 @@ msgid "Zip codes"
 msgstr "Postleitzahlen"
 
 msgid "ZipCodes"
-msgstr ""
+msgstr "Postleitzahlen"
 
 msgid "abo ?"
 msgstr "Abo?"
@@ -1534,19 +1512,19 @@ msgid "messages"
 msgstr "Nachrichten"
 
 msgid "meters"
-msgstr ""
+msgstr "Meter"
 
 msgid "offers"
 msgstr "Angebote"
 
 msgid "pools"
-msgstr ""
+msgstr "Pools"
 
 msgid "private ?"
 msgstr "Privat?"
 
 msgid "split costs ?"
-msgstr ""
+msgstr "Kosten teilen?"
 
 msgid "total year ?"
-msgstr ""
+msgstr "Komplettes Jahr?"
