@@ -15,11 +15,55 @@ namespace MU\ShareModule\Form\Type;
 use MU\ShareModule\Form\Type\Base\AbstractMessageType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Zikula\Common\Translator\TranslatorInterface;
+use MU\ShareModule\Entity\Factory\EntityFactory;
+use MU\ShareModule\Helper\FeatureActivationHelper;
+use MU\ShareModule\Helper\ListEntriesHelper;
+
+use Zikula\UsersModule\Entity\RepositoryInterface\UserRepositoryInterface;
+use MU\ShareModule\Form\DataTransformer\StringObjectTransformer;
+
 /**
  * Message editing form type implementation class.
  */
 class MessageType extends AbstractMessageType
 {
+	/**
+	 * @var UserRepositoryInterface
+	 */
+	protected $userRepository;
+	
+	/**
+	 * @var StringObjectTransformer
+	 */
+	protected $stringObjectTransformer;
+	
+	
+	
+	/**
+	 * MessageType constructor.
+	 *
+	 * @param TranslatorInterface $translator    Translator service instance
+	 * @param EntityFactory $entityFactory EntityFactory service instance
+	 * @param ListEntriesHelper $listHelper ListEntriesHelper service instance
+	 * @param FeatureActivationHelper $featureActivationHelper FeatureActivationHelper service instance
+	 * @param StringObjectTransformer $stringObjectTransformer StringObjectTransformer service instance
+	 */
+	public function __construct(
+			TranslatorInterface $translator,
+			EntityFactory $entityFactory,
+			ListEntriesHelper $listHelper,
+			FeatureActivationHelper $featureActivationHelper,
+			StringObjectTransformer $stringObjectTransformer
+			
+			) {
+				$this->setTranslator($translator);
+				$this->entityFactory = $entityFactory;
+				$this->listHelper = $listHelper;
+				$this->featureActivationHelper = $featureActivationHelper;
+				$this->stringObjectTransformer = $stringObjectTransformer;
+	}
+	
     /**
      * @inheritDoc
      */
@@ -27,5 +71,7 @@ class MessageType extends AbstractMessageType
     {
         parent::buildForm($builder, $options);
         $builder->add('recipient', HiddenType::class);
+
+        $builder->get('recipient')->addModelTransformer($this->stringObjectTransformer);
     }
 }
