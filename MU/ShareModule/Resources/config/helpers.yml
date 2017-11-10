@@ -94,4 +94,4 @@ services:
             - "@mu_share_module.entity_factory"
             - "@mu_share_module.listentries_helper"
             - "@zikula_mailer_module.api.mailer"
-            - "@zikula_users_module.current_user"
+            - "@zikula_users_module.user_repository"

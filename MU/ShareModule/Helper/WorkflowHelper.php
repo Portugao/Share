@@ -26,8 +26,8 @@ use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
 use MU\ShareModule\Entity\Factory\EntityFactory;
 use MU\ShareModule\Helper\ListEntriesHelper;
 
+use Zikula\UsersModule\Entity\RepositoryInterface\UserRepositoryInterface;
 use Zikula\MailerModule\Api\ApiInterface\MailerApiInterface;
-use Swift_Mailer;
 use Swift_Message;
 
 /**
@@ -46,6 +46,11 @@ class WorkflowHelper extends AbstractWorkflowHelper
 	protected $currentUserApi;
 	
 	/**
+	 * @var UserRepositoryInterface
+	 */
+	protected $userRepository;
+	
+	/**
 	 * WorkflowHelper constructor.
 	 *
 	 * @param TranslatorInterface     $translator        Translator service instance
@@ -56,7 +61,7 @@ class WorkflowHelper extends AbstractWorkflowHelper
 	 * @param EntityFactory           $entityFactory     EntityFactory service instance
 	 * @param ListEntriesHelper       $listEntriesHelper ListEntriesHelper service instance
      * @param MailerApiInterface        $mailerApi           MailerApi service instance
-     * @param CurrentUserApiInterface $currentUserApi  CurrentUserApi service instance
+	 * @param UserRepositoryInterface   $userRepository   UserRepositoryInterface service instance
 	 *
 	 * @return void
 	 */
@@ -69,7 +74,7 @@ class WorkflowHelper extends AbstractWorkflowHelper
 			EntityFactory $entityFactory,
 			ListEntriesHelper $listEntriesHelper,
             MailerApiInterface $mailerApi,
-			CurrentUserApiInterface $currentUserApi
+			UserRepositoryInterface $userRepository
 			) {
 				$this->translator = $translator;
 				$this->workflowRegistry = $registry;
@@ -79,50 +84,8 @@ class WorkflowHelper extends AbstractWorkflowHelper
 				$this->entityFactory = $entityFactory;
 				$this->listEntriesHelper = $listEntriesHelper;
                 $this->mailerApi = $mailerApi;
-                $this->currentUserApi = $currentUserApi;
+                $this->userRepository = $userRepository;
 	}
-	
-    /**
-     * Executes a certain workflow action for a given entity object.
-     *
-     * @param EntityAccess $entity    The given entity instance
-     * @param string       $actionId  Name of action to be executed
-     * @param bool         $recursive True if the function called itself
-     *
-     * @return bool False on error or true if everything worked well
-     */
-    /*public function executeAction(EntityAccess $entity, $actionId = '', $recursive = false)
-    {
-    	if ($actionId == 'delete') {
-    		if ($entity instanceof LocationEntity) {
-    		    $locationRepository = $this->entityFactory->getRepository('location');
-    		    $where = 'tbl.id != ' . $entity['id'];
-    		    $where .= ' AND ';
-    		    $where .= 'tbl.createdBy = ' . $entity->getCreatedBy()->getUid();
-    		    $locations = $locationRepository->selectWhere($where);
-    		    if (count($locations) == 0) {
-    		    	die('T'); // TODO
-    		    } else {
-    		    	// get entity manager
-    		    	$entityManager = $this->entityFactory->getObjectManager();
-    		    	$thisLocation = $locationRepository->find($locations[0]['id']);
-    		    	$thisLocation->setForMap(1);
-    		    	$entityManager->flush();
-    		    }
-    		}
-    	}
-    	if ($actionId == 'submit' && $entity instanceof MessageEntity) {
-    		//$this->notificationHelper->process($args);
-    		//$mailer = new \Swift_Mailer();
-    		$message = Swift_Message::newInstance();
-    		$message->setFrom('info@homepages-mit-zikula.de');
-    		$message->setTo('ue.mi@gmx.de');
-    		$message->setBody('Hallo Leute');
-    		$this->mailerApi->sendMessage($message, 'neue NAchricht', 'Alles Supi');
-    	}
-    	
-    	return parent::executeAction($entity, $actionId);
-    }*/
     
     /**
      * Executes a certain workflow action for a given entity object.
@@ -215,13 +178,13 @@ class WorkflowHelper extends AbstractWorkflowHelper
     			if ($entity instanceof LocationEntity) {
     				
     			} elseif ($entity instanceof MessageEntity) {
-    				//$this->notificationHelper->process($args);
-    				//$mailer = new \Swift_Mailer();
+    				$creatorId = $entity->getCreatedBy()->getUid();
+    				$user = $this->userRepository->find($creatorId);
     				$message = Swift_Message::newInstance();
-    				$message->setFrom('info@homepages-mit-zikula.de');
-    				$message->setTo('ue.mi@gmx.de');
-    				$message->setBody('Hallo Leute');
-    				$this->mailerApi->sendMessage($message, 'neue Nachricht', 'Alles Supi');
+    				$message->setFrom('info@papershare.de');
+    				$message->setTo($user['email']);
+    				$message->setBody($entity['textFormessage'] , 'text/html');
+    				$this->mailerApi->sendMessage($message, $this->translator->__('New message from papershare.de') . ' - ' . $entity['subject'], $entity['text'], $entity['text']);
     			}
     		} elseif ($actionId == 'updateapproved') {
     	          if ($entity instanceof OfferEntity) {

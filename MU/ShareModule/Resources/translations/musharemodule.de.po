@@ -911,6 +911,9 @@ msgstr "Muss sich im \"External/YourEntity/\" Ordner befinden."
 msgid "New content has been submitted"
 msgstr "Neuer Inhalt wurde eingereicht"
 
+msgid "New message from papershare.de"
+msgstr "Neue Nachricht von papershare.de"
+
 msgid "Newest"
 msgstr "Aktuellste"
 
@@ -944,7 +947,7 @@ msgstr "Kein Angebote mit dem selben Standort gefunden."
 msgid "No pools found."
 msgstr "Keine Pools gefunden."
 
-msgid "Not read yet
+msgid "Not read yet"
 msgstr "Noch nicht gelesen"
 
 msgid "No such item found."
@@ -1021,6 +1024,9 @@ msgstr "Aktion abgebrochen."
 
 msgid "Page size"
 msgstr "Seitengröße"
+
+msgid "Papershare - Share paper"
+msgstr "Papershare - Papier teilen"
 
 msgid "Paste as"
 msgstr "Einfügen als"
