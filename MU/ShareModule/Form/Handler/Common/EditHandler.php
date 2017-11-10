@@ -14,12 +14,89 @@ namespace MU\ShareModule\Form\Handler\Common;
 
 use MU\ShareModule\Form\Handler\Common\Base\AbstractEditHandler;
 
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Routing\RouterInterface;
+use Zikula\Bundle\CoreBundle\HttpKernel\ZikulaHttpKernelInterface;
+use Zikula\Common\Translator\TranslatorInterface;
+
+use Zikula\Core\Doctrine\EntityAccess;
+use Zikula\PermissionsModule\Api\ApiInterface\PermissionApiInterface;
+use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
+use MU\ShareModule\Entity\Factory\EntityFactory;
+use MU\ShareModule\Helper\FeatureActivationHelper;
+use MU\ShareModule\Helper\ControllerHelper;
+use MU\ShareModule\Helper\HookHelper;
+use MU\ShareModule\Helper\ModelHelper;
+use MU\ShareModule\Helper\WorkflowHelper;
+
+use Zikula\UsersModule\Entity\RepositoryInterface\UserRepositoryInterface;
+
 /**
  * This handler class handles the page events of editing forms.
  * It collects common functionality required by different object types.
  */
 abstract class EditHandler extends AbstractEditHandler
 {
+	/**
+	 * @var UserRepositoryInterface
+	 */
+	protected $userRepository;
+	
+	/**
+	 * EditHandler constructor.
+	 *
+	 * @param ZikulaHttpKernelInterface $kernel           Kernel service instance
+	 * @param TranslatorInterface       $translator       Translator service instance
+	 * @param FormFactoryInterface      $formFactory      FormFactory service instance
+	 * @param RequestStack              $requestStack     RequestStack service instance
+	 * @param RouterInterface           $router           Router service instance
+	 * @param LoggerInterface           $logger           Logger service instance
+	 * @param PermissionApiInterface    $permissionApi    PermissionApi service instance
+	 * @param CurrentUserApiInterface   $currentUserApi   CurrentUserApi service instance
+	 * @param EntityFactory             $entityFactory    EntityFactory service instance
+	 * @param ControllerHelper          $controllerHelper ControllerHelper service instance
+	 * @param ModelHelper               $modelHelper      ModelHelper service instance
+	 * @param WorkflowHelper            $workflowHelper   WorkflowHelper service instance
+	 * @param HookHelper                $hookHelper       HookHelper service instance
+	 * @param FeatureActivationHelper   $featureActivationHelper FeatureActivationHelper service instance
+	 * @param UserRepositoryInterface   $userRepository   UserRepositoryInterface service instance
+	 */
+	public function __construct(
+			ZikulaHttpKernelInterface $kernel,
+			TranslatorInterface $translator,
+			FormFactoryInterface $formFactory,
+			RequestStack $requestStack,
+			RouterInterface $router,
+			LoggerInterface $logger,
+			PermissionApiInterface $permissionApi,
+			CurrentUserApiInterface $currentUserApi,
+			EntityFactory $entityFactory,
+			ControllerHelper $controllerHelper,
+			ModelHelper $modelHelper,
+			WorkflowHelper $workflowHelper,
+			HookHelper $hookHelper,
+			FeatureActivationHelper $featureActivationHelper,
+			UserRepositoryInterface $userRepository
+			) {
+				$this->kernel = $kernel;
+				$this->setTranslator($translator);
+				$this->formFactory = $formFactory;
+				$this->request = $requestStack->getCurrentRequest();
+				$this->router = $router;
+				$this->logger = $logger;
+				$this->permissionApi = $permissionApi;
+				$this->currentUserApi = $currentUserApi;
+				$this->entityFactory = $entityFactory;
+				$this->controllerHelper = $controllerHelper;
+				$this->modelHelper = $modelHelper;
+				$this->workflowHelper = $workflowHelper;
+				$this->hookHelper = $hookHelper;
+				$this->featureActivationHelper = $featureActivationHelper;
+				$this->userRepository = $userRepository;				
+	}
+	
     /**
      * Initialise new entity for creation.
      *
@@ -28,9 +105,10 @@ abstract class EditHandler extends AbstractEditHandler
     protected function initEntityForCreation()
     {
         $entity = parent::initEntityForCreation();
-        $offererId = $this->request->query->get('offererId', 0);
-        if ($this->objectType == 'message' && $offererId > 0) {
-        	$entity['recipient'] = $offererId;
+        $recipientId = $this->request->query->get('recipientId', 0);
+        if ($this->objectType == 'message' && $recipientId > 0) {
+        	$user = $this->userRepository->find($recipientId);
+        	$entity['recipient'] = $user;
         }
     
         return $entity;
