@@ -70,7 +70,7 @@
                 </td>
                 <td headers="hSender" class="text-left">
                 {% set profileLink = message.createdBy.getUid()|profileLinkByUserId() %}
-                <dd class="avatar">{{ userAvatar(message.createdBy.getUid(), {rating: 'g'}) }} {{ profileLink|raw }}</dd>
+                <dd class="avatar">{{ userAvatar(message.createdBy.getUid(), {rating: 'g'}) }} {{ profileLink|raw }} <a title="{{ __('answer') }}" href="{{ path('musharemodule_message_' ~ routeArea ~ 'edit', { recipientId: message.createdBy.getUid()}) }}"><i class="fa fa-reply" aria-hidden="true"></i></a></dd>
                 </td>
                 <td headers="hCreatedDate" class="text-left">
                     {{ message.createdDate|localizeddate('medium', 'short') }}
@@ -136,11 +136,15 @@
                     {{ message.subject }}
                 </td>
                 <td headers="hRecipient" class="text-left">
-                {% set profileLink = message.recipient|profileLinkByUserId() %}
-                <dd class="avatar">{{ userAvatar(message.recipient, {rating: 'g'}) }} {{ profileLink|raw }}</dd>
+                {% set profileLink = message.recipient.getUid()|profileLinkByUserId() %}
+                <dd class="avatar">{{ userAvatar(message.recipient.getUid(), {rating: 'g'}) }} {{ profileLink|raw }}</dd>
                 </td>
                 <td headers="hReadByRecipient" class="text-left">
+                {% if message.readByRecipient != NULL %}
                     {{ message.readByRecipient|localizeddate('medium', 'short') }}
+                {% else %}
+                    {{ __('Not read yet') }}
+                {% endif %}
                 </td>
             </tr>
         {% else %}
