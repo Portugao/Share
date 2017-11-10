@@ -220,15 +220,15 @@ class LinkContainer extends AbstractLinkContainer
         			'title' => $this->__('Sentbox - Messages list', 'musharemodule')
         		];
         }
-        if (in_array('message', $allowedObjectTypes)
+        /*if (in_array('message', $allowedObjectTypes)
         		&& $this->permissionApi->hasPermission($this->getBundleName() . ':Message:', '::', $permLevel)) {
         			$links[] = [
         					'url' => $this->router->generate('musharemodule_message_' . $routeArea . 'edit', array('offererId' => 2)),
         					'text' => $this->__('Send message', 'musharemodule'),
         					'title' => $this->__('Send a message to the offerer', 'musharemodule')
         					];
-        				}
-        }       
+        				}*/
+        }   
         if ($routeArea == 'admin' && in_array('pool', $allowedObjectTypes)
             && $this->permissionApi->hasPermission($this->getBundleName() . ':Pool:', '::', $permLevel)) {
             $links[] = [

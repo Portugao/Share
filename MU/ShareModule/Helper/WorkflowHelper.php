@@ -172,13 +172,14 @@ class WorkflowHelper extends AbstractWorkflowHelper
     		        	}	        	
     		        }
     			// if the entity is message	
-    			} elseif ($entity instanceof MesageEntity) {
+    			} elseif ($entity instanceof MessageEntity) {
     				if ($entity['statusSender'] == 1 && $entity['statusRecipient'] == 1) {
     					if ($uid == $entity->getCreatedBy()->getUid()) {
-    					$entity->setStatusSender(2);
+    					    $entity->setStatusSender(2);
     					} else {
     						$entity->setStatusRecipient(2);
     					}
+    					$entity->setWorkflowState('approved');
     					$entityManager->flush();
     				} elseif ($entity['statusSender'] == 1 && $entity['statusRecipient'] == 2) {
     					if ($uid == $entity->getCreatedBy()->getUid()) {
