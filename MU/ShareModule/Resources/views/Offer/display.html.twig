@@ -14,7 +14,8 @@
 {% block content %}
     {% set isQuickView = app.request.query.getBoolean('raw', false) %}
     <div class="musharemodule-offer musharemodule-display">
-
+    <div class="row">
+    <div class="col-sm-6">
     <dl>
         {#% if offer.product is not empty %}
             <dt>{{ __('Product') }}</dt>
@@ -126,6 +127,13 @@
         {% endif %#}
         
     </dl>
+    </div>
+    <div class="col-sm-6">
+    <h3>{{ __('Interested?') }}</h3>
+    {{ __('If you are interested in the offer, you can send a message to the offerer.') }}<br /><br />
+    <a href="{{ path('musharemodule_message_' ~ routeArea ~ 'edit', { recipientId: offer.createdBy.getUid()}) }}" class="btn btn-success">{{ __('Send a message now?') }}</a>
+    </div>
+    </div>
 
     <h3 class="musharemodule-map">{{ __('Map') }}</h3>
     <div id="mapContainer" class="musharemodule-mapcontainer">
