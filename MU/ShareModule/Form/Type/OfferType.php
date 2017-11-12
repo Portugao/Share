@@ -72,18 +72,19 @@ class OfferType extends AbstractOfferType
      */
     public function addIncomingRelationshipFields(FormBuilderInterface $builder, array $options)
     {
-    	$uid = $this->currentUserApi->get('uid');
-    	if ($uid == 2) {
-    		$queryBuilder = function(EntityRepository $er) {
-    			// select without joins
-    			return $er->getListQueryBuilder('', '', false);
-    		};    		
-    	} else {
-        	$queryBuilder = function(EntityRepository $er) {
-                // select without joins
-            	return $er->getOwnLocationsBuilder('', '', false);
-            };
-    	}
+    	
+
+        $queryBuilder = function(EntityRepository $er) {
+    		// select without joins
+        	$uid = $this->currentUserApi->get('uid');
+        	if ($uid == 2) {
+        		$where = '';
+        	} else {
+        		$where = 'tbl.createdBy = ' . $uid;
+        	}
+    		return $er->getListQueryBuilder($where, '', false);
+    	};    		
+
         $entityDisplayHelper = $this->entityDisplayHelper;
         $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
             return $entityDisplayHelper->getFormattedTitle($entity);
