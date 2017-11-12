@@ -65,8 +65,13 @@ function mUShareInitGeographicalView(parameters, isEditMode)
     
     // create custom icon
     var paperIcon = L.icon({
-        iconUrl: '/modules/MU/ShareModule/Resources/public/images/icon1.png',
+        iconUrl: '../../modules/MU/ShareModule/Resources/public/images/icon1.png',
+        shadowUrl: '../../modules/MU/ShareModule/Resources/public/images/icon1-shadow.png',
         iconSize: [50, 50], // size of the icon
+        shadowSize:   [50, 40], // size of the shadow
+        iconAnchor:   [25, 50], // point of the icon which will correspond to marker's location
+        shadowAnchor: [25, 40],  // the same for the shadow
+        popupAnchor:  [0, -45] // point from which the popup should open relative to the iconAnchor
         });
     }
     
