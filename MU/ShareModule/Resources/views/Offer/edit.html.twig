@@ -16,10 +16,27 @@
         ] %}
         {{ form_start(form, {attr: {id: 'offerEditForm', class: 'mushare-edit-form'}}) }}
         {{ form_errors(form) }}
+        <fieldset class="musharemodule-map">
+            <legend>{{ __('Map - Choose the coordinates for your offer!') }}</legend>
+            <div class="alert alert-info">{{ __('Click into the map for setting the coordinates for your offer!') }}</div>
+            <div id="mapContainer" class="musharemodule-mapcontainer">
+            </div>
+        </fieldset>
         <fieldset>
-            <legend>{{ __('Content') }}</legend>
+            <div class="alert alert-info">{{ __('These fields get changed automatically, if you click into the map.') }}</div>
+            {{ form_row(form.latitude) }}
+            {{ form_row(form.longitude) }}         
+        </fieldset>    
+        <fieldset>
+            <legend>{{ __('Product Info') }}</legend>
             {{ form_row(form.product) }}
             {{ form_row(form.description) }}
+        </fieldset>
+        {% if featureActivationHelper.isEnabled(constant('MU\\ShareModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'offer') %}
+            {{ include('@MUShareModule/Helper/includeCategoriesEdit.html.twig', {obj: offer}) }}
+        {% endif %}
+        <fieldset>
+        <legend>{{ __('Additional settings for your offer') }}</legend>
             {{ form_row(form.isOpen) }}
             {{ form_row(form.abo) }}
             {{ form_row(form.period) }}
@@ -29,14 +46,6 @@
             {{ form_row(form.atMe) }}
             {{ form_row(form.zipCode) }}
             {{ form_row(form.meetingPlace) }}
-            {{ form_row(form.latitude) }}
-            {{ form_row(form.longitude) }}
-        </fieldset>
-        
-        <fieldset class="musharemodule-map">
-            <legend>{{ __('Map') }}</legend>
-            <div id="mapContainer" class="musharemodule-mapcontainer">
-            </div>
         </fieldset>
     
         {{ include(
@@ -50,9 +59,6 @@
             {group: 'offer', heading: __('Pool'), alias: 'pool', mandatory: false, idPrefix: 'shareOffer_Pool', linkingItem: offer, displayMode: 'choices'}
         ) }}
         </div>
-        {% if featureActivationHelper.isEnabled(constant('MU\\ShareModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'offer') %}
-            {{ include('@MUShareModule/Helper/includeCategoriesEdit.html.twig', {obj: offer}) }}
-        {% endif %}
         {% if mode != 'create' %}
             {{ include('@MUShareModule/Helper/includeStandardFieldsEdit.html.twig', {obj: offer}) }}
         {% endif %}

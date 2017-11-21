@@ -16,6 +16,36 @@
         ] %}
         {{ form_start(form, {attr: {id: 'locationEditForm', class: 'mushare-edit-form'}}) }}
         {{ form_errors(form) }}
+
+        <fieldset class="musharemodule-map">
+        <legend>{{ __('Map - Choose your location') }}</legend>
+        <div class="alert alert-info">{{ __('Click into the map for setting your location! Use the links for better focus on your location!') }}</div>
+        <!-- Tabs-Navs -->
+		<ul class="nav nav-tabs" role="tablist">
+		    <li role="presentation" class="active"><a href="#germany" role="tab" data-toggle="tab">{{ __('Germany') }}</a></li>
+		    <li role="presentation"><a href="#austria" role="tab" data-toggle="tab">{{ __('Austria') }}</a></li>
+		    <li role="presentation"><a href="#switzerland" role="tab" data-toggle="tab">{{ __('Switzerland') }}</a></li>
+        </ul>
+		
+		<!-- Tab-Inhalte -->
+		<div class="tab-content">
+		    <div role="tabpanel" class="tab-pane active" id="germany">
+		    <h4>{{ __('States') }}</h4>
+            <a class="btn btn-success btn-xs" title="Click for focus of the map to Brandenburg" href="">Brandenburg</a> <a class="btn btn-success btn-xs" title="Click for focus of the map to Bremen" href="">Bremen</a>	    
+		    <h4>{{ __('Cities') }}</h4>
+		    <a class="btn btn-success btn-xs" title="Click for focus of the map to Berlin" href="">Berlin</a> <a class="btn btn-success btn-xs" title="Click for focus of the map to Hamburg" href="">Hamburg</a>
+		    </div>
+		    <div role="tabpanel" class="tab-pane" id="austria">...</div>
+		    <div role="tabpanel" class="tab-pane" id="switzerland">...</div>
+		</div>
+
+        <div id="mapContainer" class="musharemodule-mapcontainer"></div>      
+        </fieldset>
+        <fieldset>
+            <div class="alert alert-info">{{ __('These fields get changed automatically, if you click into the map.') }}</div>
+            {{ form_row(form.latitude) }}
+            {{ form_row(form.longitude) }}         
+        </fieldset>
         <fieldset>
             <legend>{{ __('Content') }}</legend>
             {{ form_row(form.title) }}
@@ -28,21 +58,18 @@
             {{ form_row(form.zipCodes) }}
             {{ form_row(form.searchOptions) }}
             {{ form_row(form.private) }}
+            <div class="hidden buisiness">
+            <div class="alert alert-info">{{ __('The following fields are for buisiness locations like restaurants, service companies and so on.') }}</div>
             {{ form_row(form.name) }}
             {{ form_row(form.description) }}
             {{ form_row(form.mail) }}
             {{ form_row(form.website) }}
             {{ form_row(form.phone) }}
             {{ form_row(form.mobile) }}
-            {{ form_row(form.latitude) }}
-            {{ form_row(form.longitude) }}
-        </fieldset>
-        
-        <fieldset class="musharemodule-map">
-            <legend>{{ __('Map') }}</legend>
-            <div id="mapContainer" class="musharemodule-mapcontainer">
             </div>
         </fieldset>
+        
+
         
         {% if mode != 'create' %}
             {{ include('@MUShareModule/Helper/includeStandardFieldsEdit.html.twig', {obj: location}) }}
@@ -55,7 +82,7 @@
                 {% endfor %}
             </fieldset>
         {% endif %}
-        
+        <div class="hidden">
         {% if form.moderationSpecificCreator is defined %}
             <fieldset id="moderationFieldsSection">
                 <legend>{{ __('Moderation') }} <i class="fa fa-expand"></i></legend>
@@ -65,7 +92,7 @@
                 </div>
             </fieldset>
         {% endif %}
-        
+        </div>
         
         {# include possible submit actions #}
         <div class="form-group form-buttons">
@@ -100,6 +127,11 @@
     
     {% set formInitScript %}
         <script type="text/javascript">
+        var MU = jQuery.noConflict();
+        /*MU('#musharemodule_location_private').checked() {
+            MU('.buisiness').val();
+        });*/
+        MU('#germany').tab('show');
         /* <![CDATA[ */
             
             ( function($) {
