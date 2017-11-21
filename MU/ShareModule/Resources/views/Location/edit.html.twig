@@ -18,8 +18,10 @@
         {{ form_errors(form) }}
 
         <fieldset class="musharemodule-map">
+        {% if mode == 'create' %}
         <legend>{{ __('Map - Choose your location') }}</legend>
         <div class="alert alert-info">{{ __('Click into the map for setting your location! Use the links for better focus on your location!') }}</div>
+
         <!-- Tabs-Navs -->
 		<ul class="nav nav-tabs" role="tablist">
 		    <li role="presentation" class="active"><a href="#germany" role="tab" data-toggle="tab">{{ __('Germany') }}</a></li>
@@ -38,6 +40,7 @@
 		    <div role="tabpanel" class="tab-pane" id="austria">...</div>
 		    <div role="tabpanel" class="tab-pane" id="switzerland">...</div>
 		</div>
+		{% endif %}
 
         <div id="mapContainer" class="musharemodule-mapcontainer"></div>      
         </fieldset>
