@@ -160,7 +160,7 @@ class WorkflowHelper extends AbstractWorkflowHelper
     				$where .= 'tbl.createdBy = ' . $entity->getCreatedBy()->getUid();
     				$locations = $locationRepository->selectWhere($where);
     				if (count($locations) == 0) {
-    					die('T'); // TODO
+    					//die('T'); // TODO
     					
     				} else {
     					$thisLocation = $locationRepository->find($locations[0]['id']);
