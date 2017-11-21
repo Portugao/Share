@@ -18,6 +18,8 @@ use Zikula\Component\SortableColumns\SortableColumns;
 use Zikula\Core\RouteUrl;
 use ServiceUtil;
 use DateTime;
+use Zikula\MailerModule\Api\ApiInterface\MailerApiInterface;
+use Swift_Message;
 
 /**
  * Helper implementation class for controller layer methods.
@@ -356,6 +358,14 @@ class ControllerHelper extends AbstractControllerHelper
 
     		$entity->setReadByRecipient(new \DateTime());
     		$entityManager->flush();
+    		
+    		$creatorId = $entity->getCreatedBy()->getUid();
+    		$user = $this->userRepository->find($creatorId);
+    		$message = Swift_Message::newInstance();
+    		$message->setFrom('info@papershare.de');
+    		$message->setTo($user['email']);
+    		$message->setBody($this->translator->__('The user has read your message.') , 'text/html');
+    		$this->mailerApi->sendMessage($message, $this->translator->__('New message from papershare.de') . ' - ' . $entity['subject'], $entity['text'], $entity['text']);
     	}
     
     	return $this->addTemplateParameters($objectType, $templateParameters, 'controllerAction', $contextArgs);
