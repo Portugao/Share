@@ -104,6 +104,9 @@ msgstr "Bei mir"
 msgid "Attribution for tile layer to use."
 msgstr ""
 
+msgid "Austria"
+msgstr "Österreich"
+
 msgid "Back"
 msgstr "Zurück"
 
@@ -151,6 +154,9 @@ msgstr "Wähle die Suchoption"
 
 msgid "Choose your location of offer"
 msgstr "Wähle den Standort des Angebots"
+
+msgid "Cities"
+msgstr "Städte"
 
 msgid "City"
 msgstr "Stadt"
@@ -641,6 +647,9 @@ msgstr "Allgemein"
 msgid "Geo"
 msgstr "Geo"
 
+msgid "Germany"
+msgstr "Deutschland"
+
 msgid "Here you can choose a custom creation date"
 msgstr "Hier kannst Du ein eigenes Erstelldatum auswählen"
 
@@ -737,7 +746,7 @@ msgid "Invalid user identifier received."
 msgstr "Ungültige Benutzerkennung erkannt."
 
 msgid "Is open"
-msgstr "Geöffnet"
+msgstr "Aktiv?"
 
 msgid ""
 "Is your offer active?\r\n"
@@ -1266,6 +1275,9 @@ msgstr "Standard"
 msgid "State"
 msgstr "Status"
 
+msgid "States"
+msgstr "Bundesländer"
+
 msgid "Status recipient"
 msgstr "Status Empfänger"
 
@@ -1292,6 +1304,9 @@ msgstr "Zum Backend wechseln."
 
 msgid "Switch to user area."
 msgstr "Zum Frontend wechseln."
+
+msgid "Switzerland"
+msgstr "Schweiz"
 
 msgid "Template"
 msgstr "Template"
