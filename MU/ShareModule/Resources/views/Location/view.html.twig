@@ -459,7 +459,7 @@
         {% if canBeCreated %}
             {% if hasPermission('MUShareModule:Location:', '::', 'ACCESS_EDIT') %}
                 {% set createTitle = __('Create location') %}
-                <a href="{{ path('musharemodule_location_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}"><i class="fa fa-plus"></i> {{ createTitle }}</a>
+                <a class="btn btn-default" href="{{ path('musharemodule_location_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}"><i class="fa fa-plus"></i> {{ createTitle }}</a>
             {% endif %}
         {% endif %}
         {#% if all == 1 %}
