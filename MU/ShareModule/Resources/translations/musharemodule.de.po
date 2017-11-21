@@ -164,6 +164,9 @@ msgstr "Stadt"
 msgid "CityName"
 msgstr "Stadtname"
 
+msgid "Click into the map for setting the coordinates for your offer!"
+msgstr "Klicke in die Karte um die Koordinaten für Dein Angebot zu setzen!"
+
 msgid "Collection of pool"
 msgstr "Kollektion von Pools"
 
