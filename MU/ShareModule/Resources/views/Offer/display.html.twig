@@ -131,7 +131,7 @@
     <div class="col-sm-6">
     <h3>{{ __('Interested?') }}</h3>
     {{ __('If you are interested in the offer, you can send a message to the offerer.') }}<br /><br />
-    <a href="{{ path('musharemodule_message_' ~ routeArea ~ 'edit', { recipientId: offer.createdBy.getUid()}) }}" class="btn btn-success">{{ __('Send a message now?') }}</a>
+    <a href="{{ path('musharemodule_message_' ~ routeArea ~ 'edit', { recipientId: offer.createdBy.getUid(), offerId: offer.id}) }}" class="btn btn-success">{{ __('Send a message now?') }}</a>
     </div>
     </div>
 
