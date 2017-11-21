@@ -6,7 +6,7 @@
 
     {{ block('page_nav_links') }}
 
-    {{ include('@MUShareModule/Offer/viewQuickNav.html.twig', {workflowStateFilter: false}) }}{# see template file for available options #}
+    {#{ include('@MUShareModule/Offer/viewQuickNav.html.twig', {workflowStateFilter: false}) }}{# see template file for available options #}
 
     {% if routeArea == 'admin' %}
     <form action="{{ path('musharemodule_offer_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="offersViewForm" class="form-horizontal" role="form">
