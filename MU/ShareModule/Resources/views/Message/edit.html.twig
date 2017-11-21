@@ -10,6 +10,7 @@
 {% block title mode == 'create' ? __('Create message') : __('Edit message') %}
 {% block content %}
     <div class="musharemodule-message musharemodule-edit">
+    <div class="alert alert-info">{{ __('Send message to user') }} {{ message.recipient.getUname() }}</div>
         {% form_theme form with [
             '@MUShareModule/Form/bootstrap_3.html.twig',
             'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
@@ -39,7 +40,7 @@
                 {% endfor %}
             </fieldset>
         {% endif %}
-        
+        <div class="hidden">
         {% if form.moderationSpecificCreator is defined %}
             <fieldset id="moderationFieldsSection">
                 <legend>{{ __('Moderation') }} <i class="fa fa-expand"></i></legend>
@@ -49,7 +50,7 @@
                 </div>
             </fieldset>
         {% endif %}
-        
+        </div>
         
         {# include possible submit actions #}
         <div class="form-group form-buttons">

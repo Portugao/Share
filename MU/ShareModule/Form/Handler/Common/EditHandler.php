@@ -106,8 +106,12 @@ abstract class EditHandler extends AbstractEditHandler
     {
         $entity = parent::initEntityForCreation();
         $recipientId = $this->request->query->get('recipientId', 0);
-        if ($this->objectType == 'message' && $recipientId > 0) {
+        $offerId = $this->request->query->get('offerId', 0);
+        if ($this->objectType == 'message' && $recipientId > 0 && $offerId > 0) {
         	$user = $this->userRepository->find($recipientId);
+        	$offerRepository = $this->entityFactory->getRepository('offer');
+        	$offer = $offerRepository->find($offerId);
+        	$entity['subject'] = $offer['product'];
         	$entity['recipient'] = $user;
         }
     
