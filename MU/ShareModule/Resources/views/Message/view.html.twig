@@ -12,7 +12,7 @@
 
     {{ block('page_nav_links') }}
 
-    {{ include('@MUShareModule/Message/viewQuickNav.html.twig', {workflowStateFilter: false}) }}{# see template file for available options #}
+    {#{ include('@MUShareModule/Message/viewQuickNav.html.twig', {workflowStateFilter: false}) }}{# see template file for available options #}
 
     {% if routeArea == 'admin' %}
     <form action="{{ path('musharemodule_message_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="messagesViewForm" class="form-horizontal" role="form">
@@ -25,10 +25,10 @@
                 {% if routeArea == 'admin' %}
                     <col id="cSelect" />
                 {% endif %}
-                <col id="cItemActions" />
                 <col id="cSubject" />
                 <col id="cSender" />
                 <col id="cCreatedDate" />
+                <col id="cLinks" />
             </colgroup>
             <thead>
             <tr>
@@ -37,7 +37,6 @@
                         <input type="checkbox" class="mushare-mass-toggle" />
                     </th>
                 {% endif %}
-                <th id="hItemActions" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}z-order-unsorted z-w02">{{ __('Actions') }}</th>
                 <th id="hSubject" scope="col" class="text-left">
                     {{ __('Subject') }}
                 </th>
@@ -47,6 +46,9 @@
                 <th id="hCreatedDate scope="col" class="text-left z-order-unsorted">
                     {{ __('Sent on') }}
                 </th>
+                <th id="hLinks" scope="col">
+                </th>
+            
             </tr>
             </thead>
             <tbody>
@@ -58,13 +60,6 @@
                         <input type="checkbox" name="items[]" value="{{ message.getKey() }}" class="mushare-toggle-checkbox" />
                     </td>
                 {% endif %}
-                <td id="itemActions{{ message.getKey() }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
-                    {% set itemActions = knp_menu_get('MUShareModule:ItemActionsMenu:menu', [], {entity: message, area: routeArea, context: 'view'}) %}
-                    <div class="dropdown">
-                        <a id="itemActions{{ message.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
-                        {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:actions.html.twig'}) }}
-                    </div>
-                </td>
                 <td headers="hSubject" class="text-left">
                     {{ message.subject }}
                 </td>
@@ -74,6 +69,9 @@
                 </td>
                 <td headers="hCreatedDate" class="text-left">
                     {{ message.createdDate|localizeddate('medium', 'short') }}
+                </td>
+                <td headers="hLinks">
+                    <a href="{{ path('musharemodule_location_delete', { 'id': message.id}) }}" title="{{ __('Delete') }}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                 </td>
             </tr>
         {% else %}
@@ -89,13 +87,11 @@
             
             {% if kind == 'sentbox' %}
             <colgroup>
-                {% if routeArea == 'admin' %}
-                    <col id="cSelect" />
-                {% endif %}
                 <col id="cItemActions" />
                 <col id="cSubject" />
                 <col id="cRecipient" />
                 <col id="cReadByRecipient" />
+                <col id="cLinks" />
             </colgroup>
             <thead>
             <tr>
@@ -104,8 +100,7 @@
                         <input type="checkbox" class="mushare-mass-toggle" />
                     </th>
                 {% endif %}
-                <th id="hItemActions" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}z-order-unsorted z-w02">{{ __('Actions') }}</th>
-                <th id="hSubject" scope="col" class="text-left">
+               <th id="hSubject" scope="col" class="text-left">
                     {{ __('Subject') }}
                 </th>
                 <th id="hRecipient" scope="col" class="text-right">
@@ -114,6 +109,8 @@
                 <th id="hReadByRecipient" scope="col" class="text-left z-order-unsorted">
                     {{ __('Read by recipient') }}
                 </th>
+                <th id="hLinks" scope="col">
+                </th
             </tr>
             </thead>
             <tbody>
@@ -125,13 +122,6 @@
                         <input type="checkbox" name="items[]" value="{{ message.getKey() }}" class="mushare-toggle-checkbox" />
                     </td>
                 {% endif %}
-                <td id="itemActions{{ message.getKey() }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
-                    {% set itemActions = knp_menu_get('MUShareModule:ItemActionsMenu:menu', [], {entity: message, area: routeArea, context: 'view'}) %}
-                    <div class="dropdown">
-                        <a id="itemActions{{ message.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
-                        {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:actions.html.twig'}) }}
-                    </div>
-                </td>
                 <td headers="hSubject" class="text-left">
                     {{ message.subject }}
                 </td>
@@ -145,6 +135,9 @@
                 {% else %}
                     {{ __('Not read yet') }}
                 {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('musharemodule_location_delete', { 'id': message.id}) }}" title="{{ __('Delete') }}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                 </td>
             </tr>
         {% else %}

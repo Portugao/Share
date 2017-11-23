@@ -15,23 +15,20 @@
         <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover table-condensed">
             <colgroup>
-                {% if routeArea == 'admin' %}
-                    <col id="cSelect" />
-                {% endif %}
-                <col id="cItemActions" />
                 <col id="cProduct" />
                 {#<col id="cDescription" />
                 <col id="cIsOpen" />#}
                 <col id="cAbo" />
                 <col id="cPeriod" />
-                <col id="cTotalYear" />
+                {#<col id="cTotalYear" />
                 <col id="cSplitCosts" />
-                <col id="cBack" />
+                <col id="cBack" />#}
                 <col id="cAtMe" />
                 <col id="cZipCode" />
                 <col id="cMeetingPlace" />
                 <col id="cLocationOfOffer" />
                 {#<col id="cPool" />#}
+                <col id="cLinks" />
             </colgroup>
             <thead>
             <tr>
@@ -40,7 +37,6 @@
                         <input type="checkbox" class="mushare-mass-toggle" />
                     </th>
                 {% endif %}
-                <th id="hItemActions" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}z-order-unsorted z-w02">{{ __('Actions') }}</th>
                 <th id="hProduct" scope="col" class="text-left">
                     <a href="{{ sort.product.url }}" title="{{ __f('Sort by %s', {'%s': 'product'}) }}" class="{{ sort.product.class }}">{{ __('Product') }}</a>
                 </th>
@@ -56,7 +52,7 @@
                 <th id="hPeriod" scope="col" class="text-left">
                     <a href="{{ sort.period.url }}" title="{{ __f('Sort by %s', {'%s': 'period'}) }}" class="{{ sort.period.class }}">{{ __('Period') }}</a>
                 </th>
-                <th id="hTotalYear" scope="col" class="text-center">
+                {#<th id="hTotalYear" scope="col" class="text-center">
                     <a href="{{ sort.totalYear.url }}" title="{{ __f('Sort by %s', {'%s': 'total year'}) }}" class="{{ sort.totalYear.class }}">{{ __('Total year') }}</a>
                 </th>
                 <th id="hSplitCosts" scope="col" class="text-center">
@@ -64,7 +60,7 @@
                 </th>
                 <th id="hBack" scope="col" class="text-center">
                     <a href="{{ sort.back.url }}" title="{{ __f('Sort by %s', {'%s': 'back'}) }}" class="{{ sort.back.class }}">{{ __('Back') }}</a>
-                </th>
+                </th>#}
                 <th id="hAtMe" scope="col" class="text-center">
                     <a href="{{ sort.atMe.url }}" title="{{ __f('Sort by %s', {'%s': 'at me'}) }}" class="{{ sort.atMe.class }}">{{ __('At me') }}</a>
                 </th>
@@ -80,26 +76,15 @@
                 {#<th id="hPool" scope="col" class="text-left">
                     <a href="{{ sort.pool.url }}" title="{{ __f('Sort by %s', {'%s': 'pool'}) }}" class="{{ sort.pool.class }}">{{ __('Pool') }}</a>
                 </th>#}
+                <th id="hLinks" scope="col" class="text-right">
             </tr>
             </thead>
             <tbody>
         
         {% for offer in items %}
             <tr>
-                {% if routeArea == 'admin' %}
-                    <td headers="hSelect" class="fixed-column text-center z-w02">
-                        <input type="checkbox" name="items[]" value="{{ offer.getKey() }}" class="mushare-toggle-checkbox" />
-                    </td>
-                {% endif %}
-                <td id="itemActions{{ offer.getKey() }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
-                    {% set itemActions = knp_menu_get('MUShareModule:ItemActionsMenu:menu', [], {entity: offer, area: routeArea, context: 'view'}) %}
-                    <div class="dropdown">
-                        <a id="itemActions{{ offer.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
-                        {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:actions.html.twig'}) }}
-                    </div>
-                </td>
                 <td headers="hProduct" class="text-left">
-                    {{ offer.product }}
+                    <a href="{{ path('musharemodule_offer_display', {'id': offer.id}) }}" >{{ offer.product }}</a>
                 </td>
                 {#<td headers="hDescription" class="text-left">
                     {{ offer.description|striptags|truncate(50) }}
@@ -121,7 +106,7 @@
                 <td headers="hPeriod" class="text-left">
                     {{ offer.period|musharemodule_listEntry('offer', 'period') }}
                 </td>
-                <td headers="hTotalYear" class="text-center">
+                {#<td headers="hTotalYear" class="text-center">
                     {% if offer.totalYear %}
                         <i class="fa fa-check" title="{{ __('Yes') }}"></i>
                     {% else %}
@@ -141,7 +126,7 @@
                     {% else %}
                         <i class="fa fa-times" title="{{ __('No') }}"></i>
                     {% endif %}
-                </td>
+                </td>#}
                 <td headers="hAtMe" class="text-center">
                     {% if offer.atMe %}
                         <i class="fa fa-check" title="{{ __('Yes') }}"></i>
@@ -160,20 +145,15 @@
                         <a href="{{ path('musharemodule_location_' ~ routeArea ~ 'display', {'id': offer.locationOfOffer.getId()}) }}">{% spaceless %}
                           {{ offer.locationOfOffer|musharemodule_formattedTitle }}
                         {% endspaceless %}</a>
-                        <a id="locationItem{{ offer.getKey() }}_rel_{{ offer.locationOfOffer.getKey() }}Display" href="{{ path('musharemodule_location_' ~ routeArea ~ 'display', {'id': offer.locationOfOffer.getId(), raw: 1}) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="mushare-inline-window hidden" data-modal-title="{{ offer.locationOfOffer|musharemodule_formattedTitle|e('html_attr') }}"><i class="fa fa-id-card-o"></i></a>
                     {% else %}
                         {{ __('Not set.') }}
                     {% endif %}
                 </td>
-                {#<td headers="hPool" class="text-left">
-                    {% if offer.pool|default %}
-                        <a href="{{ path('musharemodule_pool_' ~ routeArea ~ 'display', {'id': offer.pool.getId()}) }}">{% spaceless %}
-                          {{ offer.pool|musharemodule_formattedTitle }}
-                        {% endspaceless %}</a>
-                    {% else %}
-                        {{ __('Not set.') }}
-                    {% endif %}
-                </td>#}
+                <td>
+                    <a href="{{ path('musharemodule_offer_edit', { 'id': offer.id}) }}" title="{{ __('Edit') }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                    <a href="{{ path('musharemodule_offer_delete', { 'id': offer.id}) }}" title="{{ __('Delete') }}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                </td>
+
             </tr>
         {% else %}
             <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
