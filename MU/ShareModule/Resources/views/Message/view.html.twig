@@ -61,7 +61,7 @@
                     </td>
                 {% endif %}
                 <td headers="hSubject" class="text-left">
-                    {{ message.subject }}
+                    <a href="{{ path('musharemodule_message_display', {'id': message.getId()}) }}">{{ message.subject }}</a>
                 </td>
                 <td headers="hSender" class="text-left">
                 {% set profileLink = message.createdBy.getUid()|profileLinkByUserId() %}
@@ -123,7 +123,7 @@
                     </td>
                 {% endif %}
                 <td headers="hSubject" class="text-left">
-                    {{ message.subject }}
+                    <a href="{{ path('musharemodule_message_display', {'id': message.getId()}) }}">{{ message.subject }}</a>
                 </td>
                 <td headers="hRecipient" class="text-left">
                 {% set profileLink = message.recipient.getUid()|profileLinkByUserId() %}
