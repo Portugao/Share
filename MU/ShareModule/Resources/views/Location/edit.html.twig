@@ -101,7 +101,13 @@
         <div class="form-group form-buttons">
             <div class="col-sm-offset-3 col-sm-9">
                 {% for action in actions %}
+                {% if action.id == 'unpublish' %}
+                <div class="hidden">
+                {% endif %}
                     {{ form_widget(attribute(form, action.id)) }}
+                {% if action.id == 'unpublish' %}
+                </div>
+                {% endif %}
                     {% if mode == 'create' and action.id == 'submit' and form.submitrepeat is defined %}
                         {{ form_widget(attribute(form, 'submitrepeat')) }}
                     {% endif %}
