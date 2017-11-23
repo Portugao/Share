@@ -818,6 +818,9 @@ msgstr "Standort filter hooks subscriber"
 msgid "Location form aware subscriber"
 msgstr "Standort form aware subscriber"
 
+msgid "Location information"
+msgstr "Angaben zum Standort"
+
 msgid "Location of offer"
 msgstr "Standort des Angebots"
 
@@ -1478,6 +1481,9 @@ msgstr "Workflows"
 
 msgid "Yes"
 msgstr "Ja"
+
+msgid "You activated your location %location% for the map!"
+msgstr "Du hast Deinen Standort %location% für die Karte aktiviert!"
 
 msgid ""
 "You can create several locations.\n"
