@@ -54,7 +54,7 @@ class EditHandler extends AbstractEditHandler
             // store new identifier
             $this->idValue = $entity->getKey();
         }
-        if ($success) {
+        if ($success && $entity['forMap'] == 1) {
         	$repository = $this->entityFactory->getRepository('location');
         	$offerRepository = $this->entityFactory->getRepository('offer');
         	$uid = $this->currentUserApi->get('uid');
@@ -73,6 +73,7 @@ class EditHandler extends AbstractEditHandler
         			
         		}
         	}
+        	$flashBag->add('status', $this->__f('You activated your location %location% for the map!', ['%location%' => $entity['title']]));
         	$where2 = 'tblOfferOfLocation';
         }
     
