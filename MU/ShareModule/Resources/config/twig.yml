@@ -8,6 +8,8 @@ services:
             - "@mu_share_module.entity_display_helper"
             - "@mu_share_module.workflow_helper"
             - "@mu_share_module.listentries_helper"
+            - "@zikula_users_module.current_user"
+            - "@mu_share_module.entity_factory"
         public: false
         tags:
             - { name: twig.extension }
