@@ -14,10 +14,83 @@ namespace MU\ShareModule\Twig;
 
 use MU\ShareModule\Twig\Base\AbstractTwigExtension;
 
+use Zikula\Common\Translator\TranslatorInterface;
+use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
+use MU\ShareModule\Helper\ListEntriesHelper;
+use MU\ShareModule\Helper\EntityDisplayHelper;
+use MU\ShareModule\Helper\WorkflowHelper;
+use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
+use MU\ShareModule\Entity\Factory\EntityFactory;
+
 /**
  * Twig extension implementation class.
  */
 class TwigExtension extends AbstractTwigExtension
 {
-    // feel free to add your own Twig extension methods here
+	/**
+	 * @var CurrentUserApiInterface
+	 */
+	protected $currentUserApi;
+	
+	/**
+	 * @var EntityFactory
+	 */
+	protected $entityFactory;
+	
+	const amountMessages = 50;
+	
+	/**
+	 * TwigExtension constructor.
+	 *
+	 * @param TranslatorInterface $translator     Translator service instance
+	 * @param VariableApiInterface   $variableApi    VariableApi service instance
+	 * @param EntityDisplayHelper $entityDisplayHelper EntityDisplayHelper service instance
+	 * @param WorkflowHelper      $workflowHelper WorkflowHelper service instance
+	 * @param ListEntriesHelper   $listHelper     ListEntriesHelper service instance
+	 * @param CurrentUserApiInterface $currentUserApi CurrentUserApiInterface service instance
+	 * @param EntityFactory       $entityFactory EntityFactory service instance
+	 */
+	public function __construct(
+			TranslatorInterface $translator,
+			VariableApiInterface $variableApi,
+			EntityDisplayHelper $entityDisplayHelper,
+			WorkflowHelper $workflowHelper,
+			ListEntriesHelper $listHelper,
+			CurrentUserApiInterface $currentUserApi,
+			EntityFactory $entityFactory)
+	{
+		$this->setTranslator($translator);
+		$this->variableApi = $variableApi;
+		$this->entityDisplayHelper = $entityDisplayHelper;
+		$this->workflowHelper = $workflowHelper;
+		$this->listHelper = $listHelper;
+		$this->currentUserApi = $currentUserApi;
+		$this->entityFactory = $entityFactory;
+	}
+	
+    /**
+     * Returns a list of custom Twig functions.
+     *
+     * @return \Twig_SimpleFunction[]
+     */
+    public function getFunctions()
+    {
+    	$functions = parent::getFunctions();
+    	
+    	$functions[] = new \Twig_SimpleFunction('musharemodule_messageAmount', [$this, 'getMessageAmount']);
+    	return $functions;
+
+    }
+    
+    public function getMessageAmount()
+    {
+    	$uid = $this->currentUserApi->get('uid');
+    	$repository = $this->entityFactory->getRepository('message');
+    	$where = 'tbl.createdBy = ' . $uid;
+    	$messageCount['sentMessages'] = $repository->selectCount($where);
+    	$where2 = 'tbl.recipient = ' . $uid;
+    	$messageCount['getMessages'] = $repository->selectCount($where2);
+    	$messageCount['max'] = self::amountMessages;
+    	return $messageCount;
+    }
 }

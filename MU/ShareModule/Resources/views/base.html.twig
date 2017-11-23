@@ -12,7 +12,15 @@
 {% endblock %}
 
 {% block appTitle %}
-    {{ moduleHeader('user', __('Share paper'), '', false, false, false, false) }}
+    {#{ moduleHeader('user', __('Share paper'), '', false, false, false, false) }#}
+    {% set messageAmount = musharemodule_messageAmount() %}
+    <h2>{{ __('Share paper') }}</h2>
+    <ul class="nav nav-pills" role="tablist">
+    <li role="presentation"><a class="btn btn-default btn-sm" href="{{ path('musharemodule_location_view') }}">{{ __('Map') }}</a></li>
+    <li role="presentation"><a class="btn btn-default btn-sm" href="{{ path('musharemodule_offer_view', {'own': 1}) }}">{{ __('My offers') }}</a></li>
+    <li role="presentation"><a class="btn btn-default btn-sm" href="{{ path('musharemodule_message_view') }}">{{ __('Inbox') }} <span class="badge">{{ messageAmount.getMessages }}</span></a></li>
+    <li role="presentation"><a class="btn btn-default btn-sm" href="{{ path('musharemodule_message_view', {'kind': 'sentbox'}) }}">{{ __('Sentbox') }} <span class="badge">{{ messageAmount.sentMessages }}</span></a></li>
+    </ul>
 {% endblock %}
 
 {% block titleArea %}
